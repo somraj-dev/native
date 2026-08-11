@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml;
 using Serilog;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace AxioVital.Desktop;
 
@@ -34,34 +35,48 @@ public partial class App : Application
 
         // Global unhandled exception handling
         this.UnhandledException += OnUnhandledException;
+        AppDomain.CurrentDomain.UnhandledException += OnAppDomainUnhandledException;
+        TaskScheduler.UnobservedTaskException += OnTaskSchedulerUnobservedTaskException;
     }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        // Build configuration
-        Configuration = new ConfigurationBuilder()
-            .SetBasePath(AppContext.BaseDirectory)
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
-            .Build();
+        try
+        {
+            // Build configuration
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+                .Build();
 
-        // Configure Serilog
-        Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(Configuration)
-            .WriteTo.File(
-                Path.Combine(AppContext.BaseDirectory, "logs", "axiovital-desktop-.log"),
-                rollingInterval: Serilog.RollingInterval.Day,
-                retainedFileCountLimit: 14)
-            .CreateLogger();
+            // Configure Serilog
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration)
+                .WriteTo.File(
+                    Path.Combine(AppContext.BaseDirectory, "logs", "axiovital-desktop-.log"),
+                    rollingInterval: Serilog.RollingInterval.Day,
+                    retainedFileCountLimit: 14)
+                .CreateLogger();
 
-        // Build DI container
-        var services = new ServiceCollection();
-        ConfigureServices(services);
-        Services = services.BuildServiceProvider();
+            Log.Information("AxioVital Desktop application starting up...");
 
-        // Launch main window
-        _mainWindow = new MainWindow();
-        _mainWindow.Activate();
+            // Build DI container
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            Services = services.BuildServiceProvider();
+
+            // Launch main window
+            _mainWindow = new MainWindow();
+            _mainWindow.Activate();
+            Log.Information("AxioVital Desktop main window activated successfully.");
+        }
+        catch (Exception ex)
+        {
+            Log.Fatal(ex, "Critical failure during AxioVital Desktop startup.");
+            Log.CloseAndFlush();
+            throw;
+        }
     }
 
     private static void ConfigureServices(IServiceCollection services)
@@ -98,8 +113,23 @@ public partial class App : Application
 
     private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
-        Log.Fatal(e.Exception, "Unhandled exception in AxioVital Desktop");
+        Log.Fatal(e.Exception, "Unhandled XAML exception in AxioVital Desktop");
         Log.CloseAndFlush();
         e.Handled = true;
+    }
+
+    private void OnAppDomainUnhandledException(object sender, System.UnhandledExceptionEventArgs e)
+    {
+        if (e.ExceptionObject is Exception ex)
+        {
+            Log.Fatal(ex, "Unhandled AppDomain exception in AxioVital Desktop");
+            Log.CloseAndFlush();
+        }
+    }
+
+    private void OnTaskSchedulerUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
+    {
+        Log.Error(e.Exception, "Unobserved Task Exception in AxioVital Desktop");
+        e.SetObserved();
     }
 }
