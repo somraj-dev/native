@@ -32,9 +32,36 @@ public partial class MainPage : Page
         ShowPatientProfileView();
     }
 
+    private bool _isPageFullScreen = false;
+
     private void OnFullScreenPointerPressed(object sender, PointerRoutedEventArgs e)
     {
-        App.MainWindowInstance?.ToggleFullScreen();
+        TogglePageFullScreen();
+    }
+
+    public void TogglePageFullScreen()
+    {
+        _isPageFullScreen = !_isPageFullScreen;
+
+        var vis = _isPageFullScreen ? Visibility.Collapsed : Visibility.Visible;
+        TopRibbonBarGrid.Visibility = vis;
+        SubNavBarGrid.Visibility = vis;
+        CategoryBarGrid.Visibility = vis;
+        DarkHeaderBarGrid.Visibility = vis;
+        TabStripBarGrid.Visibility = vis;
+    }
+
+    public void ExitPageFullScreen()
+    {
+        if (_isPageFullScreen)
+        {
+            _isPageFullScreen = false;
+            TopRibbonBarGrid.Visibility = Visibility.Visible;
+            SubNavBarGrid.Visibility = Visibility.Visible;
+            CategoryBarGrid.Visibility = Visibility.Visible;
+            DarkHeaderBarGrid.Visibility = Visibility.Visible;
+            TabStripBarGrid.Visibility = Visibility.Visible;
+        }
     }
 
     public void ShowMessageCenterView()

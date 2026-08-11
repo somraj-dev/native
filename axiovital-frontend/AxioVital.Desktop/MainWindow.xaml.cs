@@ -44,6 +44,11 @@ public sealed partial class MainWindow : Window
         if (e.Key == VirtualKey.Escape)
         {
             ExitFullScreen();
+
+            if (RootFrame.Content is MainPage mainPage)
+            {
+                mainPage.ExitPageFullScreen();
+            }
         }
     }
 }
