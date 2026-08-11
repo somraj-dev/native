@@ -53,20 +53,20 @@
         </Grid>
 
         <!-- ==================== 1. SUB NAV BAR 2 ==================== -->
-        <Grid Grid.Row="1" Background="#E6E9EE" Padding="12,4,12,4" BorderBrush="#D0D4DC" BorderThickness="0,0,0,1">
+        <Grid Grid.Row="1" Background="#FFFFFF" Padding="12,5,12,5" BorderBrush="#D0D4DC" BorderThickness="0,0,0,1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                 <!-- Message Center Tab Button -->
-                <Border x:Name="MessageCenterTabBorder" Padding="0,0,0,2" PointerPressed="OnMessageCenterTabPointerPressed">
+                <Border x:Name="MessageCenterTabBorder" Padding="0,0,0,3" PointerPressed="OnMessageCenterTabPointerPressed">
                     <TextBlock x:Name="MessageCenterTabText" Text="Message Center" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 </Border>
 
                 <!-- Patient List Tab Button -->
-                <Border x:Name="PatientListTabBorder" BorderBrush="#0A658E" BorderThickness="0,0,0,2" Padding="0,0,0,2" PointerPressed="OnPatientListTabPointerPressed">
+                <Border x:Name="PatientListTabBorder" BorderBrush="#0A658E" BorderThickness="0,0,0,2" Padding="0,0,0,3" PointerPressed="OnPatientListTabPointerPressed">
                     <TextBlock x:Name="PatientListTabText" Text="Patient List" Foreground="#0A658E" FontSize="11" FontWeight="Bold" />
                 </Border>
 
@@ -83,8 +83,13 @@
         </Grid>
 
         <!-- ==================== 2. CATEGORY BAR 3 ==================== -->
-        <Grid Grid.Row="2" Background="#DFE3E8" Padding="12,3,12,3" BorderBrush="#CBD0D8" BorderThickness="0,0,0,1">
-            <StackPanel Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
+        <Grid Grid.Row="2" Background="#EEF2F6" Padding="12,4,12,4" BorderBrush="#CBD0D8" BorderThickness="0,0,0,1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
                 <TextBlock Text="Dashboard" Foreground="#444444" FontSize="11" />
                 <TextBlock Text="Scheduler" Foreground="#111111" FontSize="11" FontWeight="Bold" />
                 <TextBlock Text="Order Sets" Foreground="#111111" FontSize="11" FontWeight="Bold" />
@@ -92,6 +97,8 @@
                 <TextBlock Text="Labs" Foreground="#444444" FontSize="11" />
                 <TextBlock Text="Analytics" Foreground="#444444" FontSize="11" />
             </StackPanel>
+
+            <FontIcon Grid.Column="1" Glyph="&#xE712;" FontSize="12" Foreground="#666666" VerticalAlignment="Center" />
         </Grid>
 
         <!-- ==================== 3. DARK BLUE HEADER BAR 4 ==================== -->
@@ -106,7 +113,7 @@
 
             <!-- Quick Tools Right -->
             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
-                <Border Background="#062B40" CornerRadius="2" Padding="8,2,8,2">
+                <Border Background="#06263B" CornerRadius="3" Padding="8,3,8,3">
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#99BCCF" />
                         <TextBox PlaceholderText="Search by Patient or Order..." Background="Transparent" Foreground="White" BorderThickness="0" FontSize="11" Width="170" Padding="0" />
@@ -128,15 +135,15 @@
         </Grid>
 
         <!-- ==================== 4. LIGHT BLUE TAB STRIP BAR 5 ==================== -->
-        <Grid Grid.Row="4" Background="#BACBD4" Padding="12,4,12,4">
+        <Grid Grid.Row="4" Background="#BACBD4" Padding="12,4,12,0">
             <StackPanel Orientation="Horizontal" Spacing="4">
-                <Border x:Name="PatientProfileTabPill" Background="#E6EEF2" CornerRadius="2,2,0,0" Padding="10,4,10,4" PointerPressed="OnPatientListTabPointerPressed">
+                <Border x:Name="PatientProfileTabPill" Background="#E6EEF2" CornerRadius="3,3,0,0" Padding="12,5,12,5" PointerPressed="OnPatientListTabPointerPressed">
                     <TextBlock Text="Patient Profile: JOHN DOE" Foreground="#0A3F5C" FontSize="11" FontWeight="Bold" />
                 </Border>
-                <Border x:Name="MessageCenterTabPill" Background="#FFFFFF" CornerRadius="2,2,0,0" Padding="10,4,10,4" Visibility="Collapsed" PointerPressed="OnMessageCenterTabPointerPressed">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
+                <Border x:Name="MessageCenterTabPill" Background="#FFFFFF" CornerRadius="3,3,0,0" Padding="12,5,12,5" Visibility="Collapsed" PointerPressed="OnMessageCenterTabPointerPressed">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
                         <TextBlock Text="General Messages: JOHN DOE" Foreground="#0A3F5C" FontSize="11" FontWeight="Bold" />
-                        <TextBlock Text="✕" Foreground="#666666" FontSize="10" VerticalAlignment="Center" />
+                        <TextBlock Text="✕" Foreground="#777777" FontSize="10" VerticalAlignment="Center" />
                     </StackPanel>
                 </Border>
             </StackPanel>
@@ -313,110 +320,156 @@
                 </ScrollViewer>
             </Grid>
 
-            <!-- MESSAGE CENTER VIEW CONTENT -->
+            <!-- ==================== 1:1 MIRROR REPLICA MESSAGE CENTER VIEW ==================== -->
             <Grid x:Name="MessageCenterView" Visibility="Collapsed" Background="White">
                 <Grid.RowDefinitions>
+                    <!-- Action Bar -->
                     <RowDefinition Height="Auto" />
+                    <!-- Data Table -->
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <!-- Message Action Toolbar -->
-                <Grid Grid.Row="0" Background="#EBEFF2" Padding="12,6,12,6" BorderBrush="#CBD0D8" BorderThickness="0,0,0,1">
-                    <StackPanel Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" Spacing="4">
+                <Grid Grid.Row="0" Background="#F0F3F6" Padding="12,6,12,6" BorderBrush="#CBD0D8" BorderThickness="0,0,0,1">
+                    <StackPanel Orientation="Horizontal" Spacing="20" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
                             <FontIcon Glyph="&#xE789;" FontSize="11" Foreground="#C82333" />
                             <TextBlock Text="Communicate ▾" Foreground="#333333" FontSize="11" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="11" Foreground="#EE9A00" />
+                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                            <FontIcon Glyph="&#xE8B7;" FontSize="11" Foreground="#D97706" />
                             <TextBlock Text="Open" Foreground="#333333" FontSize="11" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
-                            <FontIcon Glyph="&#xE8A5;" FontSize="11" Foreground="#005C8A" />
+                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                            <FontIcon Glyph="&#xE8A5;" FontSize="11" Foreground="#0A658E" />
                             <TextBlock Text="Message Journal" Foreground="#333333" FontSize="11" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
-                            <FontIcon Glyph="&#xE72A;" FontSize="11" Foreground="#005C8A" />
+                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                            <FontIcon Glyph="&#xE72A;" FontSize="11" Foreground="#0A658E" />
                             <TextBlock Text="Forward Only" Foreground="#333333" FontSize="11" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
+                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
                             <FontIcon Glyph="&#xE77B;" FontSize="11" Foreground="#444444" />
                             <TextBlock Text="Select Patient" Foreground="#333333" FontSize="11" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
+                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
                             <FontIcon Glyph="&#xE73A;" FontSize="11" Foreground="#444444" />
                             <TextBlock Text="Select All" Foreground="#333333" FontSize="11" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
 
-                <!-- Data Table Grid -->
+                <!-- Data Table Grid with Full Vertical & Horizontal Borders -->
                 <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <Grid MinWidth="1200">
+                    <Grid MinWidth="1440">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <!-- Table Header Row -->
-                        <Grid Grid.Row="0" Background="#F0F3F6" Padding="6,6,6,6" BorderBrush="#D0D4DC" BorderThickness="0,0,0,1">
+                        <!-- 1:1 Table Header Row -->
+                        <Grid Grid.Row="0" Background="#E8EDF2" BorderBrush="#D0D5DD" BorderThickness="0,0,0,1">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="240" />
+                                <ColumnDefinition Width="75" />
                                 <ColumnDefinition Width="130" />
-                                <ColumnDefinition Width="220" />
-                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="230" />
+                                <ColumnDefinition Width="95" />
                                 <ColumnDefinition Width="110" />
-                                <ColumnDefinition Width="220" />
-                                <ColumnDefinition Width="80" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="120" />
-                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="130" />
+                                <ColumnDefinition Width="130" />
                                 <ColumnDefinition Width="110" />
                                 <ColumnDefinition Width="70" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="Patient Name" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
-                            <TextBlock Grid.Column="1" Text="Plan Name" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
-                            <TextBlock Grid.Column="2" Text="Action" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
-                            <TextBlock Grid.Column="3" Text="Details" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
-                            <TextBlock Grid.Column="4" Text="Details" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
-                            <TextBlock Grid.Column="5" Text="Comment" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
-                            <TextBlock Grid.Column="6" Text="Originator Name" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
-                            <TextBlock Grid.Column="7" Text="Create Date" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
-                            <TextBlock Grid.Column="8" Text="Stop Date" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
-                            <TextBlock Grid.Column="9" Text="Stop Type" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
-                            <TextBlock Grid.Column="10" Text="Status" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                            <Border Grid.Column="0" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
+                                <TextBlock Text="Patient Name" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+                            <Border Grid.Column="1" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
+                                <TextBlock Text="Plan Name" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+                            <Border Grid.Column="2" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
+                                <TextBlock Text="Action" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+                            <Border Grid.Column="3" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
+                                <TextBlock Text="Details" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+                            <Border Grid.Column="4" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
+                                <TextBlock Text="Details" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+                            <Border Grid.Column="5" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
+                                <TextBlock Text="Comment" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+                            <Border Grid.Column="6" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
+                                <TextBlock Text="Originator Name" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+                            <Border Grid.Column="7" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
+                                <TextBlock Text="Create Date" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+                            <Border Grid.Column="8" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
+                                <TextBlock Text="Stop Date" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+                            <Border Grid.Column="9" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
+                                <TextBlock Text="Stop Type" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+                            <Border Grid.Column="10" Padding="6,6,6,6">
+                                <TextBlock Text="Status" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
                         </Grid>
 
-                        <!-- Table Rows ItemsRepeater / ListView -->
+                        <!-- Table Rows ItemsControl with 1:1 Cell Dividers -->
                         <ItemsControl x:Name="MessageCenterItemsControl" Grid.Row="1">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Padding="6,5,6,5" BorderBrush="#EAEAEA" BorderThickness="0,0,0,1" Background="White">
+                                    <Grid Background="White">
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="240" />
+                                            <ColumnDefinition Width="75" />
                                             <ColumnDefinition Width="130" />
-                                            <ColumnDefinition Width="220" />
-                                            <ColumnDefinition Width="70" />
+                                            <ColumnDefinition Width="230" />
+                                            <ColumnDefinition Width="95" />
                                             <ColumnDefinition Width="110" />
-                                            <ColumnDefinition Width="220" />
-                                            <ColumnDefinition Width="80" />
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="120" />
-                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="130" />
+                                            <ColumnDefinition Width="130" />
                                             <ColumnDefinition Width="110" />
                                             <ColumnDefinition Width="70" />
                                         </Grid.ColumnDefinitions>
 
-                                        <TextBlock Grid.Column="0" Text="{Binding PatientName}" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="1" Text="{Binding PlanName}" Foreground="#005C8A" FontSize="11" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="2" Text="{Binding Action}" Foreground="#333333" FontSize="11" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="3" Text="{Binding DetailsDate}" Foreground="#666666" FontSize="10" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="4" Text="{Binding DetailsDesc}" Foreground="#333333" FontSize="11" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="5" Text="{Binding Comment}" Foreground="#555555" FontSize="11" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="6" Text="{Binding OriginatorName}" Foreground="#555555" FontSize="11" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="7" Text="{Binding CreateDate}" Foreground="#555555" FontSize="10" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="8" Text="{Binding StopDate}" Foreground="#555555" FontSize="10" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="9" Text="{Binding StopType}" Foreground="#333333" FontSize="11" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="10" Text="{Binding Status}" Foreground="#008000" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
+                                        <Border Grid.Column="0" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
+                                            <TextBlock Text="{Binding PatientName}" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Grid.Column="1" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
+                                            <TextBlock Text="{Binding PlanName}" Foreground="#005C8A" FontSize="11" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Grid.Column="2" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
+                                            <TextBlock Text="{Binding Action}" Foreground="#333333" FontSize="11" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Grid.Column="3" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
+                                            <TextBlock Text="{Binding DetailsDate}" Foreground="#666666" FontSize="10" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Grid.Column="4" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
+                                            <TextBlock Text="{Binding DetailsDesc}" Foreground="#333333" FontSize="11" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Grid.Column="5" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
+                                            <TextBlock Text="{Binding Comment}" Foreground="#555555" FontSize="11" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Grid.Column="6" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
+                                            <TextBlock Text="{Binding OriginatorName}" Foreground="#555555" FontSize="11" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Grid.Column="7" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
+                                            <TextBlock Text="{Binding CreateDate}" Foreground="#555555" FontSize="10" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Grid.Column="8" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
+                                            <TextBlock Text="{Binding StopDate}" Foreground="#555555" FontSize="10" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Grid.Column="9" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
+                                            <TextBlock Text="{Binding StopType}" Foreground="#333333" FontSize="11" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Grid.Column="10" BorderBrush="#E2E6EA" BorderThickness="0,0,0,1" Padding="6,5,6,5">
+                                            <TextBlock Text="{Binding Status}" Foreground="#008000" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
+                                        </Border>
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
