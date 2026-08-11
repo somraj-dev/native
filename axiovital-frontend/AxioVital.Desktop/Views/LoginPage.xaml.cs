@@ -21,10 +21,10 @@ public sealed partial class LoginPage : Page
 
         ViewModel.OnLoginSuccess = () =>
         {
-            // Navigate to main application shell upon successful login
+            // Navigate to main application page (MainPage) upon successful login
             if (this.Frame != null)
             {
-                this.Frame.Navigate(typeof(HomePage));
+                this.Frame.Navigate(typeof(MainPage));
             }
         };
     }
