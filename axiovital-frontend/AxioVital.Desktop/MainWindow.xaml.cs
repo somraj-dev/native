@@ -13,8 +13,8 @@ public sealed partial class MainWindow : Window
     {
         this.InitializeComponent();
 
-        // Set default page
-        ContentFrame.Navigate(typeof(HomePage));
+        // Set initial screen to AxioVital Environment Login Page
+        ContentFrame.Navigate(typeof(LoginPage));
     }
 
     private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

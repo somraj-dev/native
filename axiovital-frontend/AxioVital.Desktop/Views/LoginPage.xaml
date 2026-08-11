@@ -1,0 +1,132 @@
+<Page
+    x:Class="AxioVital.Desktop.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="#0B587E">
+
+    <Grid Padding="24">
+        <!-- Top Left Brand Header -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Spacing="10">
+            <Ellipse Width="24" Height="24" Fill="White" VerticalAlignment="Center">
+                <Ellipse.Opacity>0.9</Ellipse.Opacity>
+            </Ellipse>
+            <FontIcon Glyph="&#xE774;" FontSize="18" Foreground="#0B587E" Margin="-29,0,0,0" VerticalAlignment="Center" />
+            <TextBlock Text="AxioVital" Foreground="White" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" />
+        </StackPanel>
+
+        <!-- Center Login Form Area -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20" Width="400">
+
+            <!-- Title -->
+            <TextBlock
+                Text="AxioVital Environment ™"
+                Foreground="#A4D4EC"
+                FontSize="32"
+                FontWeight="SemiBold"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,10" />
+
+            <!-- Form Card Fields -->
+            <StackPanel Width="260" HorizontalAlignment="Center" Spacing="14">
+
+                <!-- User Name -->
+                <StackPanel Spacing="4">
+                    <TextBlock Text="User Name :" Foreground="White" FontSize="12" FontWeight="SemiBold" />
+                    <ComboBox
+                        ItemsSource="{Binding Users}"
+                        SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
+                        Width="260"
+                        HorizontalAlignment="Center"
+                        Background="White"
+                        Foreground="Black" />
+                </StackPanel>
+
+                <!-- Password -->
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Password :" Foreground="White" FontSize="12" FontWeight="SemiBold" />
+                    <PasswordBox
+                        x:Name="PasswordInput"
+                        PasswordChanged="PasswordInput_PasswordChanged"
+                        Width="260"
+                        HorizontalAlignment="Center"
+                        Background="White"
+                        Foreground="Black" />
+                </StackPanel>
+
+                <!-- Domain -->
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Domain :" Foreground="White" FontSize="12" FontWeight="SemiBold" />
+                    <ComboBox
+                        ItemsSource="{Binding Domains}"
+                        SelectedItem="{Binding SelectedDomain, Mode=TwoWay}"
+                        Width="260"
+                        HorizontalAlignment="Center"
+                        Background="White"
+                        Foreground="Black" />
+                </StackPanel>
+
+                <!-- Error / Status Message -->
+                <TextBlock
+                    Text="{Binding StatusMessage}"
+                    Foreground="#FF6B6B"
+                    FontSize="11"
+                    HorizontalAlignment="Center"
+                    TextWrapping="Wrap"
+                    Visibility="{Binding HasError}" />
+
+                <!-- Action Buttons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16" Margin="0,10,0,0">
+                    <Button
+                        Content="OK"
+                        Command="{Binding LoginCommand}"
+                        Width="90"
+                        Height="28"
+                        Padding="0"
+                        Background="#D5D5D5"
+                        Foreground="#1A1A1A"
+                        BorderBrush="#A0A0A0"
+                        FontSize="12"
+                        FontWeight="SemiBold" />
+
+                    <Button
+                        Content="Cancel"
+                        Command="{Binding CancelCommand}"
+                        Width="90"
+                        Height="28"
+                        Padding="0"
+                        Background="#D5D5D5"
+                        Foreground="#1A1A1A"
+                        BorderBrush="#A0A0A0"
+                        FontSize="12"
+                        FontWeight="SemiBold" />
+                </StackPanel>
+
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Bottom Footer Section -->
+        <Grid VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Bottom Left Badge -->
+            <Grid Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,16,0">
+                <Ellipse Width="32" Height="32" Fill="#111111" />
+                <TextBlock Text="N" Foreground="White" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+
+            <!-- Legal Footer Text -->
+            <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Spacing="2">
+                <TextBlock Text="Operating Environment" Foreground="White" FontSize="13" FontWeight="Bold" />
+                <TextBlock Text="© 2026 AxioVital Corporation. All rights reserved." Foreground="#C0DCED" FontSize="10" />
+                <TextBlock Text="Access and use of this solution system (including components thereof) require, and are governed by, license(s) from AxioVital Corporation." Foreground="#96C7E2" FontSize="9.5" TextWrapping="Wrap" />
+                <TextBlock Text="Unauthorized use, access, reproduction, display or distribution of any portion of this solution or the data contained therein may result in severe civil damages and criminal penalties. Further Information may be found in Help/About." Foreground="#96C7E2" FontSize="9.5" TextWrapping="Wrap" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
