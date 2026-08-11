@@ -1,0 +1,8 @@
+{
+  "applicationName": "AxioVital Native Desktop",
+  "version": "1.0.0",
+  "assets": [
+    "AppLogo.png",
+    "PatientAvatarDefault.png"
+  ]
+}

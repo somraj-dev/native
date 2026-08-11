@@ -1,0 +1,27 @@
+-- AxioVital Database Initial Migration
+-- PostgreSQL 16 Schema Setup
+
+CREATE TABLE IF NOT EXISTS tenants (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    identifier VARCHAR(100) NOT NULL UNIQUE,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE NULL,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY,
+    tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    email VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(500) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE NULL,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE INDEX IF NOT EXISTS idx_users_tenant_email ON users(tenant_id, email);
