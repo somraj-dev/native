@@ -102,32 +102,32 @@
         </Grid>
 
         <!-- ==================== 3. DARK BLUE HEADER BAR 4 ==================== -->
-        <Grid Grid.Row="3" Background="#0A3F5C" Padding="12,6,12,6">
+        <Grid Grid.Row="3" Background="#0A486F" Padding="12,3,12,3" MinHeight="28">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Name="HeaderTitleText" Grid.Column="0" Text="Patient Profile" Foreground="White" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" />
+            <TextBlock x:Name="HeaderTitleText" Grid.Column="0" Text="Patient Profile" Foreground="White" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
 
             <!-- Quick Tools Right -->
-            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
-                <Border Background="#06263B" CornerRadius="3" Padding="8,3,8,3">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#99BCCF" />
-                        <TextBox PlaceholderText="Search by Patient or Order..." Background="Transparent" Foreground="White" BorderThickness="0" FontSize="11" Width="170" Padding="0" />
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
+                <Border Background="#05263B" CornerRadius="4" Padding="6,1,8,1" Height="24" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#00D2FF" VerticalAlignment="Center" />
+                        <TextBox PlaceholderText="Search by Patient or Order..." Background="Transparent" Foreground="White" BorderThickness="0" FontSize="11" Width="180" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" />
                     </StackPanel>
                 </Border>
-                <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
                     <FontIcon Glyph="&#xE740;" FontSize="11" Foreground="White" />
                     <TextBlock Text="Full screen" Foreground="White" FontSize="11" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
                     <FontIcon Glyph="&#xE749;" FontSize="11" Foreground="White" />
                     <TextBlock Text="Print" Foreground="White" FontSize="11" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
                     <FontIcon Glyph="&#xE72C;" FontSize="11" Foreground="White" />
                     <TextBlock Text="0 minutes ago" Foreground="White" FontSize="11" />
                 </StackPanel>
