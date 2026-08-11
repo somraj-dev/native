@@ -99,6 +99,18 @@ if ($null -ne $makePriPath -and $null -ne $xbfSourceDir) {
         Copy-Item $xbf.FullName $destPath -Force
     }
 
+    # Copy WinUI 3 controls PRI files to staging so makepri indexes themeresources.xaml into resources.pri
+    $nuGetWinUiPri = "$env:USERPROFILE\.nuget\packages\microsoft.windowsappsdk\1.6.250205002\tools\net6.0\.."
+    $priCandidates = @(
+        (Join-Path $buildOutDir "Microsoft.UI.pri"),
+        (Join-Path $buildOutDir "Microsoft.UI.Xaml.Controls.pri")
+    )
+    foreach ($priCandidate in $priCandidates) {
+        if (Test-Path $priCandidate) {
+            Copy-Item $priCandidate $priStagingDir -Force
+        }
+    }
+
     $priConfigPath = Join-Path $priStagingDir "priconfig.xml"
     Push-Location $priStagingDir
     & $makePriPath createconfig /cf $priConfigPath /dq en-US /o 2>&1 | Out-Null
@@ -142,6 +154,11 @@ if ($null -ne $xbfSourceDir) {
         Copy-Item $xbf.FullName $destPath -Force
     }
     Write-Host "       Copied $($xbfFiles.Count) XBF file(s)." -ForegroundColor Green
+}
+
+if (Test-Path $priBuildPath) {
+    Copy-Item $priBuildPath (Join-Path $publishDir "resources.pri") -Force
+    Write-Host "       Copied AutoMerged resources.pri to publish directory." -ForegroundColor Green
 }
 
 # --- Step 6: Create SmartScreen Unblock Launcher in Publish Folder ---
