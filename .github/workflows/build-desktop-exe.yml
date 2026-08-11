@@ -1,0 +1,51 @@
+name: AxioVital Native — Desktop Executable Build & Artifacts
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  build-desktop-exe:
+    name: Build & Package AxioVital.Desktop.exe
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 9 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore NuGet Dependencies
+        run: dotnet restore AxioVital.sln
+
+      - name: Build Full Solution
+        run: dotnet build AxioVital.sln --no-restore -c Release
+
+      - name: Run Foundation Unit Tests
+        run: dotnet run --project tests/AxioVital.UnitTests -c Release
+
+      - name: Publish Standalone Desktop Executable (.exe)
+        run: |
+          dotnet publish axiovital-frontend/AxioVital.Desktop/AxioVital.Desktop.csproj `
+            -c Release `
+            -r win-x64 `
+            --self-contained true `
+            -o ./dist/AxioVital-Desktop-win-x64
+
+      - name: Copy Root Launchers to Package
+        run: |
+          Copy-Item "run-desktop.bat" "./dist/AxioVital-Desktop-win-x64/" -Force
+          Copy-Item "run-desktop.ps1" "./dist/AxioVital-Desktop-win-x64/" -Force
+
+      - name: Upload Desktop Executable Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AxioVital-Desktop-win-x64-v1.0
+          path: ./dist/AxioVital-Desktop-win-x64/
+          retention-days: 30

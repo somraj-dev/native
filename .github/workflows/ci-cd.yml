@@ -5,24 +5,26 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
+  workflow_dispatch:
 
 jobs:
   build-and-test:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
 
-    - name: Setup .NET 9 SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '9.0.x'
+      - name: Setup .NET 9 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
 
-    - name: Restore Dependencies
-      run: dotnet restore AxioVital.sln
+      - name: Restore Dependencies
+        run: dotnet restore AxioVital.sln
 
-    - name: Build AxioVital Solution
-      run: dotnet build AxioVital.sln --no-restore --configuration Release
+      - name: Build AxioVital Solution
+        run: dotnet build AxioVital.sln --no-restore --configuration Release
 
-    - name: Run Unit Tests
-      run: dotnet run --project tests/AxioVital.UnitTests
+      - name: Run Unit Tests
+        run: dotnet run --project tests/AxioVital.UnitTests -c Release
