@@ -199,26 +199,42 @@
             <Button Grid.Column="6" Background="Transparent" BorderThickness="0" Padding="6" VerticalAlignment="Center" Margin="8,0,0,0" x:Name="PatientActionsMenuButton">
                 <FontIcon Glyph="&#xE700;" FontSize="18" Foreground="White" />
                 <Button.Flyout>
-                    <MenuFlyout Placement="BottomEdgeAlignedRight">
-                        <MenuFlyoutItem Text="Bed Transfer" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Cancel Discharge" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Cancel Pending Discharge" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Cancel Pending Transfer" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Cancel Transfer" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Clozapine Registry" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Discharge Encounter" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Facility Transfer" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Leave of Absence" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Modify Discharge" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Pending Discharge" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Pending Facility Transfer" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Pending Transfer" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Print Labels" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Process Alert" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="Update Patient Information" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="View Encounter" FontSize="13" Foreground="#222222" />
-                        <MenuFlyoutItem Text="View Person" FontSize="13" Foreground="#222222" />
-                    </MenuFlyout>
+                    <Flyout Placement="BottomEdgeAlignedRight">
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style TargetType="FlyoutPresenter">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="BorderBrush" Value="#CCCCCC" />
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="CornerRadius" Value="2" />
+                                <Setter Property="MinWidth" Value="220" />
+                                <Setter Property="RequestedTheme" Value="Light" />
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
+                        
+                        <Border Background="White" Padding="0,6,0,6" Width="220" RequestedTheme="Light">
+                            <StackPanel Spacing="0">
+                                <TextBlock Text="Bed Transfer" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Cancel Discharge" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Cancel Pending Discharge" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Cancel Pending Transfer" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Cancel Transfer" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Clozapine Registry" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Discharge Encounter" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Facility Transfer" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Leave of Absence" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Modify Discharge" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Pending Discharge" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Pending Facility Transfer" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Pending Transfer" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Print Labels" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Process Alert" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="Update Patient Information" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="View Encounter" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                                <TextBlock Text="View Person" Foreground="#222222" FontSize="12" Padding="14,5,14,5" />
+                            </StackPanel>
+                        </Border>
+                    </Flyout>
                 </Button.Flyout>
             </Button>
         </Grid>
