@@ -32,6 +32,11 @@ public partial class MainPage : Page
         ShowPatientProfileView();
     }
 
+    private void OnFullScreenPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        App.MainWindowInstance?.ToggleFullScreen();
+    }
+
     public void ShowMessageCenterView()
     {
         // Update Sub Nav 2 Highlight

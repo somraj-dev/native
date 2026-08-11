@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="AxioVital">
 
-    <Grid>
+    <Grid x:Name="RootGrid" KeyDown="OnRootGridKeyDown">
         <Frame x:Name="RootFrame" />
     </Grid>
 

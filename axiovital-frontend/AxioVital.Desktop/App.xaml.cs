@@ -24,6 +24,11 @@ public partial class App : Application
     private Window? _mainWindow;
 
     /// <summary>
+    /// Gets the active main window instance.
+    /// </summary>
+    public static MainWindow? MainWindowInstance { get; private set; }
+
+    /// <summary>
     /// Gets the service provider for dependency injection.
     /// </summary>
     public static IServiceProvider Services { get; private set; } = null!;
@@ -79,7 +84,9 @@ public partial class App : Application
             Services = services.BuildServiceProvider();
 
             // Launch main window
-            _mainWindow = new MainWindow();
+            var win = new MainWindow();
+            _mainWindow = win;
+            MainWindowInstance = win;
             _mainWindow.Activate();
             Log.Information("AxioVital Desktop main window activated successfully.");
         }
