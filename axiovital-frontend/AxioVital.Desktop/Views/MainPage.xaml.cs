@@ -147,4 +147,21 @@ public partial class MainPage : Page
             new() { PatientName = "MILLER, ROBERT", PlanName = "Referral to Pulmonary Care Hospital", Action = "Referral", DetailsDate = "05/28/17 13:30...", DetailsDesc = "Transfer for advanced COPD care", Comment = "AXIO, MD", OriginatorName = "AXIO, MD", CreateDate = "05/28/2017 13:30", StopDate = "05/28/2017 13:30", StopType = "Physician Stop", Status = "Open" }
         };
     }
-}
+    
+    public void ToggleQuickPanel()
+        {
+            if (QuickPanelOverlay.Visibility == Visibility.Visible)
+            {
+                QuickPanelOverlay.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                QuickPanelOverlay.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void OnQuickPanelCloseClicked(object sender, RoutedEventArgs e)
+        {
+            QuickPanelOverlay.Visibility = Visibility.Collapsed;
+        }
+    }

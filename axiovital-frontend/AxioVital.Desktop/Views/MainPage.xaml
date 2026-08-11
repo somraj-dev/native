@@ -539,5 +539,187 @@
             <TextBlock Grid.Column="4" Text="12/08/2026 03:12 AM" Foreground="White" FontSize="10" VerticalAlignment="Center" />
         </Grid>
 
+    <!-- ==================== 8. QUICK PANEL OVERLAY (Ctrl+Q) ==================== -->
+    <Grid x:Name="QuickPanelOverlay" Grid.RowSpan="8" Background="#40000000" Visibility="Collapsed" Canvas.ZIndex="100">
+        <Border Background="White" Width="720" Height="520" CornerRadius="8" BorderBrush="#CCCCCC" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="36" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="56" />
+                </Grid.RowDefinitions>
+
+                <!-- Title Bar -->
+                <Grid Grid.Row="0" BorderBrush="#EEEEEE" BorderThickness="0,0,0,1">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0" Spacing="8">
+                        <Grid Width="16" Height="16">
+                            <Ellipse Fill="#E6D9F2" />
+                            <FontIcon Glyph="&#xE77B;" FontSize="8" Foreground="#8A2BE2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                        <TextBlock Text="Person Mgmt: Conversation Launcher" Foreground="#333333" FontSize="12" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Spacing="16" Margin="0,0,16,0">
+                        <TextBlock Text="—" FontSize="10" Foreground="#555555" />
+                        <TextBlock Text="◻" FontSize="14" Foreground="#BBBBBB" Margin="0,-4,0,0" />
+                        <TextBlock Text="✕" FontSize="12" Foreground="#555555" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Icons Grid -->
+                <Grid Grid.Row="1" Padding="24,20,24,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Row 0 -->
+                    <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE77B;" FontSize="32" Foreground="#4B0082" HorizontalAlignment="Center" />
+                        <TextBlock Text="Add/Modify Person" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE803;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Bed Transfer" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE711;" FontSize="32" Foreground="#FF6666" HorizontalAlignment="Center" />
+                        <TextBlock Text="Cancel Discharge" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE711;" FontSize="32" Foreground="#FF6666" HorizontalAlignment="Center" />
+                        <TextBlock Text="Cancel Encounter" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE711;" FontSize="32" Foreground="#FF6666" HorizontalAlignment="Center" />
+                        <TextBlock Text="Cancel Pending..." TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE711;" FontSize="32" Foreground="#FF6666" HorizontalAlignment="Center" />
+                        <TextBlock Text="Cancel Pendi..." TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE711;" FontSize="32" Foreground="#FF6666" HorizontalAlignment="Center" />
+                        <TextBlock Text="Cancel Transfer" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!-- Row 1 -->
+                    <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xEA43;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Discharge Encounter" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xEB67;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Facility Transfer" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE72A;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Leave of Absence" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE70F;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Modify Discharge" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE8B9;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Newborn Modify" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE8B9;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Newborn Quick Reg" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE823;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Pending Discharge" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!-- Row 2 -->
+                    <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE823;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Pending Facil..." TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE823;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Pending Transfer" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE8D5;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Pre-Register Outpatient" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE8D5;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Pre-Register Patient To..." TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE8A4;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Print Specimen Labels" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE783;" FontSize="32" Foreground="#FFCC00" HorizontalAlignment="Center" />
+                        <TextBlock Text="Process Alert" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE945;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Quick Reg" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!-- Row 3 -->
+                    <StackPanel Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE8F1;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Referral Management" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xEB67;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Register Outpatient" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xEB67;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Register Patient To..." TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE8B9;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Stillborn" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE72C;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="Update Patient Information" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE890;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="View Encounter" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE77B;" FontSize="32" Foreground="#4B0082" HorizontalAlignment="Center" />
+                        <TextBlock Text="View Person" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!-- Row 4 -->
+                    <StackPanel Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE945;" FontSize="32" Foreground="#333333" HorizontalAlignment="Center" />
+                        <TextBlock Text="WH Quick Reg" TextAlignment="Center" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Footer Buttons -->
+                <Grid Grid.Row="2" Background="#F2F3F5" CornerRadius="0,0,8,8" BorderBrush="#EEEEEE" BorderThickness="0,1,0,0" Padding="16,0,16,0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Spacing="8">
+                        <Button Content="OK" Width="72" Background="#EEEEEE" BorderBrush="#CCCCCC" Foreground="#333333" Click="OnQuickPanelCloseClicked" />
+                        <Button Content="Cancel" Width="72" Background="#EEEEEE" BorderBrush="#CCCCCC" Foreground="#333333" Click="OnQuickPanelCloseClicked" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
     </Grid>
 </Page>

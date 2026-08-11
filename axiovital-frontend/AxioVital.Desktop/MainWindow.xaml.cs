@@ -50,5 +50,12 @@ public sealed partial class MainWindow : Window
                 mainPage.ExitPageFullScreen();
             }
         }
+        else if (e.Key == VirtualKey.Q && Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down))
+        {
+            if (RootFrame.Content is MainPage mainPage)
+            {
+                mainPage.ToggleQuickPanel();
+            }
+        }
     }
 }
