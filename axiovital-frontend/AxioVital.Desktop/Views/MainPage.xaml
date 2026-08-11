@@ -102,7 +102,7 @@
         </Grid>
 
         <!-- ==================== 3. DARK BLUE HEADER BAR 4 ==================== -->
-        <Grid Grid.Row="3" Background="#0A486F" Padding="12,3,12,3" MinHeight="28">
+        <Grid Grid.Row="3" Background="#0A527B" Padding="12,3,12,3" MinHeight="28">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -113,10 +113,10 @@
 
             <!-- Quick Tools Right -->
             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
-                <Border Background="#05263B" CornerRadius="4" Padding="6,1,8,1" Height="24" VerticalAlignment="Center">
+                <Border Background="#021826" CornerRadius="5" Padding="8,2,8,2" Height="24" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-                        <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#00D2FF" VerticalAlignment="Center" />
-                        <TextBox PlaceholderText="Search by Patient or Order..." Background="Transparent" Foreground="White" BorderThickness="0" FontSize="11" Width="180" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                        <TextBlock Text="🔍" FontFamily="Segoe UI Emoji" FontSize="11" VerticalAlignment="Center" />
+                        <TextBox PlaceholderText="Search by Patient or Order..." Background="Transparent" Foreground="White" BorderThickness="0" FontSize="11" Width="185" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" />
                     </StackPanel>
                 </Border>
                 <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
