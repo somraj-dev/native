@@ -1,11 +1,10 @@
 using AxioVital.Desktop.Views;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 
 namespace AxioVital.Desktop;
 
 /// <summary>
-/// Main application window with navigation shell.
+/// Main application window host.
 /// </summary>
 public sealed partial class MainWindow : Window
 {
@@ -13,21 +12,7 @@ public sealed partial class MainWindow : Window
     {
         this.InitializeComponent();
 
-        // Set initial screen to AxioVital Environment Login Page
-        ContentFrame.Navigate(typeof(LoginPage));
-    }
-
-    private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
-    {
-        if (args.SelectedItem is NavigationViewItem item)
-        {
-            var tag = item.Tag?.ToString();
-            switch (tag)
-            {
-                case "Home":
-                    ContentFrame.Navigate(typeof(HomePage));
-                    break;
-            }
-        }
+        // Launch initial full-screen AxioVital Environment Login Screen
+        RootFrame.Navigate(typeof(LoginPage));
     }
 }
