@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml;
 using Serilog;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace AxioVital.Desktop;
@@ -17,6 +18,9 @@ namespace AxioVital.Desktop;
 /// </summary>
 public partial class App : Application
 {
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+    private static extern int MessageBox(IntPtr hWnd, string text, string caption, uint type);
+
     private Window? _mainWindow;
 
     /// <summary>
@@ -31,12 +35,20 @@ public partial class App : Application
 
     public App()
     {
-        this.InitializeComponent();
+        try
+        {
+            this.InitializeComponent();
 
-        // Global unhandled exception handling
-        this.UnhandledException += OnUnhandledException;
-        AppDomain.CurrentDomain.UnhandledException += OnAppDomainUnhandledException;
-        TaskScheduler.UnobservedTaskException += OnTaskSchedulerUnobservedTaskException;
+            // Global unhandled exception handling
+            this.UnhandledException += OnUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += OnAppDomainUnhandledException;
+            TaskScheduler.UnobservedTaskException += OnTaskSchedulerUnobservedTaskException;
+        }
+        catch (Exception ex)
+        {
+            ShowNativeError("App Constructor Error", ex.ToString());
+            throw;
+        }
     }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
@@ -75,6 +87,7 @@ public partial class App : Application
         {
             Log.Fatal(ex, "Critical failure during AxioVital Desktop startup.");
             Log.CloseAndFlush();
+            ShowNativeError("Startup Critical Error", ex.ToString());
             throw;
         }
     }
@@ -115,6 +128,7 @@ public partial class App : Application
     {
         Log.Fatal(e.Exception, "Unhandled XAML exception in AxioVital Desktop");
         Log.CloseAndFlush();
+        ShowNativeError("Unhandled XAML Error", e.Exception?.ToString() ?? "Unknown XAML Exception");
         e.Handled = true;
     }
 
@@ -124,6 +138,7 @@ public partial class App : Application
         {
             Log.Fatal(ex, "Unhandled AppDomain exception in AxioVital Desktop");
             Log.CloseAndFlush();
+            ShowNativeError("Unhandled AppDomain Error", ex.ToString());
         }
     }
 
@@ -131,5 +146,16 @@ public partial class App : Application
     {
         Log.Error(e.Exception, "Unobserved Task Exception in AxioVital Desktop");
         e.SetObserved();
+    }
+
+    private static void ShowNativeError(string title, string message)
+    {
+        try
+        {
+            MessageBox(IntPtr.Zero, message, $"AxioVital Error: {title}", 0x00000010 | 0x00000000); // MB_ICONERROR
+        }
+        catch
+        {
+        }
     }
 }
