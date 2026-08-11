@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\backend\AxioVital.Domain\AxioVital.Domain.csproj" />
-    <ProjectReference Include="..\..\src\backend\AxioVital.Infrastructure\AxioVital.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\axiovital-backend\AxioVital.Domain\AxioVital.Domain.csproj" />
+    <ProjectReference Include="..\..\axiovital-backend\AxioVital.Infrastructure\AxioVital.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

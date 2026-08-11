@@ -1,0 +1,6 @@
+{
+  "packages": [
+    "AxioVital.Contracts",
+    "AxioVital.Domain"
+  ]
+}

@@ -27,7 +27,7 @@
              TaskFactory="TaskHostFactory" />
 
   <ItemGroup>
-    <ProjectReference Include="..\..\backend\AxioVital.Contracts\AxioVital.Contracts.csproj" />
+    <ProjectReference Include="..\..\axiovital-backend\AxioVital.Contracts\AxioVital.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,15 @@
+{
+  "name": "axiovital-native",
+  "version": "1.0.0",
+  "description": "AxioVital Native Healthcare Enterprise Platform",
+  "private": true,
+  "scripts": {
+    "build": "dotnet build AxioVital.sln",
+    "test": "dotnet run --project tests/AxioVital.UnitTests",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}

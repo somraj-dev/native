@@ -1,0 +1,22 @@
+<Project>
+
+  <!--
+    Directory.Build.targets is evaluated LAST by MSBuild (after all NuGet packages and SDK targets).
+    This overrides legacy Visual Studio UWP Appx packaging targets so WinUI 3 desktop applications
+    compile cleanly via standalone .NET CLI without requiring Visual Studio Appx packaging tasks.
+  -->
+  <Target Name="CopyLocalFilesOutputGroup" Returns="@(CopyLocalFilesOutputGroupOutput)">
+    <ItemGroup>
+      <CopyLocalFilesOutputGroupOutput Include="@(ReferenceCopyLocalPaths)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GetMrtPackagingOutputs" Returns="@(PackagingOutputs)" />
+  <Target Name="_GetDefaultResourceLanguage" />
+  <Target Name="_GetPackageArchitecture" />
+  <Target Name="_GetSdkToolPaths" />
+  <Target Name="_GenerateProjectPriFile" />
+  <Target Name="_GenerateProjectPriFileCore" />
+  <Target Name="_CreatePriConfigXml" />
+
+</Project>

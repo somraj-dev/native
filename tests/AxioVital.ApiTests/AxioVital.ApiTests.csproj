@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\backend\AxioVital.Api\AxioVital.Api.csproj" />
-    <ProjectReference Include="..\..\src\backend\AxioVital.Contracts\AxioVital.Contracts.csproj" />
+    <ProjectReference Include="..\..\axiovital-backend\AxioVital.Api\AxioVital.Api.csproj" />
+    <ProjectReference Include="..\..\axiovital-backend\AxioVital.Contracts\AxioVital.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

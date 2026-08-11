@@ -10,16 +10,16 @@ WORKDIR /src
 
 COPY ["Directory.Build.props", "."]
 COPY ["Directory.Packages.props", "."]
-COPY ["src/backend/AxioVital.Domain/AxioVital.Domain.csproj", "src/backend/AxioVital.Domain/"]
-COPY ["src/backend/AxioVital.Contracts/AxioVital.Contracts.csproj", "src/backend/AxioVital.Contracts/"]
-COPY ["src/backend/AxioVital.Application/AxioVital.Application.csproj", "src/backend/AxioVital.Application/"]
-COPY ["src/backend/AxioVital.Infrastructure/AxioVital.Infrastructure.csproj", "src/backend/AxioVital.Infrastructure/"]
-COPY ["src/backend/AxioVital.Api/AxioVital.Api.csproj", "src/backend/AxioVital.Api/"]
+COPY ["axiovital-backend/AxioVital.Domain/AxioVital.Domain.csproj", "axiovital-backend/AxioVital.Domain/"]
+COPY ["axiovital-backend/AxioVital.Contracts/AxioVital.Contracts.csproj", "axiovital-backend/AxioVital.Contracts/"]
+COPY ["axiovital-backend/AxioVital.Application/AxioVital.Application.csproj", "axiovital-backend/AxioVital.Application/"]
+COPY ["axiovital-backend/AxioVital.Infrastructure/AxioVital.Infrastructure.csproj", "axiovital-backend/AxioVital.Infrastructure/"]
+COPY ["axiovital-backend/AxioVital.Api/AxioVital.Api.csproj", "axiovital-backend/AxioVital.Api/"]
 
-RUN dotnet restore "src/backend/AxioVital.Api/AxioVital.Api.csproj"
+RUN dotnet restore "axiovital-backend/AxioVital.Api/AxioVital.Api.csproj"
 
 COPY . .
-WORKDIR "/src/src/backend/AxioVital.Api"
+WORKDIR "/src/axiovital-backend/AxioVital.Api"
 RUN dotnet build "AxioVital.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
