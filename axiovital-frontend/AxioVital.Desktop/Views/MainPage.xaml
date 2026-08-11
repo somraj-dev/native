@@ -251,12 +251,7 @@
                         </StackPanel>
                     </ScrollViewer>
 
-                    <Grid Grid.Row="2" Padding="12">
-                        <Grid Width="28" Height="28" HorizontalAlignment="Left">
-                            <Ellipse Fill="#000000" />
-                            <TextBlock Text="N" Foreground="White" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Grid>
-                    </Grid>
+
                 </Grid>
 
                 <!-- Form Area -->
@@ -478,13 +473,7 @@
                     </Grid>
                 </ScrollViewer>
 
-                <!-- Bottom Left Circle Badge ("N") overlay for Message Center -->
-                <Grid Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="12,0,0,12">
-                    <Grid Width="28" Height="28">
-                        <Ellipse Fill="#000000" />
-                        <TextBlock Text="N" Foreground="White" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Grid>
-                </Grid>
+
             </Grid>
 
         </Grid>
