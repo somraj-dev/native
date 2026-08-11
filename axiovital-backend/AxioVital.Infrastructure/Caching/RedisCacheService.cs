@@ -29,7 +29,7 @@ public class RedisCacheService : ICacheService
             if (value.IsNullOrEmpty)
                 return default;
 
-            return JsonSerializer.Deserialize<T>(value!);
+            return JsonSerializer.Deserialize<T>((string)value!);
         }
         catch (Exception ex)
         {
