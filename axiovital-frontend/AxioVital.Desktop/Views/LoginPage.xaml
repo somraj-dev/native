@@ -5,20 +5,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="#0A658E">
+    Background="#005C8A">
 
-    <Grid Padding="30">
+    <Grid Padding="24">
         <!-- 1. Top Left Header Brand -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Spacing="10">
-            <Grid Width="26" Height="26">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Spacing="8">
+            <Grid Width="24" Height="24">
                 <Ellipse Fill="White" />
-                <FontIcon Glyph="&#xE774;" FontSize="18" Foreground="#0A658E" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <FontIcon Glyph="&#xE774;" FontSize="16" Foreground="#005C8A" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Grid>
-            <TextBlock Text="AxioVital" Foreground="White" FontSize="22" FontWeight="Bold" VerticalAlignment="Center" />
+            <TextBlock Text="AxioVital" Foreground="White" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" />
         </StackPanel>
 
         <!-- 2. Main Center Content -->
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-40,0,0">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-30,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -28,95 +28,101 @@
             <TextBlock
                 Grid.Row="0"
                 Text="AxioVital Environment ™"
-                Foreground="#82B2C9"
-                FontSize="38"
-                FontWeight="SemiBold"
+                Foreground="#5C8CA8"
+                FontSize="34"
+                FontWeight="Bold"
                 HorizontalAlignment="Center"
-                Margin="0,0,0,45" />
+                Margin="0,0,0,36" />
 
             <!-- Login Form Controls Container -->
-            <StackPanel Grid.Row="1" Width="280" HorizontalAlignment="Center">
+            <StackPanel Grid.Row="1" Width="260" HorizontalAlignment="Center">
 
                 <!-- User Name Field -->
-                <TextBlock Text="User Name :" Foreground="White" FontSize="13" FontWeight="Normal" Margin="0,0,0,5" />
+                <TextBlock Text="User Name :" Foreground="White" FontSize="12" FontWeight="Normal" Margin="0,0,0,4" />
                 <ComboBox
                     ItemsSource="{Binding Users}"
                     SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
-                    Width="280"
-                    Height="32"
+                    Width="260"
+                    Height="26"
+                    Padding="6,2,6,2"
                     HorizontalAlignment="Stretch"
                     Background="White"
                     Foreground="Black"
                     CornerRadius="0"
-                    BorderBrush="#777777"
-                    Margin="0,0,0,14" />
+                    BorderBrush="#888888"
+                    BorderThickness="1"
+                    Margin="0,0,0,12" />
 
                 <!-- Password Field -->
-                <TextBlock Text="Password :" Foreground="White" FontSize="13" FontWeight="Normal" Margin="0,0,0,5" />
+                <TextBlock Text="Password :" Foreground="White" FontSize="12" FontWeight="Normal" Margin="0,0,0,4" />
                 <PasswordBox
                     x:Name="PasswordInput"
                     PasswordChanged="PasswordInput_PasswordChanged"
-                    Width="280"
-                    Height="32"
+                    Width="260"
+                    Height="26"
+                    Padding="6,2,6,2"
                     HorizontalAlignment="Stretch"
                     Background="White"
                     Foreground="Black"
                     CornerRadius="0"
-                    BorderBrush="#777777"
-                    Margin="0,0,0,14" />
+                    BorderBrush="#888888"
+                    BorderThickness="1"
+                    Margin="0,0,0,12" />
 
                 <!-- Domain Field -->
-                <TextBlock Text="Domain :" Foreground="White" FontSize="13" FontWeight="Normal" Margin="0,0,0,5" />
+                <TextBlock Text="Domain :" Foreground="White" FontSize="12" FontWeight="Normal" Margin="0,0,0,4" />
                 <ComboBox
                     ItemsSource="{Binding Domains}"
                     SelectedItem="{Binding SelectedDomain, Mode=TwoWay}"
-                    Width="280"
-                    Height="32"
+                    Width="260"
+                    Height="26"
+                    Padding="6,2,6,2"
                     HorizontalAlignment="Stretch"
                     Background="White"
                     Foreground="Black"
                     CornerRadius="0"
-                    BorderBrush="#777777"
-                    Margin="0,0,0,22" />
+                    BorderBrush="#888888"
+                    BorderThickness="1"
+                    Margin="0,0,0,18" />
 
                 <!-- Status / Error Message -->
                 <TextBlock
                     Text="{Binding StatusMessage}"
-                    Foreground="#FF8888"
+                    Foreground="#FF9999"
                     FontSize="11"
                     HorizontalAlignment="Center"
                     TextWrapping="Wrap"
-                    Margin="0,0,0,10"
+                    Margin="0,0,0,8"
                     Visibility="{Binding ErrorMessageVisibility}" />
 
                 <!-- Action Buttons Row -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12">
                     <Button
                         Content="OK"
                         Command="{Binding LoginCommand}"
-                        Width="100"
-                        Height="30"
+                        Width="85"
+                        Height="26"
                         Padding="0"
-                        Background="#D5D5D5"
+                        Background="#D4D4D4"
                         Foreground="Black"
                         BorderBrush="#777777"
                         BorderThickness="1"
                         CornerRadius="0"
-                        FontSize="12"
+                        FontSize="11"
                         FontWeight="Normal" />
 
                     <Button
                         Content="Cancel"
                         Command="{Binding CancelCommand}"
-                        Width="100"
-                        Height="30"
+                        Width="85"
+                        Height="26"
                         Padding="0"
-                        Background="#D5D5D5"
+                        Background="#D4D4D4"
                         Foreground="Black"
                         BorderBrush="#777777"
                         BorderThickness="1"
                         CornerRadius="0"
-                        FontSize="12"
+                        FontSize="11"
                         FontWeight="Normal" />
                 </StackPanel>
 
@@ -131,17 +137,17 @@
             </Grid.ColumnDefinitions>
 
             <!-- Bottom Left Circle Badge ("N") -->
-            <Grid Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,12,0">
-                <Ellipse Width="34" Height="34" Fill="#111111" />
-                <TextBlock Text="N" Foreground="White" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Grid Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,10,0">
+                <Ellipse Width="30" Height="30" Fill="#000000" />
+                <TextBlock Text="N" Foreground="White" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Grid>
 
             <!-- Footer Text Stack -->
-            <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Spacing="2" MaxWidth="850">
-                <TextBlock Text="Operating Environment" Foreground="White" FontSize="14" FontWeight="Bold" />
-                <TextBlock Text="© 2026 AxioVital Corporation. All rights reserved." Foreground="#82B2C9" FontSize="11" />
-                <TextBlock Text="Access and use of this solution system (including components thereof) require, and are governed by, license(s) from AxioVital Corporation." Foreground="#73A3BA" FontSize="10" TextWrapping="Wrap" />
-                <TextBlock Text="Unauthorized use, access, reproduction, display or distribution of any portion of this solution or the data contained therein may result in severe civil damages and criminal penalties. Further Information may be found in Help/About." Foreground="#73A3BA" FontSize="10" TextWrapping="Wrap" />
+            <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Spacing="1" MaxWidth="800">
+                <TextBlock Text="Operating Environment" Foreground="White" FontSize="13" FontWeight="Bold" />
+                <TextBlock Text="© 2026 AxioVital Corporation. All rights reserved." Foreground="#6E9BB8" FontSize="10" />
+                <TextBlock Text="Access and use of this solution system (including components thereof) require, and are governed by, license(s) from AxioVital Corporation." Foreground="#5F8FA9" FontSize="9" TextWrapping="Wrap" />
+                <TextBlock Text="Unauthorized use, access, reproduction, display or distribution of any portion of this solution or the data contained therein may result in severe civil damages and criminal penalties. Further Information may be found in Help/About." Foreground="#5F8FA9" FontSize="9" TextWrapping="Wrap" />
             </StackPanel>
         </Grid>
     </Grid>
