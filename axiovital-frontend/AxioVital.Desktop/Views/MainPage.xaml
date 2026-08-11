@@ -196,7 +196,31 @@
                 <TextBlock Text="Inpatient FIN: 00095576415 [Admit Dt: 10/6/2020 3:14:12 PM CDT]" Foreground="White" FontSize="10" />
             </StackPanel>
 
-            <FontIcon Grid.Column="6" Glyph="&#xE700;" FontSize="16" Foreground="White" VerticalAlignment="Center" Margin="12,0,0,0" />
+            <Button Grid.Column="6" Background="Transparent" BorderThickness="0" Padding="6" VerticalAlignment="Center" Margin="8,0,0,0" x:Name="PatientActionsMenuButton">
+                <FontIcon Glyph="&#xE700;" FontSize="18" Foreground="White" />
+                <Button.Flyout>
+                    <MenuFlyout Placement="BottomEdgeAlignedRight">
+                        <MenuFlyoutItem Text="Bed Transfer" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Cancel Discharge" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Cancel Pending Discharge" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Cancel Pending Transfer" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Cancel Transfer" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Clozapine Registry" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Discharge Encounter" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Facility Transfer" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Leave of Absence" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Modify Discharge" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Pending Discharge" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Pending Facility Transfer" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Pending Transfer" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Print Labels" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Process Alert" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="Update Patient Information" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="View Encounter" FontSize="13" Foreground="#222222" />
+                        <MenuFlyoutItem Text="View Person" FontSize="13" Foreground="#222222" />
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
         </Grid>
 
         <!-- ==================== 6. MAIN CONTENT AREA ==================== -->
