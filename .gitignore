@@ -1,6 +1,7 @@
 ## Ignore Visual Studio / .NET build outputs & temp files
 [Bb]in/
 [Oo]bj/
+dist/
 .vs/
 .idea/
 .vscode/
