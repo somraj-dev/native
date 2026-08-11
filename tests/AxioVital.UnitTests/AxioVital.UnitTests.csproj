@@ -1,15 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>AxioVital.UnitTests</RootNamespace>
-    <AssemblyName>AxioVital.UnitTests</AssemblyName>
     <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AxioVital.Domain\AxioVital.Domain.csproj" />
-    <ProjectReference Include="..\..\src\AxioVital.Application\AxioVital.Application.csproj" />
-    <ProjectReference Include="..\..\src\AxioVital.Infrastructure\AxioVital.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\backend\AxioVital.Domain\AxioVital.Domain.csproj" />
+    <ProjectReference Include="..\..\src\backend\AxioVital.Infrastructure\AxioVital.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="FluentAssertions" />
   </ItemGroup>
 
 </Project>

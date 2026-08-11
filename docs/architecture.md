@@ -1,54 +1,58 @@
-# AxioVital Native — Architecture Documentation & File Hierarchy
+# AxioVital Native — Architecture Documentation & Subfolder Hierarchy
 
-## Folder Hierarchy
+## Modular Directory Hierarchy
+
+To keep a clean separation of concerns and avoid mixing desktop UI code with backend domain/API services, `src/` is cleanly divided into `frontend/` and `backend/` subfolders:
 
 ```text
 AxioVital/
 ├── src/
-│   ├── AxioVital.Desktop/
-│   │   ├── Views/
-│   │   ├── ViewModels/
-│   │   ├── Models/
-│   │   ├── Services/
-│   │   ├── Navigation/
-│   │   ├── Controls/
-│   │   ├── Resources/
-│   │   ├── Assets/
-│   │   └── App.xaml
+│   ├── frontend/
+│   │   └── AxioVital.Desktop/
+│   │       ├── Views/
+│   │       ├── ViewModels/
+│   │       ├── Models/
+│   │       ├── Services/
+│   │       ├── Navigation/
+│   │       ├── Controls/
+│   │       ├── Resources/
+│   │       ├── Assets/
+│   │       └── App.xaml
 │   │
-│   ├── AxioVital.Api/
-│   │   ├── Controllers/
-│   │   ├── Middleware/
-│   │   ├── Authentication/
-│   │   ├── Authorization/
-│   │   └── Program.cs
-│   │
-│   ├── AxioVital.Application/
-│   │   ├── Services/
-│   │   ├── Interfaces/
-│   │   ├── DTOs/
-│   │   ├── Commands/
-│   │   └── Queries/
-│   │
-│   ├── AxioVital.Domain/
-│   │   ├── Entities/
-│   │   ├── ValueObjects/
-│   │   ├── Enums/
-│   │   └── Interfaces/
-│   │
-│   ├── AxioVital.Infrastructure/
-│   │   ├── Persistence/
-│   │   ├── Repositories/
-│   │   ├── Authentication/
-│   │   ├── Storage/
-│   │   ├── Messaging/
-│   │   ├── Caching/
-│   │   └── Interoperability/
-│   │
-│   └── AxioVital.Contracts/
-│       ├── Requests/
-│       ├── Responses/
-│       └── DTOs/
+│   └── backend/
+│       ├── AxioVital.Api/
+│       │   ├── Controllers/
+│       │   ├── Middleware/
+│       │   ├── Authentication/
+│       │   ├── Authorization/
+│       │   └── Program.cs
+│       │
+│       ├── AxioVital.Application/
+│       │   ├── Services/
+│       │   ├── Interfaces/
+│       │   ├── DTOs/
+│       │   ├── Commands/
+│       │   └── Queries/
+│       │
+│       ├── AxioVital.Domain/
+│       │   ├── Entities/
+│       │   ├── ValueObjects/
+│       │   ├── Enums/
+│       │   └── Interfaces/
+│       │
+│       ├── AxioVital.Infrastructure/
+│       │   ├── Persistence/
+│       │   ├── Repositories/
+│       │   ├── Authentication/
+│       │   ├── Storage/
+│       │   ├── Messaging/
+│       │   ├── Caching/
+│       │   └── Interoperability/
+│       │
+│       └── AxioVital.Contracts/
+│           ├── Requests/
+│           ├── Responses/
+│           └── DTOs/
 │
 ├── tests/
 │   ├── AxioVital.UnitTests/
@@ -75,14 +79,14 @@ AxioVital/
 
 ## Solution Projects Overview
 
-| Project | Target | Description |
-|---|---|---|
-| `AxioVital.Desktop` | `net9.0-windows10.0.19041.0` | WinUI 3 + XAML + MVVM native Windows desktop client |
-| `AxioVital.Api` | `net9.0` | ASP.NET Core 9 Web API host |
-| `AxioVital.Application` | `net9.0` | Application services & CQRS business logic abstractions |
-| `AxioVital.Domain` | `net9.0` | Enterprise entities, value objects, domain rules |
-| `AxioVital.Infrastructure` | `net9.0` | EF Core 9, Security, Redis, Messaging, Storage, Interop |
-| `AxioVital.Contracts` | `net9.0` | Shared DTO requests/responses |
-| `AxioVital.UnitTests` | `net9.0` | Executable smoke & unit test suite |
-| `AxioVital.IntegrationTests` | `net9.0` | EF Core database integration tests |
-| `AxioVital.ApiTests` | `net9.0` | API endpoint integration tests (WebApplicationFactory) |
+| Category | Project | Target | Description |
+|---|---|---|---|
+| **Frontend** | `src/frontend/AxioVital.Desktop` | `net9.0-windows10.0.19041.0` | WinUI 3 + XAML + MVVM native Windows desktop client |
+| **Backend** | `src/backend/AxioVital.Api` | `net9.0` | ASP.NET Core 9 Web API host |
+| **Backend** | `src/backend/AxioVital.Application` | `net9.0` | Application services & CQRS business logic abstractions |
+| **Backend** | `src/backend/AxioVital.Domain` | `net9.0` | Enterprise entities, value objects, domain rules |
+| **Backend** | `src/backend/AxioVital.Infrastructure` | `net9.0` | EF Core 9, Security, Redis, Messaging, Storage, Interop |
+| **Backend** | `src/backend/AxioVital.Contracts` | `net9.0` | Shared DTO requests/responses |
+| **Tests** | `tests/AxioVital.UnitTests` | `net9.0` | Executable smoke & unit test suite |
+| **Tests** | `tests/AxioVital.IntegrationTests` | `net9.0` | EF Core database integration tests |
+| **Tests** | `tests/AxioVital.ApiTests` | `net9.0` | API endpoint integration tests (WebApplicationFactory) |

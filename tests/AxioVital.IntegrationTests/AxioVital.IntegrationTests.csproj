@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>AxioVital.IntegrationTests</RootNamespace>
-    <AssemblyName>AxioVital.IntegrationTests</AssemblyName>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AxioVital.Domain\AxioVital.Domain.csproj" />
-    <ProjectReference Include="..\..\src\AxioVital.Infrastructure\AxioVital.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\backend\AxioVital.Domain\AxioVital.Domain.csproj" />
+    <ProjectReference Include="..\..\src\backend\AxioVital.Infrastructure\AxioVital.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
