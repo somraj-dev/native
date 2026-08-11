@@ -1,0 +1,32 @@
+<!-- Copyright (c) AxioVital. All rights reserved. -->
+<Page
+    x:Class="AxioVital.Desktop.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource SolidBackgroundFillColorBaseBrush}">
+
+    <Grid Padding="32">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="16">
+            <TextBlock
+                Text="AxioVital"
+                FontSize="48"
+                FontWeight="Bold"
+                HorizontalAlignment="Center" />
+            <TextBlock
+                Text="Healthcare Platform"
+                FontSize="20"
+                Opacity="0.7"
+                HorizontalAlignment="Center" />
+            <TextBlock
+                Text="Foundation Ready — Phase 1 Complete"
+                FontSize="14"
+                Opacity="0.5"
+                HorizontalAlignment="Center"
+                Margin="0,16,0,0" />
+        </StackPanel>
+    </Grid>
+
+</Page>

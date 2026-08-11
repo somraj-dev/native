@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>AxioVital.UnitTests</RootNamespace>
+    <AssemblyName>AxioVital.UnitTests</AssemblyName>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\AxioVital.Domain\AxioVital.Domain.csproj" />
+    <ProjectReference Include="..\..\src\AxioVital.Application\AxioVital.Application.csproj" />
+    <ProjectReference Include="..\..\src\AxioVital.Infrastructure\AxioVital.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

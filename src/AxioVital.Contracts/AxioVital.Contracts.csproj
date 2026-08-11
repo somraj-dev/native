@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>AxioVital.Contracts</RootNamespace>
+    <AssemblyName>AxioVital.Contracts</AssemblyName>
+    <Description>AxioVital Contracts - Shared request/response DTOs between API and Desktop client</Description>
+  </PropertyGroup>
+
+</Project>

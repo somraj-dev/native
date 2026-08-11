@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>AxioVital.Infrastructure</RootNamespace>
+    <AssemblyName>AxioVital.Infrastructure</AssemblyName>
+    <Description>AxioVital Infrastructure Layer - Persistence, Authentication, Storage, Messaging, Caching, Interoperability</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AxioVital.Domain\AxioVital.Domain.csproj" />
+    <ProjectReference Include="..\AxioVital.Application\AxioVital.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Entity Framework Core -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+
+    <!-- Security -->
+    <PackageReference Include="Konscious.Security.Cryptography.Argon2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+
+    <!-- Redis -->
+    <PackageReference Include="StackExchange.Redis" />
+
+    <!-- Object Storage (MinIO) -->
+    <PackageReference Include="Minio" />
+
+    <!-- Logging -->
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Extensions.Logging" />
+
+    <!-- DI & Configuration -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+</Project>

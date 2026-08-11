@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: axiovital
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: axiovital-api
+  namespace: axiovital
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: axiovital-api
+  template:
+    metadata:
+      labels:
+        app: axiovital-api
+    spec:
+      containers:
+      - name: api
+        image: axiovital-api:latest
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 10

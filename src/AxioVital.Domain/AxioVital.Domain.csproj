@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>AxioVital.Domain</RootNamespace>
+    <AssemblyName>AxioVital.Domain</AssemblyName>
+    <Description>AxioVital Domain Layer - Entities, Value Objects, Enums, and Domain Interfaces</Description>
+  </PropertyGroup>
+
+</Project>

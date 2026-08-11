@@ -1,0 +1,24 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+COPY ["Directory.Build.props", "."]
+COPY ["Directory.Packages.props", "."]
+COPY ["src/AxioVital.Domain/AxioVital.Domain.csproj", "src/AxioVital.Domain/"]
+COPY ["src/AxioVital.Contracts/AxioVital.Contracts.csproj", "src/AxioVital.Contracts/"]
+COPY ["src/AxioVital.Application/AxioVital.Application.csproj", "src/AxioVital.Application/"]
+COPY ["src/AxioVital.Infrastructure/AxioVital.Infrastructure.csproj", "src/AxioVital.Infrastructure/"]
+COPY ["src/AxioVital.Api/AxioVital.Api.csproj", "src/AxioVital.Api/"]
+
+RUN dotnet restore "src/AxioVital.Api/AxioVital.Api.csproj"
+
+COPY src/ src/
+WORKDIR "/src/src/AxioVital.Api"
+RUN dotnet build "AxioVital.Api.csproj" -c Release -o /app/build
+RUN dotnet publish "AxioVital.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "AxioVital.Api.dll"]
