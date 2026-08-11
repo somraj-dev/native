@@ -144,6 +144,18 @@ if ($null -ne $xbfSourceDir) {
     Write-Host "       Copied $($xbfFiles.Count) XBF file(s)." -ForegroundColor Green
 }
 
+# --- Step 6: Create SmartScreen Unblock Launcher in Publish Folder ---
+$launcherPath = Join-Path $publishDir "Run-AxioVital.bat"
+$launcherContent = @"
+@echo off
+title AxioVital Desktop Launcher
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-ChildItem -Path '%~dp0' -Recurse | Unblock-File" 2>nul
+cd /d "%~dp0"
+start "" "%~dp0AxioVital.Desktop.exe"
+"@
+Set-Content -Path $launcherPath -Value $launcherContent -Encoding ASCII
+Write-Host "       Created SmartScreen Unblock Launcher (Run-AxioVital.bat)" -ForegroundColor Green
+
 Write-Host ""
 Write-Host "================================================" -ForegroundColor Cyan
 Write-Host "  Build & Publish Complete!" -ForegroundColor Green
