@@ -4,29 +4,37 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:AxioVital.Desktop.Models"
     mc:Ignorable="d"
     Background="#F4F5F7">
 
     <Grid>
         <Grid.RowDefinitions>
+            <!-- 0. Topmost Nav Bar 1 -->
             <RowDefinition Height="Auto" />
+            <!-- 1. Sub Nav Bar 2 -->
             <RowDefinition Height="Auto" />
+            <!-- 2. Category Bar 3 -->
             <RowDefinition Height="Auto" />
+            <!-- 3. Dark Blue Header Bar 4 -->
             <RowDefinition Height="Auto" />
+            <!-- 4. Light Blue Tab Strip Bar 5 -->
             <RowDefinition Height="Auto" />
+            <!-- 5. Deep Blue Patient Demographic Banner -->
             <RowDefinition Height="Auto" />
+            <!-- 6. Main Content Area (Patient Profile OR Message Center) -->
             <RowDefinition Height="*" />
+            <!-- 7. Bottom Status Bar -->
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- 0. Top Ribbon Options Bar -->
+        <!-- ==================== 0. TOP RIBBON OPTIONS BAR ==================== -->
         <Grid Grid.Row="0" Background="#F2F3F5" Padding="12,4,12,4" BorderBrush="#D5D9E0" BorderThickness="0,0,0,1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!-- Ribbon Menu Options -->
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                 <TextBlock Text="Home" Foreground="#111111" FontSize="11" FontWeight="Bold" />
                 <TextBlock Text="Ledger" Foreground="#333333" FontSize="11" FontWeight="Normal" />
@@ -37,7 +45,6 @@
                 <TextBlock Text="Help" Foreground="#333333" FontSize="11" FontWeight="Normal" />
             </StackPanel>
 
-            <!-- Utility Icons -->
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
                 <FontIcon Glyph="&#xE7F4;" FontSize="12" Foreground="#555555" />
                 <FontIcon Glyph="&#xE72E;" FontSize="12" Foreground="#555555" />
@@ -45,32 +52,38 @@
             </StackPanel>
         </Grid>
 
-        <!-- 1. Sub Nav Bar 2 -->
-        <Grid Grid.Row="1" Background="#E6E9EE" Padding="12,4,12,4">
+        <!-- ==================== 1. SUB NAV BAR 2 ==================== -->
+        <Grid Grid.Row="1" Background="#E6E9EE" Padding="12,4,12,4" BorderBrush="#D0D4DC" BorderThickness="0,0,0,1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
-                <TextBlock Text="Message Center" Foreground="#333333" FontSize="11" />
-                <Border BorderBrush="#0A658E" BorderThickness="0,0,0,2" Padding="0,0,0,2">
-                    <TextBlock Text="Patient List" Foreground="#0A658E" FontSize="11" FontWeight="Bold" />
+                <!-- Message Center Tab Button -->
+                <Border x:Name="MessageCenterTabBorder" Padding="0,0,0,2" PointerPressed="OnMessageCenterTabPointerPressed">
+                    <TextBlock x:Name="MessageCenterTabText" Text="Message Center" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 </Border>
-                <TextBlock Text="Physician Handoff" Foreground="#333333" FontSize="11" />
-                <TextBlock Text="Care Workflow" Foreground="#333333" FontSize="11" />
-                <TextBlock Text="Quality Measures" Foreground="#333333" FontSize="11" />
-                <TextBlock Text="Customised" Foreground="#333333" FontSize="11" />
+
+                <!-- Patient List Tab Button -->
+                <Border x:Name="PatientListTabBorder" BorderBrush="#0A658E" BorderThickness="0,0,0,2" Padding="0,0,0,2" PointerPressed="OnPatientListTabPointerPressed">
+                    <TextBlock x:Name="PatientListTabText" Text="Patient List" Foreground="#0A658E" FontSize="11" FontWeight="Bold" />
+                </Border>
+
+                <TextBlock Text="Physician Handoff" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <TextBlock Text="Care Workflow" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <TextBlock Text="Quality Measures" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <TextBlock Text="Customised" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 <TextBlock Text="Reports" Foreground="#111111" FontSize="11" FontWeight="Bold" />
-                <TextBlock Text="UpToDate" Foreground="#333333" FontSize="11" />
-                <TextBlock Text="Ongoing Activities" Foreground="#333333" FontSize="11" />
+                <TextBlock Text="UpToDate" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <TextBlock Text="Ongoing Activities" Foreground="#333333" FontSize="11" FontWeight="Normal" />
             </StackPanel>
 
             <FontIcon Grid.Column="1" Glyph="&#xE712;" FontSize="12" Foreground="#666666" VerticalAlignment="Center" />
         </Grid>
 
-        <!-- 2. Category Bar 3 -->
-        <Grid Grid.Row="2" Background="#DFE3E8" Padding="12,3,12,3">
+        <!-- ==================== 2. CATEGORY BAR 3 ==================== -->
+        <Grid Grid.Row="2" Background="#DFE3E8" Padding="12,3,12,3" BorderBrush="#CBD0D8" BorderThickness="0,0,0,1">
             <StackPanel Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
                 <TextBlock Text="Dashboard" Foreground="#444444" FontSize="11" />
                 <TextBlock Text="Scheduler" Foreground="#111111" FontSize="11" FontWeight="Bold" />
@@ -81,7 +94,7 @@
             </StackPanel>
         </Grid>
 
-        <!-- 3. Dark Blue Patient Profile Header -->
+        <!-- ==================== 3. DARK BLUE HEADER BAR 4 ==================== -->
         <Grid Grid.Row="3" Background="#0A3F5C" Padding="12,6,12,6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -89,8 +102,9 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="Patient Profile" Foreground="White" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" />
+            <TextBlock x:Name="HeaderTitleText" Grid.Column="0" Text="Patient Profile" Foreground="White" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" />
 
+            <!-- Quick Tools Right -->
             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                 <Border Background="#062B40" CornerRadius="2" Padding="8,2,8,2">
                     <StackPanel Orientation="Horizontal" Spacing="6">
@@ -113,15 +127,23 @@
             </StackPanel>
         </Grid>
 
-        <!-- 4. Light Blue Patient Tab Strip -->
+        <!-- ==================== 4. LIGHT BLUE TAB STRIP BAR 5 ==================== -->
         <Grid Grid.Row="4" Background="#BACBD4" Padding="12,4,12,4">
-            <Border Background="#E6EEF2" CornerRadius="2,2,0,0" HorizontalAlignment="Left" Padding="10,4,10,4">
-                <TextBlock Text="Patient Profile: JOHN DOE" Foreground="#0A3F5C" FontSize="11" FontWeight="Bold" />
-            </Border>
+            <StackPanel Orientation="Horizontal" Spacing="4">
+                <Border x:Name="PatientProfileTabPill" Background="#E6EEF2" CornerRadius="2,2,0,0" Padding="10,4,10,4" PointerPressed="OnPatientListTabPointerPressed">
+                    <TextBlock Text="Patient Profile: JOHN DOE" Foreground="#0A3F5C" FontSize="11" FontWeight="Bold" />
+                </Border>
+                <Border x:Name="MessageCenterTabPill" Background="#FFFFFF" CornerRadius="2,2,0,0" Padding="10,4,10,4" Visibility="Collapsed" PointerPressed="OnMessageCenterTabPointerPressed">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock Text="General Messages: JOHN DOE" Foreground="#0A3F5C" FontSize="11" FontWeight="Bold" />
+                        <TextBlock Text="✕" Foreground="#666666" FontSize="10" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
         </Grid>
 
-        <!-- 5. Deep Blue Patient Demographic Banner -->
-        <Grid Grid.Row="5" Background="#005C8A" Padding="12,8,12,8">
+        <!-- ==================== 5. DEEP BLUE PATIENT DEMOGRAPHIC BANNER ==================== -->
+        <Grid x:Name="PatientDemographicBanner" Grid.Row="5" Background="#005C8A" Padding="12,8,12,8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="2.2*" />
@@ -170,125 +192,251 @@
             <FontIcon Grid.Column="6" Glyph="&#xE700;" FontSize="16" Foreground="White" VerticalAlignment="Center" Margin="12,0,0,0" />
         </Grid>
 
-        <!-- 6. Main Content Area -->
+        <!-- ==================== 6. MAIN CONTENT AREA ==================== -->
         <Grid Grid.Row="6">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
 
-            <!-- Sidebar -->
-            <Grid Grid.Column="0" Background="#0A3F5C">
+            <!-- PATIENT PROFILE VIEW CONTENT -->
+            <Grid x:Name="PatientProfileView" Visibility="Visible">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Sidebar -->
+                <Grid Grid.Column="0" Background="#0A3F5C">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Padding="12,8,12,8" Background="#062B40">
+                        <TextBlock Text="Menu" Foreground="White" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
+                        <FontIcon Glyph="&#xE76B;" FontSize="10" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Spacing="0">
+                            <TextBlock Text="Documentation" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Outside Records" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Allergies" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Clinical Media" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Diagnoses and Problems" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Form Browser" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Growth Chart" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Insurance" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Histories" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Interactive View and I&amp;O" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="MAR Summary" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Medication List" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Recommendations" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="Smart App Validator" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="mTuitive - OpNote Test - IE" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="mTuitive - OpNote Test - Edge" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            
+                            <Border Background="#005C8A" Padding="12,7,12,7">
+                                <TextBlock Text="Op Note - Prod - Edge" Foreground="White" FontSize="11" FontWeight="Bold" />
+                            </Border>
+
+                            <TextBlock Text="WorkflowView Edge" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="mTuitive Dev - Edge" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                            <TextBlock Text="mTuitive Debug EDGE" Foreground="White" FontSize="11" Padding="12,6,12,6" />
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <Grid Grid.Row="2" Padding="12">
+                        <Grid Width="28" Height="28" HorizontalAlignment="Left">
+                            <Ellipse Fill="#000000" />
+                            <TextBlock Text="N" Foreground="White" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <!-- Form Area -->
+                <ScrollViewer Grid.Column="1" Background="White" Padding="32,24,32,24">
+                    <StackPanel Width="560" HorizontalAlignment="Left" Spacing="20">
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="Implant Lot #: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
+                            <TextBox Height="90" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="#BBBBBB" BorderThickness="1" CornerRadius="2" />
+                        </StackPanel>
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Was dermal matrix used?: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
+                            <StackPanel Spacing="6" Margin="10,0,0,0">
+                                <RadioButton Content="Yes" FontSize="12" Foreground="#333333" />
+                                <RadioButton Content="No" FontSize="12" Foreground="#333333" />
+                                <RadioButton Content="Unknown" FontSize="12" Foreground="#333333" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="Operative Description: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" PlaceholderText="Choose an option" HorizontalAlignment="Stretch" Height="30" BorderBrush="#BBBBBB" CornerRadius="2" />
+                                <TextBlock Grid.Column="1" Text="Other..." Foreground="#005C8A" FontSize="12" Margin="12,0,0,0" VerticalAlignment="Center" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="Comments: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
+                            <TextBox Height="90" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="#BBBBBB" BorderThickness="1" CornerRadius="2" />
+                        </StackPanel>
+
+                        <StackPanel Spacing="10" Margin="0,10,0,0">
+                            <Border Background="#FFFF00" Padding="8,4,8,4" HorizontalAlignment="Left">
+                                <TextBlock Text="Other Comments" Foreground="Black" FontSize="13" FontWeight="Bold" />
+                            </Border>
+
+                            <StackPanel Spacing="6">
+                                <Border Background="#FFFF00" Padding="4,2,4,2" HorizontalAlignment="Left">
+                                    <TextBlock Text="Other Comments:" Foreground="Black" FontSize="12" FontWeight="Bold" />
+                                </Border>
+
+                                <TextBox
+                                    Height="80"
+                                    Text="I am signing this report at the direction of administration, in the absence of Cerner Surgeon 1."
+                                    TextWrapping="Wrap"
+                                    AcceptsReturn="True"
+                                    Foreground="#333333"
+                                    BorderBrush="#BBBBBB"
+                                    BorderThickness="1"
+                                    CornerRadius="2" />
+                            </StackPanel>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!-- MESSAGE CENTER VIEW CONTENT -->
+            <Grid x:Name="MessageCenterView" Visibility="Collapsed" Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0" Padding="12,8,12,8" Background="#062B40">
-                    <TextBlock Text="Menu" Foreground="White" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
-                    <FontIcon Glyph="&#xE76B;" FontSize="10" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                <!-- Message Action Toolbar -->
+                <Grid Grid.Row="0" Background="#EBEFF2" Padding="12,6,12,6" BorderBrush="#CBD0D8" BorderThickness="0,0,0,1">
+                    <StackPanel Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <FontIcon Glyph="&#xE789;" FontSize="11" Foreground="#C82333" />
+                            <TextBlock Text="Communicate ▾" Foreground="#333333" FontSize="11" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <FontIcon Glyph="&#xE8B7;" FontSize="11" Foreground="#EE9A00" />
+                            <TextBlock Text="Open" Foreground="#333333" FontSize="11" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <FontIcon Glyph="&#xE8A5;" FontSize="11" Foreground="#005C8A" />
+                            <TextBlock Text="Message Journal" Foreground="#333333" FontSize="11" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <FontIcon Glyph="&#xE72A;" FontSize="11" Foreground="#005C8A" />
+                            <TextBlock Text="Forward Only" Foreground="#333333" FontSize="11" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <FontIcon Glyph="&#xE77B;" FontSize="11" Foreground="#444444" />
+                            <TextBlock Text="Select Patient" Foreground="#333333" FontSize="11" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <FontIcon Glyph="&#xE73A;" FontSize="11" Foreground="#444444" />
+                            <TextBlock Text="Select All" Foreground="#333333" FontSize="11" />
+                        </StackPanel>
+                    </StackPanel>
                 </Grid>
 
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                    <StackPanel Spacing="0">
-                        <TextBlock Text="Documentation" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Outside Records" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Allergies" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Clinical Media" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Diagnoses and Problems" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Form Browser" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Growth Chart" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Insurance" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Histories" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Interactive View and I&amp;O" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="MAR Summary" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Medication List" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Recommendations" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="Smart App Validator" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="mTuitive - OpNote Test - IE" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="mTuitive - OpNote Test - Edge" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        
-                        <Border Background="#005C8A" Padding="12,7,12,7">
-                            <TextBlock Text="Op Note - Prod - Edge" Foreground="White" FontSize="11" FontWeight="Bold" />
-                        </Border>
+                <!-- Data Table Grid -->
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <Grid MinWidth="1200">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Text="WorkflowView Edge" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="mTuitive Dev - Edge" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        <TextBlock Text="mTuitive Debug EDGE" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                    </StackPanel>
+                        <!-- Table Header Row -->
+                        <Grid Grid.Row="0" Background="#F0F3F6" Padding="6,6,6,6" BorderBrush="#D0D4DC" BorderThickness="0,0,0,1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130" />
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="70" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Patient Name" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="1" Text="Plan Name" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="2" Text="Action" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="3" Text="Details" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="4" Text="Details" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="5" Text="Comment" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="6" Text="Originator Name" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="7" Text="Create Date" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="8" Text="Stop Date" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="9" Text="Stop Type" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="10" Text="Status" Foreground="#444444" FontSize="11" FontWeight="SemiBold" />
+                        </Grid>
+
+                        <!-- Table Rows ItemsRepeater / ListView -->
+                        <ItemsControl x:Name="MessageCenterItemsControl" Grid.Row="1">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="6,5,6,5" BorderBrush="#EAEAEA" BorderThickness="0,0,0,1" Background="White">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="130" />
+                                            <ColumnDefinition Width="220" />
+                                            <ColumnDefinition Width="70" />
+                                            <ColumnDefinition Width="110" />
+                                            <ColumnDefinition Width="220" />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="110" />
+                                            <ColumnDefinition Width="70" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="{Binding PatientName}" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" Text="{Binding PlanName}" Foreground="#005C8A" FontSize="11" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="2" Text="{Binding Action}" Foreground="#333333" FontSize="11" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="3" Text="{Binding DetailsDate}" Foreground="#666666" FontSize="10" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="4" Text="{Binding DetailsDesc}" Foreground="#333333" FontSize="11" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="5" Text="{Binding Comment}" Foreground="#555555" FontSize="11" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="6" Text="{Binding OriginatorName}" Foreground="#555555" FontSize="11" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="7" Text="{Binding CreateDate}" Foreground="#555555" FontSize="10" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="8" Text="{Binding StopDate}" Foreground="#555555" FontSize="10" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="9" Text="{Binding StopType}" Foreground="#333333" FontSize="11" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="10" Text="{Binding Status}" Foreground="#008000" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                    </Grid>
                 </ScrollViewer>
 
-                <Grid Grid.Row="2" Padding="12">
-                    <Grid Width="28" Height="28" HorizontalAlignment="Left">
+                <!-- Bottom Left Circle Badge ("N") overlay for Message Center -->
+                <Grid Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="12,0,0,12">
+                    <Grid Width="28" Height="28">
                         <Ellipse Fill="#000000" />
                         <TextBlock Text="N" Foreground="White" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>
                 </Grid>
             </Grid>
 
-            <!-- Main Form Area -->
-            <ScrollViewer Grid.Column="1" Background="White" Padding="32,24,32,24">
-                <StackPanel Width="560" HorizontalAlignment="Left" Spacing="20">
-
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Implant Lot #: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
-                        <TextBox Height="90" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="#BBBBBB" BorderThickness="1" CornerRadius="2" />
-                    </StackPanel>
-
-                    <StackPanel Spacing="8">
-                        <TextBlock Text="Was dermal matrix used?: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
-                        <StackPanel Spacing="6" Margin="10,0,0,0">
-                            <RadioButton Content="Yes" FontSize="12" Foreground="#333333" />
-                            <RadioButton Content="No" FontSize="12" Foreground="#333333" />
-                            <RadioButton Content="Unknown" FontSize="12" Foreground="#333333" />
-                        </StackPanel>
-                    </StackPanel>
-
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Operative Description: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <ComboBox Grid.Column="0" PlaceholderText="Choose an option" HorizontalAlignment="Stretch" Height="30" BorderBrush="#BBBBBB" CornerRadius="2" />
-                            <TextBlock Grid.Column="1" Text="Other..." Foreground="#005C8A" FontSize="12" Margin="12,0,0,0" VerticalAlignment="Center" />
-                        </Grid>
-                    </StackPanel>
-
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Comments: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
-                        <TextBox Height="90" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="#BBBBBB" BorderThickness="1" CornerRadius="2" />
-                    </StackPanel>
-
-                    <StackPanel Spacing="10" Margin="0,10,0,0">
-                        <Border Background="#FFFF00" Padding="8,4,8,4" HorizontalAlignment="Left">
-                            <TextBlock Text="Other Comments" Foreground="Black" FontSize="13" FontWeight="Bold" />
-                        </Border>
-
-                        <StackPanel Spacing="6">
-                            <Border Background="#FFFF00" Padding="4,2,4,2" HorizontalAlignment="Left">
-                                <TextBlock Text="Other Comments:" Foreground="Black" FontSize="12" FontWeight="Bold" />
-                            </Border>
-
-                            <TextBox
-                                Height="80"
-                                Text="I am signing this report at the direction of administration, in the absence of Cerner Surgeon 1."
-                                TextWrapping="Wrap"
-                                AcceptsReturn="True"
-                                Foreground="#333333"
-                                BorderBrush="#BBBBBB"
-                                BorderThickness="1"
-                                CornerRadius="2" />
-                        </StackPanel>
-                    </StackPanel>
-
-                </StackPanel>
-            </ScrollViewer>
         </Grid>
 
-        <!-- 7. Bottom Status Bar -->
+        <!-- ==================== 7. BOTTOM STATUS BAR ==================== -->
         <Grid Grid.Row="7" Background="#062B40" Padding="12,4,12,4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
