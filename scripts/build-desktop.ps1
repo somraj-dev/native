@@ -159,7 +159,7 @@ if ($null -eq $makePriPath) {
         # Run makepri new on staging directory
         $priOutputPath = Join-Path $publishDir "resources.pri"
         Push-Location $priStagingDir
-        & $makePriPath new /pr $priStagingDir /cf $priConfigPath /of $priOutputPath /o 2>&1 | ForEach-Object {
+        & $makePriPath new /pr $priStagingDir /cf $priConfigPath /of $priOutputPath /in AxioVital.Desktop /o 2>&1 | ForEach-Object {
             $line = "$_" -replace "`0", ''
             if ($line.Trim()) {
                 Write-Host "       $line" -ForegroundColor DarkGray

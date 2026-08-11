@@ -93,7 +93,7 @@ jobs:
           # Generate config and PRI
           Push-Location $stagingDir
           & $makePri.FullName createconfig /cf priconfig.xml /dq en-US /o 2>&1 | Out-Null
-          & $makePri.FullName new /pr . /cf priconfig.xml /of "$((Resolve-Path $publishDir).Path)\resources.pri" /o 2>&1
+          & $makePri.FullName new /pr . /cf priconfig.xml /of "$((Resolve-Path $publishDir).Path)\resources.pri" /in AxioVital.Desktop /o 2>&1
           Pop-Location
           
           if (Test-Path "$publishDir/resources.pri") {
