@@ -173,9 +173,25 @@ start "" "%~dp0AxioVital.Desktop.exe"
 Set-Content -Path $launcherPath -Value $launcherContent -Encoding ASCII
 Write-Host "       Created SmartScreen Unblock Launcher (Run-AxioVital.bat)" -ForegroundColor Green
 
+# --- Step 7: Build AxioVital-Setup.exe Installer ---
+Write-Host "[6/6] Packaging AxioVital-Setup.exe Standalone Installer..." -ForegroundColor Yellow
+$installerDir = Join-Path $repoRoot "axiovital-installer"
+$payloadZipPath = Join-Path $installerDir "AxioVitalPayload.zip"
+$setupCsprojPath = Join-Path $installerDir "AxioVitalSetup.csproj"
+$installerOutDir = Join-Path $repoRoot "installer-output"
+
+if (Test-Path $payloadZipPath) { Remove-Item $payloadZipPath -Force }
+Compress-Archive -Path "$publishDir\*" -DestinationPath $payloadZipPath -Force
+
+dotnet publish $setupCsprojPath -c $Configuration -r $RuntimeId -o $installerOutDir | Out-Null
+if (Test-Path (Join-Path $installerOutDir "AxioVital-Setup.exe")) {
+    Copy-Item (Join-Path $installerOutDir "AxioVital-Setup.exe") (Join-Path $repoRoot "AxioVital-Setup.exe") -Force
+    Write-Host "       Generated AxioVital-Setup.exe successfully." -ForegroundColor Green
+}
+
 Write-Host ""
 Write-Host "================================================" -ForegroundColor Cyan
 Write-Host "  Build & Publish Complete!" -ForegroundColor Green
-Write-Host "  Output: $publishDir" -ForegroundColor Cyan
-Write-Host "  Run:    $publishDir\AxioVital.Desktop.exe" -ForegroundColor Cyan
+Write-Host "  Desktop App: $publishDir\AxioVital.Desktop.exe" -ForegroundColor Cyan
+Write-Host "  Installer:   $repoRoot\AxioVital-Setup.exe" -ForegroundColor Cyan
 Write-Host "================================================" -ForegroundColor Cyan

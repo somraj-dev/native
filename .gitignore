@@ -27,5 +27,7 @@ scratch/
 !.env.example
 
 ## OS generated files
-.DS_Store
-Thumbs.db
+## Installer outputs
+axiovital-installer/AxioVitalPayload.zip
+installer-output/
+AxioVital-Setup.exe
