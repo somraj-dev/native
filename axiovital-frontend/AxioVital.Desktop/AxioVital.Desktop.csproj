@@ -13,18 +13,11 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <WindowsPackageType>None</WindowsPackageType>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <!-- PRI generation requires Visual Studio MSBuild (Microsoft.VisualStudio.Telemetry).
+         We generate resources.pri manually using makepri.exe in the build script. -->
     <AppxGeneratePriEnabled>false</AppxGeneratePriEnabled>
     <NoWarn>$(NoWarn);MVVMTK0045</NoWarn>
   </PropertyGroup>
-
-  <!-- Map legacy VS UWP Appx task names to WinAppSDK MSBuild tasks in Microsoft.Build.Msix.dll for CLI compatibility -->
-  <UsingTask TaskName="Microsoft.Build.AppxPackage.RemovePayloadDuplicates"
-             AssemblyFile="$(UserProfile)\.nuget\packages\microsoft.windowsappsdk\1.6.250205002\tools\net6.0\Microsoft.Build.Msix.dll"
-             TaskFactory="TaskHostFactory" />
-
-  <UsingTask TaskName="Microsoft.Build.Packaging.Pri.Tasks.ExpandPriContent"
-             AssemblyFile="$(UserProfile)\.nuget\packages\microsoft.windowsappsdk\1.6.250205002\tools\net6.0\Microsoft.Build.Msix.dll"
-             TaskFactory="TaskHostFactory" />
 
   <ItemGroup>
     <ProjectReference Include="..\..\axiovital-backend\AxioVital.Contracts\AxioVital.Contracts.csproj" />

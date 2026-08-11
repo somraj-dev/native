@@ -38,10 +38,74 @@ jobs:
             --self-contained true `
             -o ./dist/AxioVital-Desktop-win-x64
 
-      - name: Copy Root Launchers to Package
+      - name: Copy XBF (compiled XAML) files to publish output
+        shell: pwsh
         run: |
-          Copy-Item "run-desktop.bat" "./dist/AxioVital-Desktop-win-x64/" -Force
-          Copy-Item "run-desktop.ps1" "./dist/AxioVital-Desktop-win-x64/" -Force
+          $xbfSourceDir = "axiovital-frontend/AxioVital.Desktop/obj/Release/net9.0-windows10.0.19041.0/win-x64"
+          $publishDir = "./dist/AxioVital-Desktop-win-x64"
+          
+          if (Test-Path $xbfSourceDir) {
+            $xbfFiles = Get-ChildItem $xbfSourceDir -Filter "*.xbf" -Recurse
+            foreach ($xbf in $xbfFiles) {
+              $relativePath = $xbf.FullName.Substring((Resolve-Path $xbfSourceDir).Path.Length).TrimStart('\', '/')
+              $destPath = Join-Path $publishDir $relativePath
+              $destDir = Split-Path $destPath -Parent
+              if (-not (Test-Path $destDir)) {
+                New-Item -ItemType Directory -Path $destDir -Force | Out-Null
+              }
+              Copy-Item $xbf.FullName $destPath -Force
+              Write-Host "Copied XBF: $relativePath"
+            }
+            Write-Host "Copied $($xbfFiles.Count) XBF file(s)"
+          } else {
+            Write-Host "::warning::XBF source directory not found: $xbfSourceDir"
+          }
+
+      - name: Generate resources.pri via makepri.exe
+        shell: pwsh
+        run: |
+          $publishDir = "./dist/AxioVital-Desktop-win-x64"
+          
+          # Find makepri.exe from Windows SDK (available on windows-latest runners)
+          $makePri = Get-ChildItem "C:\Program Files (x86)\Windows Kits\10\bin" -Recurse -Filter "makepri.exe" -ErrorAction SilentlyContinue |
+            Where-Object { $_.DirectoryName -like "*\x64" } |
+            Sort-Object { $_.DirectoryName } -Descending |
+            Select-Object -First 1
+          
+          if ($null -eq $makePri) {
+            Write-Host "::error::makepri.exe not found. Install Windows SDK."
+            exit 1
+          }
+          
+          Write-Host "Using makepri: $($makePri.FullName)"
+          
+          # Create staging dir with only XBF files for clean PRI generation
+          $stagingDir = "./dist/_pri_staging"
+          New-Item -ItemType Directory -Path $stagingDir -Force | Out-Null
+          Get-ChildItem $publishDir -Filter "*.xbf" -Recurse | ForEach-Object {
+            $relPath = $_.FullName.Substring((Resolve-Path $publishDir).Path.Length).TrimStart('\', '/')
+            $dest = Join-Path $stagingDir $relPath
+            $destDir = Split-Path $dest -Parent
+            if (-not (Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir -Force | Out-Null }
+            Copy-Item $_.FullName $dest -Force
+          }
+          
+          # Generate config and PRI
+          Push-Location $stagingDir
+          & $makePri.FullName createconfig /cf priconfig.xml /dq en-US /o 2>&1 | Out-Null
+          & $makePri.FullName new /pr . /cf priconfig.xml /of "$((Resolve-Path $publishDir).Path)\resources.pri" /o 2>&1
+          Pop-Location
+          
+          if (Test-Path "$publishDir/resources.pri") {
+            $size = (Get-Item "$publishDir/resources.pri").Length
+            Write-Host "Generated resources.pri ($size bytes)"
+          } else {
+            Write-Host "::error::resources.pri was not generated"
+            exit 1
+          }
+          
+          # Clean staging
+          Remove-Item $stagingDir -Recurse -Force -ErrorAction SilentlyContinue
 
       - name: Upload Desktop Executable Build Artifact
         uses: actions/upload-artifact@v4
