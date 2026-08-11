@@ -87,7 +87,7 @@
                     HorizontalAlignment="Center"
                     TextWrapping="Wrap"
                     Margin="0,0,0,10"
-                    Visibility="{Binding HasError}" />
+                    Visibility="{Binding ErrorMessageVisibility}" />
 
                 <!-- Action Buttons Row -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16">

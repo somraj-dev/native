@@ -2,6 +2,7 @@ using AxioVital.Desktop.Models;
 using AxioVital.Desktop.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -25,10 +26,13 @@ public partial class LoginPageViewModel : ViewModelBase
     private string _statusMessage = string.Empty;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ErrorMessageVisibility))]
     private bool _hasError;
 
     [ObservableProperty]
     private bool _isLoading;
+
+    public Visibility ErrorMessageVisibility => HasError ? Visibility.Visible : Visibility.Collapsed;
 
     public ObservableCollection<string> Users { get; } = new(LoginDomainModel.DefaultUsers);
     public ObservableCollection<string> Domains { get; } = new(LoginDomainModel.DefaultDomains);
