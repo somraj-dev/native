@@ -90,7 +90,36 @@ public partial class MainPage : Page
 
         // Toggle Content Views
         PatientProfileView.Visibility = Visibility.Collapsed;
+        SchedulerView.Visibility = Visibility.Collapsed;
         MessageCenterView.Visibility = Visibility.Visible;
+    }
+
+    
+    public void ShowSchedulerView()
+    {
+        HeaderTitleText.Text = "Appointment Reschedule Requests";
+
+        PatientProfileTabPill.Background = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 230, 238, 242));
+        MessageCenterTabPill.Visibility = Visibility.Collapsed;
+        SchedulerTabPill.Visibility = Visibility.Visible;
+        SchedulerTabPill.Background = new SolidColorBrush(Microsoft.UI.Colors.White);
+
+        PatientDemographicBanner.Visibility = Visibility.Collapsed;
+
+        PatientProfileView.Visibility = Visibility.Collapsed;
+        MessageCenterView.Visibility = Visibility.Collapsed;
+        SchedulerView.Visibility = Visibility.Visible;
+    }
+
+    private void OnSchedulerTabPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        ShowSchedulerView();
+    }
+
+    private void OnCloseSchedulerTabPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        SchedulerTabPill.Visibility = Visibility.Collapsed;
+        ShowPatientProfileView();
     }
 
     public void ShowPatientProfileView()
@@ -118,6 +147,7 @@ public partial class MainPage : Page
 
         // Toggle Content Views
         MessageCenterView.Visibility = Visibility.Collapsed;
+        SchedulerView.Visibility = Visibility.Collapsed;
         PatientProfileView.Visibility = Visibility.Visible;
     }
 
@@ -164,4 +194,128 @@ public partial class MainPage : Page
         {
             QuickPanelOverlay.Visibility = Visibility.Collapsed;
         }
+
+                private void OnPatientActionsMenuButtonClick(object sender, RoutedEventArgs e)
+        {
+            PatientActionsDropdownOverlay.Visibility = PatientActionsDropdownOverlay.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private void OnPatientActionsDropdownOverlayPointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed;
+        }
+
+        private void OnBedTransferMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed;
+            BedTransferOverlay.Visibility = Visibility.Visible;
+        }
+
+        private void OnFacilityTransferMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed;
+            FacilityTransferOverlay.Visibility = Visibility.Visible;
+            if (this.Frame != null)
+            {
+                try
+                {
+                    this.Frame.Navigate(typeof(FacilityTransferPage));
+                }
+                catch { }
+            }
+        }
+
+        private void OnCancelDischargeClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnCancelPendingDischargeClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnCancelPendingTransferClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnCancelTransferClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnClozapineRegistryClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnDischargeEncounterClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnLeaveOfAbsenceClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnModifyDischargeClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnPendingDischargeClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnPendingFacilityTransferClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnPendingTransferClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnPrintLabelsClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnProcessAlertClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnUpdatePatientInformationClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnViewEncounterClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+        private void OnViewPersonClick(object sender, RoutedEventArgs e) { PatientActionsDropdownOverlay.Visibility = Visibility.Collapsed; }
+
+        private void OnBedTransferCloseClicked(object sender, RoutedEventArgs e)
+        {
+            BedTransferOverlay.Visibility = Visibility.Collapsed;
+        }
+
+        private void OnFacilityTransferCloseClicked(object sender, RoutedEventArgs e)
+        {
+            FacilityTransferOverlay.Visibility = Visibility.Collapsed;
+        }
+
+
+
+        // Resizing logic for Bed Transfer Popup Card
+        private bool _isResizingBedTransfer = false;
+        private string _bedTransferResizeDir = "";
+        private Windows.Foundation.Point _startPointerPos;
+        private double _startWidth;
+        private double _startHeight;
+
+        private void OnResizePointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            if (sender is Microsoft.UI.Xaml.Shapes.Rectangle rect)
+            {
+                _isResizingBedTransfer = true;
+                _bedTransferResizeDir = rect.Tag as string ?? "";
+                _startPointerPos = e.GetCurrentPoint(BedTransferOverlay).Position;
+                _startWidth = BedTransferCard.Width;
+                _startHeight = BedTransferCard.Height;
+
+                rect.CapturePointer(e.Pointer);
+                e.Handled = true;
+            }
+        }
+
+        private void OnResizePointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            if (!_isResizingBedTransfer) return;
+
+            var currentPos = e.GetCurrentPoint(BedTransferOverlay).Position;
+            double deltaX = currentPos.X - _startPointerPos.X;
+            double deltaY = currentPos.Y - _startPointerPos.Y;
+
+            if (_bedTransferResizeDir.Contains("Right"))
+            {
+                BedTransferCard.Width = Math.Max(BedTransferCard.MinWidth, _startWidth + deltaX);
+            }
+            else if (_bedTransferResizeDir.Contains("Left"))
+            {
+                BedTransferCard.Width = Math.Max(BedTransferCard.MinWidth, _startWidth - deltaX);
+            }
+
+            if (_bedTransferResizeDir.Contains("Bottom"))
+            {
+                BedTransferCard.Height = Math.Max(BedTransferCard.MinHeight, _startHeight + deltaY);
+            }
+            else if (_bedTransferResizeDir.Contains("Top"))
+            {
+                BedTransferCard.Height = Math.Max(BedTransferCard.MinHeight, _startHeight - deltaY);
+            }
+
+            e.Handled = true;
+        }
+
+        private void OnResizePointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            if (_isResizingBedTransfer)
+            {
+                if (sender is Microsoft.UI.Xaml.Shapes.Rectangle rect)
+                {
+                    rect.ReleasePointerCapture(e.Pointer);
+                }
+                _isResizingBedTransfer = false;
+                e.Handled = true;
+            }
+        }
     }
+

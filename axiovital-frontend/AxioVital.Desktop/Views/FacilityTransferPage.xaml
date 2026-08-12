@@ -1,0 +1,617 @@
+<Page
+    x:Class="AxioVital.Desktop.Views.FacilityTransferPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="White">
+
+    <Page.Resources>
+        <!-- Custom styles for a 1:1 look -->
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#A0C2DE" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Height" Value="26" />
+            <Setter Property="Padding" Value="6,2" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="CornerRadius" Value="2" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="BorderBrush" Value="#A0C2DE" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Height" Value="26" />
+            <Setter Property="Padding" Value="6,2" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="CornerRadius" Value="2" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+        <Style x:Key="SectionHeader" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#0A658E" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style x:Key="RequiredStar" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#D9534F" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="0,0,2,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#333333" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- 0. Header Bar -->
+            <RowDefinition Height="Auto" />
+            <!-- 1. Scrollable Form -->
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- ==================== HEADER BAR ==================== -->
+        <Grid Grid.Row="0" Background="#0A658E" Padding="16,10" BorderBrush="#085375" BorderThickness="0,0,0,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="BackBtn" Click="OnBackClicked" Background="Transparent" BorderThickness="0" Padding="8,4" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon Glyph="&#xE72B;" FontSize="14" Foreground="White" />
+                    <TextBlock Text="Back" FontSize="13" Foreground="White" />
+                </StackPanel>
+            </Button>
+
+            <TextBlock Grid.Column="1" Text="Facility Transfer" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10">
+                <Button Content="Save" Click="OnSaveClicked" Background="#2B5886" Foreground="White" FontWeight="Bold" Height="30" Width="80" CornerRadius="3" BorderThickness="0" />
+                <Button Content="Cancel" Click="OnBackClicked" Background="White" Foreground="#333333" BorderBrush="#CCCCCC" BorderThickness="1" Height="30" Width="80" CornerRadius="3" />
+            </StackPanel>
+        </Grid>
+
+        <!-- ==================== SCROLLABLE FORM ==================== -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Padding="24,16,24,24" Spacing="16" MaxWidth="1000" HorizontalAlignment="Left">
+                
+                <!-- TOP METADATA ROW -->
+                <Grid ColumnSpacing="30" RowSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Date / Time -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                        <TextBlock Text="Transfer Date / Time :" Style="{StaticResource FieldLabel}" />
+                        
+                        <!-- Date input with Spin Buttons -->
+                        <Grid Width="110" Height="26">
+                            <TextBox Text="07/10/2017" Padding="6,2,24,2" />
+                            <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="18">
+                                <StackPanel Orientation="Vertical">
+                                    <Button Height="12" Width="18" Padding="0" Background="#F0F4F8" BorderThickness="0" CornerRadius="0,2,0,0">
+                                        <FontIcon Glyph="&#xE70E;" FontSize="6" Foreground="#555555" />
+                                    </Button>
+                                    <Button Height="12" Width="18" Padding="0" Background="#F0F4F8" BorderThickness="0" CornerRadius="0,0,2,0">
+                                        <FontIcon Glyph="&#xE70D;" FontSize="6" Foreground="#555555" />
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Time input with Spin Buttons -->
+                        <Grid Width="65" Height="26">
+                            <TextBox Text="1414" Padding="6,2,24,2" />
+                            <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="18">
+                                <StackPanel Orientation="Vertical">
+                                    <Button Height="12" Width="18" Padding="0" Background="#F0F4F8" BorderThickness="0" CornerRadius="0,2,0,0">
+                                        <FontIcon Glyph="&#xE70E;" FontSize="6" Foreground="#555555" />
+                                    </Button>
+                                    <Button Height="12" Width="18" Padding="0" Background="#F0F4F8" BorderThickness="0" CornerRadius="0,0,2,0">
+                                        <FontIcon Glyph="&#xE70D;" FontSize="6" Foreground="#555555" />
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        
+                        <TextBlock Text="CDT" Style="{StaticResource FieldLabel}" Margin="4,0,0,0" />
+                    </StackPanel>
+
+                    <!-- Performed By -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                        <TextBlock Text="Performed By :" Style="{StaticResource FieldLabel}" />
+                        <Grid Width="220" Height="26">
+                            <TextBox Text="TTP , Nurse" Padding="6,2,30,2" />
+                            <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
+                                <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+
+                <!-- ==================== CURRENT (SENDING) HOSPITAL INFORMATION ==================== -->
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Current (Sending) Hospital Information" Style="{StaticResource SectionHeader}" />
+                    <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
+                    
+                    <Grid ColumnSpacing="24" RowSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Row 0 -->
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Hospital Name :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="City Care Multispeciality Hospital" />
+                        </ComboBox>
+
+                        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Hospital Code :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <TextBox Grid.Row="0" Grid.Column="3" Text="CCH001" />
+
+                        <!-- Row 1 -->
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Department :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="General Medicine" />
+                        </ComboBox>
+
+                        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2" VerticalAlignment="Top" Margin="0,4,0,0">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Address :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <TextBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Text="123 Health Street, Chicago, IL 60601, USA" Height="62" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" />
+
+                        <!-- Row 2 -->
+                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Contact Person :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <Grid Grid.Row="2" Grid.Column="1" Height="26">
+                            <TextBox Text="Dr. Ramesh Sharma" Padding="6,2,30,2" />
+                            <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
+                                <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
+                            </Button>
+                        </Grid>
+
+                        <!-- Row 3 -->
+                        <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Phone Number :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="+1 312 555 0198" />
+
+                        <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Email :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <TextBox Grid.Row="3" Grid.Column="3" Text="transferdesk@citycarehospital.com" />
+                    </Grid>
+                </StackPanel>
+
+                <!-- ==================== RECEIVING HOSPITAL INFORMATION ==================== -->
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Receiving Hospital Information" Style="{StaticResource SectionHeader}" />
+                    <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
+                    
+                    <Grid ColumnSpacing="24" RowSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Row 0 -->
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Hospital Name :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Metro Advanced Hospital" />
+                        </ComboBox>
+
+                        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Hospital Code :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <TextBox Grid.Row="0" Grid.Column="3" Text="MAH002" />
+
+                        <!-- Row 1 -->
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Department :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Cardiology" />
+                        </ComboBox>
+
+                        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2" VerticalAlignment="Top" Margin="0,4,0,0">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Address :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <TextBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Text="456 Wellness Avenue, Chicago, IL 60611, USA" Height="62" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" />
+
+                        <!-- Row 2 -->
+                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Contact Person :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <Grid Grid.Row="2" Grid.Column="1" Height="26">
+                            <TextBox Text="Dr. Anita Verma" Padding="6,2,30,2" />
+                            <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
+                                <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
+                            </Button>
+                        </Grid>
+
+                        <!-- Row 3 -->
+                        <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Phone Number :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="+1 312 555 0456" />
+
+                        <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Email :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <TextBox Grid.Row="3" Grid.Column="3" Text="admissions@metrohospital.com" />
+                    </Grid>
+                </StackPanel>
+
+                <!-- ==================== TRANSFER DETAILS ==================== -->
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Transfer Details" Style="{StaticResource SectionHeader}" />
+                    <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
+                    
+                    <Grid ColumnSpacing="24" RowSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="270" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="270" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Row 0 -->
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Reason for Transfer :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Advanced Level of Care Required" />
+                        </ComboBox>
+
+                        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Estimated Departure Time :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <!-- Est Departure Date/Time -->
+                        <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" Spacing="4">
+                            <Grid Width="100" Height="26">
+                                <TextBox Text="07/10/2017" Padding="6,2,20,2" />
+                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <Grid Width="55" Height="26">
+                                <TextBox Text="1500" Padding="6,2,20,2" />
+                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <TextBlock Text="CDT" Style="{StaticResource FieldLabel}" VerticalAlignment="Center" />
+                        </StackPanel>
+
+                        <!-- Row 1 -->
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Mode of Transfer :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Ambulance - ALS" />
+                        </ComboBox>
+
+                        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Estimated Arrival Time :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <!-- Est Arrival Date/Time -->
+                        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" Spacing="4">
+                            <Grid Width="100" Height="26">
+                                <TextBox Text="07/10/2017" Padding="6,2,20,2" />
+                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <Grid Width="55" Height="26">
+                                <TextBox Text="1600" Padding="6,2,20,2" />
+                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <TextBlock Text="CDT" Style="{StaticResource FieldLabel}" VerticalAlignment="Center" />
+                        </StackPanel>
+
+                        <!-- Row 2 -->
+                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Priority :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <ComboBox Grid.Row="2" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="High" />
+                        </ComboBox>
+
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Comments :" Style="{StaticResource FieldLabel}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,0,0" />
+                        <TextBox Grid.Row="2" Grid.Column="3" Grid.RowSpan="3" Text="Patient requires advanced cardiac intervention not available in current hospital." Height="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" />
+
+                        <!-- Row 3 -->
+                        <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Accompanied By :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <ComboBox Grid.Row="3" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Nurse" />
+                        </ComboBox>
+
+                        <!-- Row 4 -->
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Accompanied Personnel :" Style="{StaticResource FieldLabel}" HorizontalAlignment="Right" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="Nurse, Paramedic" />
+                    </Grid>
+                </StackPanel>
+
+                <!-- ==================== CLINICAL INFORMATION ==================== -->
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Clinical Information" Style="{StaticResource SectionHeader}" />
+                    <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
+                    
+                    <Grid ColumnSpacing="24" RowSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="270" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Row 0 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Condition at Transfer :" Style="{StaticResource FieldLabel}" HorizontalAlignment="Right" />
+                        <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Stable" />
+                        </ComboBox>
+
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Treatment Given :" Style="{StaticResource FieldLabel}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,0,0" />
+                        <TextBox Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" Text="IV Fluids, Antibiotics, Oxygen Support, Pain Management" Height="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" />
+
+                        <!-- Row 1 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Vital Signs Summary :" Style="{StaticResource FieldLabel}" HorizontalAlignment="Right" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="BP: 120/80 mmHg, Pulse: 88 bpm, SpO2: 96% (RA), Temp: 98.6°F" />
+
+                        <!-- Row 2 -->
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Special Precautions :" Style="{StaticResource FieldLabel}" HorizontalAlignment="Right" />
+                        <ComboBox Grid.Row="2" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Fall Risk" />
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+
+                <!-- ==================== TRANSFER AUTHORIZATION ==================== -->
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Transfer Authorization" Style="{StaticResource SectionHeader}" />
+                    <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
+                    
+                    <Grid ColumnSpacing="24" RowSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="270" />
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="290" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Requested By :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <Grid Grid.Column="1" Height="26">
+                            <TextBox Text="Dr. Ramesh Sharma" Padding="6,2,30,2" />
+                            <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
+                                <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
+                            </Button>
+                        </Grid>
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Approved By :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <Grid Grid.Column="3" Height="26">
+                            <TextBox Text="Dr. Mehta, P." Padding="6,2,30,2" />
+                            <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
+                                <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    
+                    <Grid ColumnSpacing="24" RowSpacing="10" Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="270" />
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="290" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Requested Date / Time :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
+                            <Grid Width="100" Height="26">
+                                <TextBox Text="07/10/2017" Padding="6,2,20,2" />
+                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <Grid Width="55" Height="26">
+                                <TextBox Text="1200" Padding="6,2,20,2" />
+                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <TextBlock Text="CDT" Style="{StaticResource FieldLabel}" VerticalAlignment="Center" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
+                            <TextBlock Text="*" Style="{StaticResource RequiredStar}" />
+                            <TextBlock Text="Approved Date / Time :" Style="{StaticResource FieldLabel}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="4">
+                            <Grid Width="100" Height="26">
+                                <TextBox Text="07/10/2017" Padding="6,2,20,2" />
+                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <Grid Width="55" Height="26">
+                                <TextBox Text="1245" Padding="6,2,20,2" />
+                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <TextBlock Text="CDT" Style="{StaticResource FieldLabel}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <!-- ==================== HANDOVER INFORMATION ==================== -->
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Handover Information" Style="{StaticResource SectionHeader}" />
+                    <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
+                    
+                    <Grid ColumnSpacing="24" RowSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="270" />
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="290" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Row 0 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Handover Completed :" Style="{StaticResource FieldLabel}" HorizontalAlignment="Right" />
+                        <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Yes" />
+                            <ComboBoxItem Content="No" />
+                        </ComboBox>
+
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Handover To :" Style="{StaticResource FieldLabel}" HorizontalAlignment="Right" />
+                        <Grid Grid.Row="0" Grid.Column="3" Height="26">
+                            <TextBox Text="Dr. Anita Verma" Padding="6,2,30,2" />
+                            <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
+                                <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
+                            </Button>
+                        </Grid>
+
+                        <!-- Row 1 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Handover Method :" Style="{StaticResource FieldLabel}" HorizontalAlignment="Right" />
+                        <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Verbal" />
+                            <ComboBoxItem Content="Written" />
+                            <ComboBoxItem Content="Electronic" />
+                        </ComboBox>
+
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="Handover Time :" Style="{StaticResource FieldLabel}" HorizontalAlignment="Right" />
+                        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" Spacing="4">
+                            <Grid Width="100" Height="26">
+                                <TextBox Text="07/10/2017" Padding="6,2,20,2" />
+                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <Grid Width="55" Height="26">
+                                <TextBox Text="1450" Padding="6,2,20,2" />
+                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
+                                        <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <TextBlock Text="CDT" Style="{StaticResource FieldLabel}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
