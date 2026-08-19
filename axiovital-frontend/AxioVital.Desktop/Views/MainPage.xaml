@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:AxioVital.Desktop.Models"
+    xmlns:views="using:AxioVital.Desktop.Views"
     mc:Ignorable="d"
     Background="#F4F5F7">
 
@@ -36,7 +37,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
-                <TextBlock Text="Home" Foreground="#111111" FontSize="11" FontWeight="Bold" />
+                <TextBlock Text="Home" Foreground="#111111" FontSize="11" FontWeight="Bold" PointerPressed="OnHomeTabPointerPressed" />
                 <TextBlock Text="Ledger" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 <TextBlock Text="ambulatory" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 <TextBlock Text="Clinical" Foreground="#333333" FontSize="11" FontWeight="Normal" />
@@ -73,10 +74,14 @@
                 <TextBlock Text="Physician Handoff" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 <TextBlock Text="Care Workflow" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 <TextBlock Text="Quality Measures" Foreground="#333333" FontSize="11" FontWeight="Normal" />
-                <TextBlock Text="Customised" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <Border x:Name="CustomisedTabBorder" Padding="0,0,0,3" PointerPressed="OnCustomisedTabPointerPressed">
+                    <TextBlock x:Name="CustomisedTabText" Text="Customised" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                </Border>
                 <TextBlock Text="Reports" Foreground="#111111" FontSize="11" FontWeight="Bold" />
                 <TextBlock Text="UpToDate" Foreground="#333333" FontSize="11" FontWeight="Normal" />
-                <TextBlock Text="Ongoing Activities" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <Border x:Name="OngoingActivitiesTabBorder" Padding="0,0,0,3" PointerPressed="OnOngoingActivitiesTabPointerPressed">
+                    <TextBlock x:Name="OngoingActivitiesTabText" Text="Ongoing Activities" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                </Border>
             </StackPanel>
 
             <FontIcon Grid.Column="1" Glyph="&#xE712;" FontSize="12" Foreground="#666666" VerticalAlignment="Center" />
@@ -92,9 +97,9 @@
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
                 <TextBlock Text="Dashboard" Foreground="#444444" FontSize="11" />
                 <TextBlock Text="Scheduler" Foreground="#0A658E" FontSize="11" FontWeight="Bold" PointerPressed="OnSchedulerTabPointerPressed" />
-                <TextBlock Text="Order Sets" Foreground="#111111" FontSize="11" FontWeight="Bold" />
+                <TextBlock Text="Order Sets" Foreground="#111111" FontSize="11" FontWeight="Bold" PointerPressed="OnOrderSetsTabPointerPressed" />
                 <TextBlock Text="Care Pathways" Foreground="#444444" FontSize="11" />
-                <TextBlock Text="Labs" Foreground="#444444" FontSize="11" />
+                <TextBlock x:Name="LabsCategoryTab" Text="Labs" Foreground="#444444" FontSize="11" PointerPressed="OnLabsTabPointerPressed" />
                 <TextBlock Text="Analytics" Foreground="#444444" FontSize="11" />
             </StackPanel>
 
@@ -135,1464 +140,150 @@
         </Grid>
 
         <!-- ==================== 4. LIGHT BLUE TAB STRIP BAR 5 ==================== -->
-        <Grid x:Name="TabStripBarGrid" Grid.Row="4" Background="#BACBD4" Padding="12,4,12,0">
-            <StackPanel Orientation="Horizontal" Spacing="4">
-                <Border x:Name="PatientProfileTabPill" Background="#E6EEF2" CornerRadius="3,3,0,0" Padding="12,5,12,5" PointerPressed="OnPatientListTabPointerPressed">
-                    <TextBlock Text="Patient Profile: JOHN DOE" Foreground="#0A3F5C" FontSize="11" FontWeight="Bold" />
-                </Border>
-                <Border x:Name="MessageCenterTabPill" Background="#FFFFFF" CornerRadius="3,3,0,0" Padding="12,5,12,5" Visibility="Collapsed" PointerPressed="OnMessageCenterTabPointerPressed">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text="General Messages: JOHN DOE" Foreground="#0A3F5C" FontSize="11" FontWeight="Bold" />
-                        <TextBlock Text="✕" Foreground="#777777" FontSize="10" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Border>
-                <Border x:Name="SchedulerTabPill" Background="#FFFFFF" CornerRadius="3,3,0,0" Padding="12,5,12,5" Visibility="Collapsed" PointerPressed="OnSchedulerTabPointerPressed">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text="Appointment Reschedule Requests" Foreground="#0A3F5C" FontSize="11" FontWeight="Bold" />
-                        <TextBlock Text="✕" Foreground="#777777" FontSize="10" VerticalAlignment="Center" PointerPressed="OnCloseSchedulerTabPointerPressed" />
-                    </StackPanel>
-                </Border>
-            </StackPanel>
+        <Grid x:Name="TabStripBarGrid" Grid.Row="4" Background="#BACBD4" Padding="12,3,12,0" MinHeight="30">
+            <ListView x:Name="TabStripListView"
+                      ItemsSource="{Binding OpenTabs}"
+                      SelectionMode="None"
+                      CanReorderItems="True"
+                      AllowDrop="True"
+                      CanDragItems="True"
+                      IsItemClickEnabled="True"
+                      ItemClick="OnTabStripItemClick">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="Margin" Value="0,0,2,0" />
+                        <Setter Property="MinHeight" Value="26" />
+                        <Setter Property="MinWidth" Value="0" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <ContentPresenter x:Name="ContentPresenter" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding TabBackground}"
+                                CornerRadius="3,3,0,0"
+                                Padding="12,5,10,5">
+                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Title}"
+                                           Foreground="{Binding TextColor}"
+                                           FontSize="11"
+                                           FontWeight="{Binding TextWeight}"
+                                           FontFamily="Segoe UI"
+                                           VerticalAlignment="Center" />
+                                <Button Background="Transparent"
+                                        BorderThickness="0"
+                                        Padding="2,0"
+                                        Margin="2,0,0,0"
+                                        MinHeight="0"
+                                        MinWidth="0"
+                                        Click="OnTabCloseButtonClick"
+                                        Tag="{Binding Id}"
+                                        Visibility="{Binding CloseButtonVisibility}">
+                                    <TextBlock Text="✕" Foreground="#777777" FontSize="10" VerticalAlignment="Center" />
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
 
         <!-- ==================== 5. DEEP BLUE PATIENT DEMOGRAPHIC BANNER ==================== -->
-        <Grid x:Name="PatientDemographicBanner" Grid.Row="5" Background="#005C8A" Padding="12,8,12,8">
+        <Grid x:Name="PatientDemographicBanner" Grid.Row="5" Background="#0A5B86" Padding="12,4,12,4" MinHeight="42">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="2.2*" />
+                <ColumnDefinition Width="1.8*" />
                 <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="1.5*" />
-                <ColumnDefinition Width="1.5*" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="1.4*" />
+                <ColumnDefinition Width="1.4*" />
+                <ColumnDefinition Width="3.4*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Width="36" Height="36" VerticalAlignment="Center" Margin="0,0,12,0">
-                <Ellipse Fill="White" />
-                <FontIcon Glyph="&#xE77B;" FontSize="20" Foreground="#005C8A" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </Grid>
-
-            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
-                <TextBlock Text="JOHN DOE" Foreground="White" FontSize="15" FontWeight="Bold" />
-                <TextBlock Text="Allergies: shellfish" Foreground="#D0E4F0" FontSize="10" />
-                <TextBlock Text="Care Team: View Details" Foreground="#99CCE6" FontSize="10" TextDecorations="Underline" />
+            <!-- Column 1: Patient Name & Care Details -->
+            <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="0">
+                <TextBlock Text="JOHN DOE" Foreground="White" FontSize="14" FontWeight="Bold" />
+                <TextBlock Text="Allergies: shellfish" Foreground="#C6DFEE" FontSize="10" Margin="0,1,0,0" />
+                <TextBlock Text="Care Team: View Details" Foreground="#72C5FF" FontSize="10" TextDecorations="Underline" Margin="0,1,0,0" />
             </StackPanel>
 
-            <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="1">
+            <!-- Column 2: DOB & Dose -->
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
                 <TextBlock Text="DOB: 3/22/1984" Foreground="White" FontSize="10" />
                 <TextBlock Text="Dose Wt: 80.000 kg (04/25/2021)" Foreground="White" FontSize="10" />
-                <TextBlock Text="HealthLife: No" Foreground="White" FontSize="10" />
+                <TextBlock Text="Height: 180 cm (04/25/2021)" Foreground="White" FontSize="10" />
             </StackPanel>
 
+            <!-- Column 3: Admit Info -->
+            <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="1">
+                <TextBlock Text="Admit: 04/25/2021" Foreground="White" FontSize="10" />
+                <TextBlock Text="Loc: 2E - 201 - A" Foreground="White" FontSize="10" />
+                <TextBlock Text="MRN: 1000245678" Foreground="White" FontSize="10" />
+            </StackPanel>
+
+            <!-- Column 4: Attending Provider -->
             <StackPanel Grid.Column="3" VerticalAlignment="Center" Spacing="1">
-                <TextBlock Text="Age: 39 years" Foreground="White" FontSize="10" />
-                <TextBlock Text="LTD:" Foreground="White" FontSize="10" />
-                <TextBlock Text="Clinic: 01XTO" Foreground="White" FontSize="10" />
+                <TextBlock Text="Attending: AXIO, MD" Foreground="White" FontSize="10" />
+                <TextBlock Text="Code: Full Code" Foreground="White" FontSize="10" />
+                <TextBlock Text="Isolation: None" Foreground="White" FontSize="10" />
             </StackPanel>
 
+            <!-- Column 5: Patient Summary Metadata -->
             <StackPanel Grid.Column="4" VerticalAlignment="Center" Spacing="1">
-                <TextBlock Text="Sex: Female" Foreground="White" FontSize="10" />
-                <TextBlock Text="Code Status: Active" Foreground="White" FontSize="10" />
-                <TextBlock Text="Loc: GLW-01" Foreground="White" FontSize="10" />
+                <TextBlock Text="MRN: AVX SL A1H4XE" Foreground="White" FontSize="10" />
+                <TextBlock Text="Nominee: Mr. Ajin singh" Foreground="White" FontSize="10" />
+                <TextBlock Text="Inpatient FIN: 00096526415 [Admit Dt: 10/6/2020 3.14.12 PM CDT]" Foreground="White" FontSize="10" />
             </StackPanel>
 
-            <StackPanel Grid.Column="5" VerticalAlignment="Center" Spacing="1">
-                <TextBlock Text="MRN: AVX-SL-A1H4XE" Foreground="White" FontSize="10" />
-                <TextBlock Text="Nominee: Mr. Ajan Singh" Foreground="White" FontSize="10" />
-                <TextBlock Text="Inpatient FIN: 00095576415 [Admit Dt: 10/6/2020 3:14:12 PM CDT]" Foreground="White" FontSize="10" />
-            </StackPanel>
-
-            <Button Grid.Column="6" Background="Transparent" BorderThickness="0" Padding="6" VerticalAlignment="Center" Margin="8,0,0,0" x:Name="PatientActionsMenuButton" Click="OnPatientActionsMenuButtonClick">
-                <FontIcon Glyph="&#xE700;" FontSize="18" Foreground="White" />
+            <!-- Column 6: Hamburger Button -->
+            <Button Grid.Column="5" Background="Transparent" BorderThickness="0" Padding="4" VerticalAlignment="Center" Margin="6,0,0,0" x:Name="PatientActionsMenuButton" Click="OnPatientActionsMenuButtonClick">
+                <FontIcon Glyph="&#xE700;" FontSize="16" Foreground="White" />
             </Button>
         </Grid>
 
-        <!-- ==================== 6. MAIN CONTENT AREA ==================== -->
+        <!-- ==================== 6. MAIN CONTENT AREA (Modular UserControls) ==================== -->
         <Grid Grid.Row="6">
-
-            <!-- PATIENT PROFILE VIEW CONTENT -->
-            <Grid x:Name="PatientProfileView" Visibility="Visible">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="220" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <!-- Sidebar -->
-                <Grid Grid.Column="0" Background="#0A3F5C">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0" Padding="12,8,12,8" Background="#062B40">
-                        <TextBlock Text="Menu" Foreground="White" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
-                        <FontIcon Glyph="&#xE76B;" FontSize="10" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    </Grid>
-
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                        <StackPanel Spacing="0">
-                            <TextBlock Text="Documentation" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Outside Records" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Allergies" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Clinical Media" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Diagnoses and Problems" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Form Browser" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Growth Chart" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Insurance" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Histories" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Interactive View and I&amp;O" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="MAR Summary" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Medication List" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Recommendations" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="Smart App Validator" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="mTuitive - OpNote Test - IE" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="mTuitive - OpNote Test - Edge" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            
-                            <Border Background="#005C8A" Padding="12,7,12,7">
-                                <TextBlock Text="Op Note - Prod - Edge" Foreground="White" FontSize="11" FontWeight="Bold" />
-                            </Border>
-
-                            <TextBlock Text="WorkflowView Edge" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="mTuitive Dev - Edge" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                            <TextBlock Text="mTuitive Debug EDGE" Foreground="White" FontSize="11" Padding="12,6,12,6" />
-                        </StackPanel>
-                    </ScrollViewer>
-
-
-                </Grid>
-
-                <!-- Form Area -->
-                <ScrollViewer Grid.Column="1" Background="White" Padding="32,24,32,24">
-                    <StackPanel Width="560" HorizontalAlignment="Left" Spacing="20">
-
-                        <StackPanel Spacing="6">
-                            <TextBlock Text="Implant Lot #: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
-                            <TextBox Height="90" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="#BBBBBB" BorderThickness="1" CornerRadius="2" />
-                        </StackPanel>
-
-                        <StackPanel Spacing="8">
-                            <TextBlock Text="Was dermal matrix used?: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
-                            <StackPanel Spacing="6" Margin="10,0,0,0">
-                                <RadioButton Content="Yes" FontSize="12" Foreground="#333333" />
-                                <RadioButton Content="No" FontSize="12" Foreground="#333333" />
-                                <RadioButton Content="Unknown" FontSize="12" Foreground="#333333" />
-                            </StackPanel>
-                        </StackPanel>
-
-                        <StackPanel Spacing="6">
-                            <TextBlock Text="Operative Description: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0" PlaceholderText="Choose an option" HorizontalAlignment="Stretch" Height="30" BorderBrush="#BBBBBB" CornerRadius="2" />
-                                <TextBlock Grid.Column="1" Text="Other..." Foreground="#005C8A" FontSize="12" Margin="12,0,0,0" VerticalAlignment="Center" />
-                            </Grid>
-                        </StackPanel>
-
-                        <StackPanel Spacing="6">
-                            <TextBlock Text="Comments: (optional)" Foreground="#555555" FontSize="12" FontStyle="Italic" />
-                            <TextBox Height="90" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="#BBBBBB" BorderThickness="1" CornerRadius="2" />
-                        </StackPanel>
-
-                        <StackPanel Spacing="10" Margin="0,10,0,0">
-                            <Border Background="#FFFF00" Padding="8,4,8,4" HorizontalAlignment="Left">
-                                <TextBlock Text="Other Comments" Foreground="Black" FontSize="13" FontWeight="Bold" />
-                            </Border>
-
-                            <StackPanel Spacing="6">
-                                <Border Background="#FFFF00" Padding="4,2,4,2" HorizontalAlignment="Left">
-                                    <TextBlock Text="Other Comments:" Foreground="Black" FontSize="12" FontWeight="Bold" />
-                                </Border>
-
-                                <TextBox
-                                    Height="80"
-                                    Text="I am signing this report at the direction of administration, in the absence of Cerner Surgeon 1."
-                                    TextWrapping="Wrap"
-                                    AcceptsReturn="True"
-                                    Foreground="#333333"
-                                    BorderBrush="#BBBBBB"
-                                    BorderThickness="1"
-                                    CornerRadius="2" />
-                            </StackPanel>
-                        </StackPanel>
-
-                    </StackPanel>
-                </ScrollViewer>
-            </Grid>
-
-            <!-- ==================== 1:1 MIRROR REPLICA MESSAGE CENTER VIEW ==================== -->
-            <Grid x:Name="MessageCenterView" Visibility="Collapsed" Background="White">
-                <Grid.RowDefinitions>
-                    <!-- Action Bar -->
-                    <RowDefinition Height="Auto" />
-                    <!-- Data Table -->
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <!-- Message Action Toolbar -->
-                <Grid Grid.Row="0" Background="#F0F3F6" Padding="12,6,12,6" BorderBrush="#CBD0D8" BorderThickness="0,0,0,1">
-                    <StackPanel Orientation="Horizontal" Spacing="20" VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                            <FontIcon Glyph="&#xE789;" FontSize="11" Foreground="#C82333" />
-                            <TextBlock Text="Communicate ▾" Foreground="#333333" FontSize="11" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="11" Foreground="#D97706" />
-                            <TextBlock Text="Open" Foreground="#333333" FontSize="11" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                            <FontIcon Glyph="&#xE8A5;" FontSize="11" Foreground="#0A658E" />
-                            <TextBlock Text="Message Journal" Foreground="#333333" FontSize="11" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                            <FontIcon Glyph="&#xE72A;" FontSize="11" Foreground="#0A658E" />
-                            <TextBlock Text="Forward Only" Foreground="#333333" FontSize="11" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                            <FontIcon Glyph="&#xE77B;" FontSize="11" Foreground="#444444" />
-                            <TextBlock Text="Select Patient" Foreground="#333333" FontSize="11" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                            <FontIcon Glyph="&#xE73A;" FontSize="11" Foreground="#444444" />
-                            <TextBlock Text="Select All" Foreground="#333333" FontSize="11" />
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
-
-                <!-- Data Table Grid with Full Vertical & Horizontal Borders -->
-                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <!-- 1:1 Table Header Row -->
-                        <Grid Grid.Row="0" Background="#E8EDF2" BorderBrush="#D0D5DD" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.3*" MinWidth="130" />
-                                <ColumnDefinition Width="2.2*" MinWidth="180" />
-                                <ColumnDefinition Width="0.7*" MinWidth="65" />
-                                <ColumnDefinition Width="1.2*" MinWidth="110" />
-                                <ColumnDefinition Width="2.2*" MinWidth="180" />
-                                <ColumnDefinition Width="0.9*" MinWidth="80" />
-                                <ColumnDefinition Width="1.0*" MinWidth="95" />
-                                <ColumnDefinition Width="1.2*" MinWidth="110" />
-                                <ColumnDefinition Width="1.2*" MinWidth="110" />
-                                <ColumnDefinition Width="1.0*" MinWidth="95" />
-                                <ColumnDefinition Width="0.7*" MinWidth="65" />
-                            </Grid.ColumnDefinitions>
-
-                            <Border Grid.Column="0" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
-                                <TextBlock Text="Patient Name" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
-                            </Border>
-                            <Border Grid.Column="1" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
-                                <TextBlock Text="Plan Name" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
-                            </Border>
-                            <Border Grid.Column="2" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
-                                <TextBlock Text="Action" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
-                            </Border>
-                            <Border Grid.Column="3" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
-                                <TextBlock Text="Details" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
-                            </Border>
-                            <Border Grid.Column="4" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
-                                <TextBlock Text="Details" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
-                            </Border>
-                            <Border Grid.Column="5" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
-                                <TextBlock Text="Comment" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
-                            </Border>
-                            <Border Grid.Column="6" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
-                                <TextBlock Text="Originator Name" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
-                            </Border>
-                            <Border Grid.Column="7" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
-                                <TextBlock Text="Create Date" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
-                            </Border>
-                            <Border Grid.Column="8" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
-                                <TextBlock Text="Stop Date" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
-                            </Border>
-                            <Border Grid.Column="9" BorderBrush="#D0D5DD" BorderThickness="0,0,1,0" Padding="6,6,6,6">
-                                <TextBlock Text="Stop Type" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
-                            </Border>
-                            <Border Grid.Column="10" Padding="6,6,6,6">
-                                <TextBlock Text="Status" Foreground="#333333" FontSize="11" FontWeight="SemiBold" />
-                            </Border>
-                        </Grid>
-
-                        <!-- Table Rows ItemsControl with 1:1 Cell Dividers -->
-                        <ItemsControl x:Name="MessageCenterItemsControl" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Background="White" HorizontalAlignment="Stretch">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1.3*" MinWidth="130" />
-                                            <ColumnDefinition Width="2.2*" MinWidth="180" />
-                                            <ColumnDefinition Width="0.7*" MinWidth="65" />
-                                            <ColumnDefinition Width="1.2*" MinWidth="110" />
-                                            <ColumnDefinition Width="2.2*" MinWidth="180" />
-                                            <ColumnDefinition Width="0.9*" MinWidth="80" />
-                                            <ColumnDefinition Width="1.0*" MinWidth="95" />
-                                            <ColumnDefinition Width="1.2*" MinWidth="110" />
-                                            <ColumnDefinition Width="1.2*" MinWidth="110" />
-                                            <ColumnDefinition Width="1.0*" MinWidth="95" />
-                                            <ColumnDefinition Width="0.7*" MinWidth="65" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Border Grid.Column="0" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
-                                            <TextBlock Text="{Binding PatientName}" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                                        </Border>
-                                        <Border Grid.Column="1" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
-                                            <TextBlock Text="{Binding PlanName}" Foreground="#005C8A" FontSize="11" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
-                                        </Border>
-                                        <Border Grid.Column="2" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
-                                            <TextBlock Text="{Binding Action}" Foreground="#333333" FontSize="11" VerticalAlignment="Center" />
-                                        </Border>
-                                        <Border Grid.Column="3" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
-                                            <TextBlock Text="{Binding DetailsDate}" Foreground="#666666" FontSize="10" VerticalAlignment="Center" />
-                                        </Border>
-                                        <Border Grid.Column="4" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
-                                            <TextBlock Text="{Binding DetailsDesc}" Foreground="#333333" FontSize="11" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
-                                        </Border>
-                                        <Border Grid.Column="5" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
-                                            <TextBlock Text="{Binding Comment}" Foreground="#555555" FontSize="11" VerticalAlignment="Center" />
-                                        </Border>
-                                        <Border Grid.Column="6" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
-                                            <TextBlock Text="{Binding OriginatorName}" Foreground="#555555" FontSize="11" VerticalAlignment="Center" />
-                                        </Border>
-                                        <Border Grid.Column="7" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
-                                            <TextBlock Text="{Binding CreateDate}" Foreground="#555555" FontSize="10" VerticalAlignment="Center" />
-                                        </Border>
-                                        <Border Grid.Column="8" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
-                                            <TextBlock Text="{Binding StopDate}" Foreground="#555555" FontSize="10" VerticalAlignment="Center" />
-                                        </Border>
-                                        <Border Grid.Column="9" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="6,5,6,5">
-                                            <TextBlock Text="{Binding StopType}" Foreground="#333333" FontSize="11" VerticalAlignment="Center" />
-                                        </Border>
-                                        <Border Grid.Column="10" BorderBrush="#E2E6EA" BorderThickness="0,0,0,1" Padding="6,5,6,5">
-                                            <TextBlock Text="{Binding Status}" Foreground="#008000" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                                        </Border>
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-
-                    </Grid>
-                </ScrollViewer>
-
-
-            </Grid>
-
-            <!-- SCHEDULER VIEW CONTENT (Appointment Reschedule Requests) -->
-            <Grid x:Name="SchedulerView" Visibility="Collapsed" Background="White">
-                <Grid.RowDefinitions>
-                    <!-- Main Data Table -->
-                    <RowDefinition Height="*" />
-                    <!-- Footer Controls Bar -->
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <!-- Data Table with Column Headers -->
-                <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="28" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <!-- Column Headers -->
-                        <Grid Grid.Row="0" Background="#D9E4EC">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="140" />
-                                <ColumnDefinition Width="140" />
-                                <ColumnDefinition Width="160" />
-                                <ColumnDefinition Width="180" />
-                                <ColumnDefinition Width="170" />
-                                <ColumnDefinition Width="190" />
-                                <ColumnDefinition Width="280" />
-                                <ColumnDefinition Width="80" />
-                                <ColumnDefinition Width="90" />
-                            </Grid.ColumnDefinitions>
-
-                            <Border Grid.Column="0" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="8,4">
-                                <TextBlock Text="MRN" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                            </Border>
-                            <Border Grid.Column="1" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="8,4">
-                                <TextBlock Text="Request ID" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                            </Border>
-                            <Border Grid.Column="2" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="8,4">
-                                <TextBlock Text="Patient Name" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                            </Border>
-                            <Border Grid.Column="3" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="8,4">
-                                <TextBlock Text="Current Appointment" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                            </Border>
-                            <Border Grid.Column="4" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="8,4">
-                                <TextBlock Text="Department / Clinic" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                            </Border>
-                            <Border Grid.Column="5" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="8,4">
-                                <TextBlock Text="Requested New Date &amp; Time" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                            </Border>
-                            <Border Grid.Column="6" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="8,4">
-                                <TextBlock Text="Request Reason" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                            </Border>
-                            <Border Grid.Column="7" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="8,4">
-                                <TextBlock Text="Requested On / By" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                            </Border>
-                            <Border Grid.Column="8" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="8,4">
-                                <TextBlock Text="Priority" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                            </Border>
-                            <Border Grid.Column="9" BorderBrush="#C2D3E0" BorderThickness="0,0,0,1" Padding="8,4">
-                                <TextBlock Text="Status" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                            </Border>
-                        </Grid>
-
-                        <!-- Rows List -->
-                        <StackPanel Grid.Row="1">
-                            <!-- Row 1 -->
-                            <Grid Height="26" Background="White">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" /><ColumnDefinition Width="140" /><ColumnDefinition Width="140" /><ColumnDefinition Width="160" /><ColumnDefinition Width="180" /><ColumnDefinition Width="170" /><ColumnDefinition Width="190" /><ColumnDefinition Width="280" /><ColumnDefinition Width="80" /><ColumnDefinition Width="90" />
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="1000245679" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="1" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="REQ-2025-001245" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="2" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Rahul Patel" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="3" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="28/05/2025, 10:30 AM" Foreground="#111111" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="4" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Dr. P. Singh (Neurology)" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="5" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="30/05/2025, 11:00 AM" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="6" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Reschedule: Patient Request" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="7" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="28/05/2025, 09:15 AM by Rahul Patel (Patient)" Foreground="#555555" FontSize="10" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="8" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Normal" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="9" BorderBrush="#E2E6EA" BorderThickness="0,0,0,1" Padding="8,4"><TextBlock Text="Pending" Foreground="#333333" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                            </Grid>
-
-                            <!-- Row 2 -->
-                            <Grid Height="26" Background="#F9FAFC">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" /><ColumnDefinition Width="140" /><ColumnDefinition Width="140" /><ColumnDefinition Width="160" /><ColumnDefinition Width="180" /><ColumnDefinition Width="170" /><ColumnDefinition Width="190" /><ColumnDefinition Width="280" /><ColumnDefinition Width="80" /><ColumnDefinition Width="90" />
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="1000245680" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="1" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="REQ-2025-001246" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="2" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Maria Johnson" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="3" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="28/05/2025, 11:00 AM" Foreground="#111111" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="4" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Dr. S. Reddy (Cardiology)" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="5" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="31/05/2025, 09:30 AM" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="6" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Reschedule: Work Conflict" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="7" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="28/05/2025, 09:20 AM by Maria Johnson (Patient)" Foreground="#555555" FontSize="10" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="8" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Normal" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="9" BorderBrush="#E2E6EA" BorderThickness="0,0,0,1" Padding="8,4"><TextBlock Text="Pending" Foreground="#333333" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                            </Grid>
-
-                            <!-- Row 3 -->
-                            <Grid Height="26" Background="White">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" /><ColumnDefinition Width="140" /><ColumnDefinition Width="140" /><ColumnDefinition Width="160" /><ColumnDefinition Width="180" /><ColumnDefinition Width="170" /><ColumnDefinition Width="190" /><ColumnDefinition Width="280" /><ColumnDefinition Width="80" /><ColumnDefinition Width="90" />
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="1000245681" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="1" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="REQ-2025-001247" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="2" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="David Lee" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="3" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="28/05/2025, 03:00 PM" Foreground="#111111" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="4" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Dr. K. Iyer (Pulmonology)" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="5" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="29/05/2025, 04:00 PM" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="6" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Reschedule: Personal Emergency" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="7" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="28/05/2025, 09:35 AM by David Lee (Patient)" Foreground="#555555" FontSize="10" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="8" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="High" Foreground="#D9534F" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="9" BorderBrush="#E2E6EA" BorderThickness="0,0,0,1" Padding="8,4"><TextBlock Text="Reviewing" Foreground="#333333" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                            </Grid>
-
-                            <!-- Row 4 -->
-                            <Grid Height="26" Background="#F9FAFC">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" /><ColumnDefinition Width="140" /><ColumnDefinition Width="140" /><ColumnDefinition Width="160" /><ColumnDefinition Width="180" /><ColumnDefinition Width="170" /><ColumnDefinition Width="190" /><ColumnDefinition Width="280" /><ColumnDefinition Width="80" /><ColumnDefinition Width="90" />
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="1000245682" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="1" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="REQ-2025-001248" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="2" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Lucia Garcia" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="3" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="29/05/2025, 09:00 AM" Foreground="#111111" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="4" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Dr. M. Desai (Oncology)" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="5" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="29/05/2025, 01:00 PM" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="6" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Reschedule: Travel" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="7" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="28/05/2025, 10:05 AM by Lucia Garcia (Patient)" Foreground="#555555" FontSize="10" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="8" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Normal" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="9" BorderBrush="#E2E6EA" BorderThickness="0,0,0,1" Padding="8,4"><TextBlock Text="Approved" Foreground="#008000" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                            </Grid>
-
-                            <!-- Row 5 -->
-                            <Grid Height="26" Background="White">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" /><ColumnDefinition Width="140" /><ColumnDefinition Width="140" /><ColumnDefinition Width="160" /><ColumnDefinition Width="180" /><ColumnDefinition Width="170" /><ColumnDefinition Width="190" /><ColumnDefinition Width="280" /><ColumnDefinition Width="80" /><ColumnDefinition Width="90" />
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="1000245683" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="1" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="REQ-2025-001249" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="2" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Michael Thomas" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="3" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="29/05/2025, 11:30 AM" Foreground="#111111" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="4" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Dr. N. Verma (Dermatology)" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="5" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="30/05/2025, 10:00 AM" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="6" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Reschedule: Schedule Conflict" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="7" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="28/05/2025, 10:12 AM by Michael Thomas (Patient)" Foreground="#555555" FontSize="10" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="8" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Normal" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="9" BorderBrush="#E2E6EA" BorderThickness="0,0,0,1" Padding="8,4"><TextBlock Text="Declined" Foreground="#D9534F" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                            </Grid>
-
-                            <!-- Row 6 -->
-                            <Grid Height="26" Background="#F9FAFC">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" /><ColumnDefinition Width="140" /><ColumnDefinition Width="140" /><ColumnDefinition Width="160" /><ColumnDefinition Width="180" /><ColumnDefinition Width="170" /><ColumnDefinition Width="190" /><ColumnDefinition Width="280" /><ColumnDefinition Width="80" /><ColumnDefinition Width="90" />
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="1000245684" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="1" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="REQ-2025-001250" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="2" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="James Kim" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="3" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="30/05/2025, 02:00 PM" Foreground="#111111" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="4" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Dr. P. Nair (Diabetology)" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="5" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="02/06/2025, 11:00 AM" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="6" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Reschedule: Not Available" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="7" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="28/05/2025, 10:25 AM by James Kim (Patient)" Foreground="#555555" FontSize="10" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="8" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Low" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="9" BorderBrush="#E2E6EA" BorderThickness="0,0,0,1" Padding="8,4"><TextBlock Text="Pending" Foreground="#333333" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                            </Grid>
-
-                            <!-- Row 7 -->
-                            <Grid Height="26" Background="White">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" /><ColumnDefinition Width="140" /><ColumnDefinition Width="140" /><ColumnDefinition Width="160" /><ColumnDefinition Width="180" /><ColumnDefinition Width="170" /><ColumnDefinition Width="190" /><ColumnDefinition Width="280" /><ColumnDefinition Width="80" /><ColumnDefinition Width="90" />
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="1000245685" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="1" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="REQ-2025-001251" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="2" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Elizabeth Brown" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="3" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="30/05/2025, 04:00 PM" Foreground="#111111" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="4" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Dr. R. Menon (Nephrology)" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="5" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="31/05/2025, 04:30 PM" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="6" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Reschedule: Family Function" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="7" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="28/05/2025, 10:45 AM by Elizabeth Brown (Patient)" Foreground="#555555" FontSize="10" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="8" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Normal" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="9" BorderBrush="#E2E6EA" BorderThickness="0,0,0,1" Padding="8,4"><TextBlock Text="Pending" Foreground="#333333" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                            </Grid>
-
-                            <!-- Row 8 -->
-                            <Grid Height="26" Background="#F9FAFC">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" /><ColumnDefinition Width="140" /><ColumnDefinition Width="140" /><ColumnDefinition Width="160" /><ColumnDefinition Width="180" /><ColumnDefinition Width="170" /><ColumnDefinition Width="190" /><ColumnDefinition Width="280" /><ColumnDefinition Width="80" /><ColumnDefinition Width="90" />
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="1000245686" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="1" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="REQ-2025-001252" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="2" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Charles White" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="3" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="31/05/2025, 10:00 AM" Foreground="#111111" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="4" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Dr. S. Malhotra (ENT)" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="5" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="02/06/2025, 09:00 AM" Foreground="#005C8A" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="6" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Reschedule: Patient Request" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="7" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="28/05/2025, 11:00 AM by Charles White (Patient)" Foreground="#555555" FontSize="10" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="8" BorderBrush="#E2E6EA" BorderThickness="0,0,1,1" Padding="8,4"><TextBlock Text="Normal" Foreground="#333333" FontSize="11" VerticalAlignment="Center" /></Border>
-                                <Border Grid.Column="9" BorderBrush="#E2E6EA" BorderThickness="0,0,0,1" Padding="8,4"><TextBlock Text="Pending" Foreground="#333333" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" /></Border>
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
-                </ScrollViewer>
-
-                <!-- Footer Bar -->
-                <Grid Grid.Row="1" Background="#F4F6F8" Padding="12,6" BorderBrush="#D9E4EC" BorderThickness="0,1,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
-                        <TextBlock Text="Sort Order: Location, ascending" Foreground="#666666" FontSize="11" />
-                        <TextBlock Text="Filter: Active" Foreground="#666666" FontSize="11" />
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
-                        <TextBlock Text="Showing 8 of 8 records" Foreground="#666666" FontSize="11" VerticalAlignment="Center" />
-                        <Button Content="Refresh List" Background="White" BorderBrush="#CCCCCC" BorderThickness="1" Foreground="#333333" FontSize="11" Padding="10,3" Height="26" CornerRadius="2" />
-                    </StackPanel>
-                </Grid>
-            </Grid>
-
+            <views:PatientProfileView x:Name="PatientProfileViewControl" Visibility="Collapsed" />
+            <views:PatientListView x:Name="PatientListViewControl" Visibility="Visible" />
+            <views:MessageCenterView x:Name="MessageCenterViewControl" Visibility="Collapsed" />
+            <views:LabsView x:Name="LabsViewControl" Visibility="Collapsed" />
+            <views:SchedulerView x:Name="SchedulerViewControl" Visibility="Collapsed" />
+            <views:OngoingActivitiesView x:Name="OngoingActivitiesViewControl" Visibility="Collapsed" />
+            <views:CustomisedView x:Name="CustomisedViewControl" Visibility="Collapsed" />
         </Grid>
 
-        <!-- ==================== 7. BOTTOM STATUS BAR ==================== -->
-        <Grid Grid.Row="7" Background="#062B40" Padding="12,4,12,4">
+
+        <!-- ==================== 7. PERMANENT BOTTOM STATUS BAR / FOOTER ==================== -->
+        <Grid x:Name="PermanentFooterBar" Grid.Row="7" Background="#041D2C" Padding="12,4,12,4" MinHeight="24" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+            <!-- Left Status Info -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                 <TextBlock Text="Ready" Foreground="White" FontSize="10" />
                 <TextBlock Text="Patient: JOHN DOE ( MRN: 1000245678 )" Foreground="White" FontSize="10" FontWeight="Bold" />
             </StackPanel>
 
-            <TextBlock Grid.Column="1" Text="User: AxioVital Admin" Foreground="White" FontSize="10" Margin="0,0,24,0" VerticalAlignment="Center" />
-            <TextBlock Grid.Column="2" Text="AXIOVITAL HEALTHCARE SYSTEM" Foreground="White" FontSize="10" FontWeight="Bold" Margin="0,0,24,0" VerticalAlignment="Center" />
-            <TextBlock Grid.Column="3" Text="PROD" Foreground="White" FontSize="10" FontWeight="Bold" Margin="0,0,24,0" VerticalAlignment="Center" />
-            <TextBlock Grid.Column="4" Text="12/08/2026 03:12 AM" Foreground="White" FontSize="10" VerticalAlignment="Center" />
-        </Grid>
-
-    <!-- ==================== 8. QUICK PANEL OVERLAY (Ctrl+Q) ==================== -->
-    <Grid x:Name="QuickPanelOverlay" Grid.RowSpan="8" Background="#40000000" Visibility="Collapsed">
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="720" Height="608">
-            <!-- 1:1 Pixel-Perfect Replica Image of Conversation Launcher (Without Footer) -->
-            <Image Source="ms-appx:///Assets/quick_panel_dialog_cropped.png" 
-                   Width="720" 
-                   Height="608" 
-                   Stretch="Uniform" />
-
-            <!-- Interactive Click Handlers Overlay -->
-            <!-- Top Right Close Button -->
-            <Button Width="40" Height="30" 
-                    HorizontalAlignment="Right" VerticalAlignment="Top" 
-                    Margin="0,0,0,0" 
-                    Background="Transparent" BorderThickness="0" 
-                    Click="OnQuickPanelCloseClicked" />
-        </Grid>
-    </Grid>
-    <!-- ==================== 9. BED TRANSFER POPUP OVERLAY ==================== -->
-    <Grid x:Name="BedTransferOverlay" Grid.RowSpan="8" Background="#40000000" Visibility="Collapsed">
-        <Grid x:Name="BedTransferCard" 
-              Width="820" Height="580" 
-              MinWidth="550" MinHeight="420"
-              HorizontalAlignment="Center" VerticalAlignment="Center"
-              Background="White" 
-              BorderBrush="#A0A0A0" BorderThickness="1"
-              CornerRadius="4">
-            
-            <Grid.RowDefinitions>
-                <!-- Title bar -->
-                <RowDefinition Height="38" />
-                <!-- Content area -->
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <!-- Title Bar -->
-            <Grid Grid.Row="0" Background="#D6E4F0" CornerRadius="3,3,0,0">
-                <TextBlock Text="Bed Transfer" 
-                           Foreground="#222222" 
-                           FontSize="13" 
-                           FontWeight="Bold" 
-                           VerticalAlignment="Center" 
-                           Margin="14,0,0,0" />
-
-                <!-- Red Close Button -->
-                <Button x:Name="BedTransferCloseBtn"
-                        Width="42" Height="26"
-                        HorizontalAlignment="Right" VerticalAlignment="Top"
-                        Margin="0,5,8,0"
-                        Background="#D9534F" BorderThickness="0"
-                        CornerRadius="3"
-                        Click="OnBedTransferCloseClicked">
-                    <TextBlock Text="X" FontSize="11" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Button>
-            </Grid>
-
-            <!-- Dialog Content ScrollViewer -->
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                <StackPanel Padding="20,16,20,16" Spacing="16">
-                    
-                    <!-- Row 1: Transfer Date / Time -->
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="2">
-                            <TextBlock Text="*" Foreground="#D9534F" FontSize="12" FontWeight="Bold" />
-                            <TextBlock Text="Transfer Date / Time :" Foreground="#333333" FontSize="12" />
-                        </StackPanel>
-                        <TextBox Text="07/10/2017" Width="110" Height="28" Padding="6,2" FontSize="12" />
-                        <TextBlock Text="-" Foreground="#666666" FontSize="12" VerticalAlignment="Center" />
-                        <TextBox Text="1414" Width="65" Height="28" Padding="6,2" FontSize="12" />
-                        <TextBlock Text="- CDT" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                    </StackPanel>
-
-                    <!-- Row 2: Performed By -->
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="2">
-                            <TextBlock Text="*" Foreground="#D9534F" FontSize="12" FontWeight="Bold" />
-                            <TextBlock Text="Performed By :" Foreground="#333333" FontSize="12" />
-                        </StackPanel>
-                        <Grid Width="220" Height="28">
-                            <TextBox Text="TTP , Nurse" Padding="6,2,30,2" FontSize="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-                            <Button Width="26" Height="26" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#CCCCCC" BorderThickness="1,0,0,0" Padding="0">
-                                <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
-                            </Button>
-                        </Grid>
-                    </StackPanel>
-
-                    <!-- Section 1: Patient Information -->
-                    <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="14,10">
-                        <StackPanel Spacing="10">
-                            <TextBlock Text="Patient Information" Foreground="#0A658E" FontSize="12" FontWeight="Bold" />
-                            
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <!-- Patient ID -->
-                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                    <StackPanel Orientation="Horizontal" Spacing="2" Width="100">
-                                        <TextBlock Text="*" Foreground="#D9534F" FontSize="12" FontWeight="Bold" />
-                                        <TextBlock Text="Patient ID :" Foreground="#333333" FontSize="12" />
-                                    </StackPanel>
-                                    <Grid Width="160" Height="28">
-                                        <TextBox Text="TTPTEST" Padding="6,2,30,2" FontSize="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-                                        <Button Width="26" Height="26" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#CCCCCC" BorderThickness="1,0,0,0" Padding="0">
-                                            <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
-                                        </Button>
-                                    </Grid>
-                                </StackPanel>
-
-                                <!-- Patient Name -->
-                                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                    <StackPanel Orientation="Horizontal" Spacing="2" Width="110">
-                                        <TextBlock Text="*" Foreground="#D9534F" FontSize="12" FontWeight="Bold" />
-                                        <TextBlock Text="Patient Name :" Foreground="#333333" FontSize="12" />
-                                    </StackPanel>
-                                    <TextBox Text="PATIENT02" Width="170" Height="28" Padding="6,2" FontSize="12" IsReadOnly="True" Background="#F9F9F9" />
-                                </StackPanel>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Section 2: Current Bed Information -->
-                    <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="14,10">
-                        <StackPanel Spacing="10">
-                            <TextBlock Text="Current Bed Information" Foreground="#0A658E" FontSize="12" FontWeight="Bold" />
-                            
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <!-- Current Department -->
-                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                    <StackPanel Orientation="Horizontal" Spacing="2" Width="140">
-                                        <TextBlock Text="*" Foreground="#D9534F" FontSize="12" FontWeight="Bold" />
-                                        <TextBlock Text="Current Department :" Foreground="#333333" FontSize="12" />
-                                    </StackPanel>
-                                    <ComboBox SelectedIndex="0" Width="180" Height="28" FontSize="12">
-                                        <ComboBoxItem Content="General Medicine" />
-                                        <ComboBoxItem Content="ICU" />
-                                        <ComboBoxItem Content="Emergency" />
-                                        <ComboBoxItem Content="Pediatrics" />
-                                    </ComboBox>
-                                </StackPanel>
-
-                                <!-- Transfer Type -->
-                                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                    <StackPanel Orientation="Horizontal" Spacing="2" Width="110">
-                                        <TextBlock Text="*" Foreground="#D9534F" FontSize="12" FontWeight="Bold" />
-                                        <TextBlock Text="Transfer Type :" Foreground="#333333" FontSize="12" />
-                                    </StackPanel>
-                                    <ComboBox SelectedIndex="0" Width="170" Height="28" FontSize="12">
-                                        <ComboBoxItem Content="Within Hospital" />
-                                        <ComboBoxItem Content="Inter-Facility" />
-                                        <ComboBoxItem Content="External" />
-                                    </ComboBox>
-                                </StackPanel>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Section 3: New Bed Information -->
-                    <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="14,10">
-                        <StackPanel Spacing="12">
-                            <TextBlock Text="New Bed Information" Foreground="#0A658E" FontSize="12" FontWeight="Bold" />
-                            
-                            <!-- New Department -->
-                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                <StackPanel Orientation="Horizontal" Spacing="2" Width="140">
-                                    <TextBlock Text="*" Foreground="#D9534F" FontSize="12" FontWeight="Bold" />
-                                    <TextBlock Text="New Department :" Foreground="#333333" FontSize="12" />
-                                </StackPanel>
-                                <ComboBox SelectedIndex="0" Width="180" Height="28" FontSize="12">
-                                    <ComboBoxItem Content="Cardiology" />
-                                    <ComboBoxItem Content="Neurology" />
-                                    <ComboBoxItem Content="Orthopedics" />
-                                    <ComboBoxItem Content="Oncology" />
-                                </ComboBox>
-                            </StackPanel>
-
-                            <!-- New Ward -->
-                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                <StackPanel Orientation="Horizontal" Spacing="2" Width="140">
-                                    <TextBlock Text="*" Foreground="#D9534F" FontSize="12" FontWeight="Bold" />
-                                    <TextBlock Text="New Ward :" Foreground="#333333" FontSize="12" />
-                                </StackPanel>
-                                <ComboBox SelectedIndex="0" Width="180" Height="28" FontSize="12">
-                                    <ComboBoxItem Content="Cardiac Ward - 1" />
-                                    <ComboBoxItem Content="Cardiac Ward - 2" />
-                                    <ComboBoxItem Content="ICU Ward - A" />
-                                </ComboBox>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Action Buttons Footer -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12" Margin="0,8,0,0">
-                        <Button Content="Save" Width="95" Height="32" Background="#2B5886" Foreground="White" FontWeight="Bold" CornerRadius="4" Click="OnBedTransferCloseClicked" />
-                        <Button Content="Cancel" Width="95" Height="32" Background="White" BorderBrush="#CCCCCC" BorderThickness="1" Foreground="#333333" CornerRadius="4" Click="OnBedTransferCloseClicked" />
-                    </StackPanel>
-
-                </StackPanel>
-            </ScrollViewer>
-
-            <!-- Resize Handles (Edges and Corners) -->
-            <!-- Top Edge -->
-            <Rectangle Grid.RowSpan="2" Height="6" VerticalAlignment="Top" HorizontalAlignment="Stretch" Fill="Transparent" Tag="Top" PointerPressed="OnResizePointerPressed" PointerMoved="OnResizePointerMoved" PointerReleased="OnResizePointerReleased" />
-            <!-- Bottom Edge -->
-            <Rectangle Grid.RowSpan="2" Height="6" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Fill="Transparent" Tag="Bottom" PointerPressed="OnResizePointerPressed" PointerMoved="OnResizePointerMoved" PointerReleased="OnResizePointerReleased" />
-            <!-- Left Edge -->
-            <Rectangle Grid.RowSpan="2" Width="6" HorizontalAlignment="Left" VerticalAlignment="Stretch" Fill="Transparent" Tag="Left" PointerPressed="OnResizePointerPressed" PointerMoved="OnResizePointerMoved" PointerReleased="OnResizePointerReleased" />
-            <!-- Right Edge -->
-            <Rectangle Grid.RowSpan="2" Width="6" HorizontalAlignment="Right" VerticalAlignment="Stretch" Fill="Transparent" Tag="Right" PointerPressed="OnResizePointerPressed" PointerMoved="OnResizePointerMoved" PointerReleased="OnResizePointerReleased" />
-
-            <!-- Top Left Corner -->
-            <Rectangle Grid.RowSpan="2" Width="10" Height="10" HorizontalAlignment="Left" VerticalAlignment="Top" Fill="Transparent" Tag="TopLeft" PointerPressed="OnResizePointerPressed" PointerMoved="OnResizePointerMoved" PointerReleased="OnResizePointerReleased" />
-            <!-- Top Right Corner -->
-            <Rectangle Grid.RowSpan="2" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Top" Fill="Transparent" Tag="TopRight" PointerPressed="OnResizePointerPressed" PointerMoved="OnResizePointerMoved" PointerReleased="OnResizePointerReleased" />
-            <!-- Bottom Left Corner -->
-            <Rectangle Grid.RowSpan="2" Width="10" Height="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Fill="Transparent" Tag="BottomLeft" PointerPressed="OnResizePointerPressed" PointerMoved="OnResizePointerMoved" PointerReleased="OnResizePointerReleased" />
-            <!-- Bottom Right Corner -->
-            <Rectangle Grid.RowSpan="2" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Fill="Transparent" Tag="BottomRight" PointerPressed="OnResizePointerPressed" PointerMoved="OnResizePointerMoved" PointerReleased="OnResizePointerReleased" />
-
-        </Grid>
-    </Grid>
-
-    
-    <!-- ==================== PATIENT ACTIONS DROPDOWN CARD ==================== -->
-    <Grid x:Name="PatientActionsDropdownOverlay" Grid.RowSpan="8" Background="Transparent" Visibility="Collapsed" PointerPressed="OnPatientActionsDropdownOverlayPointerPressed">
-        <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,180,16,0" Width="240" MaxHeight="420" Background="White" BorderBrush="#CBD0D8" BorderThickness="1" CornerRadius="4">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel Padding="4,4,4,4">
-                    <Button Click="OnBedTransferMenuItemClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Bed Transfer" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnCancelDischargeClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Cancel Discharge" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnCancelPendingDischargeClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Cancel Pending Discharge" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnCancelPendingTransferClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Cancel Pending Transfer" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnCancelTransferClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Cancel Transfer" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnClozapineRegistryClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Clozapine Registry" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnDischargeEncounterClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Discharge Encounter" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnFacilityTransferMenuItemClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="#E6F2F8" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Facility Transfer" Foreground="#0A658E" FontWeight="Bold" FontSize="12" />
-                    </Button>
-                    <Button Click="OnLeaveOfAbsenceClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Leave of Absence" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnModifyDischargeClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Modify Discharge" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnPendingDischargeClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Pending Discharge" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnPendingFacilityTransferClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Pending Facility Transfer" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnPendingTransferClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Pending Transfer" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnPrintLabelsClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Print Labels" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnProcessAlertClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Process Alert" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnUpdatePatientInformationClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="Update Patient Information" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnViewEncounterClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="View Encounter" Foreground="#222222" FontSize="12" />
-                    </Button>
-                    <Button Click="OnViewPersonClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Padding="12,7" CornerRadius="2">
-                        <TextBlock Text="View Person" Foreground="#222222" FontSize="12" />
-                    </Button>
-                </StackPanel>
-            </ScrollViewer>
-        </Border>
-    </Grid>
-    <!-- ==================== 10. FACILITY TRANSFER FULL SCREEN OVERLAY ==================== -->
-        <Grid x:Name="FacilityTransferOverlay" Grid.RowSpan="8" Background="White" Visibility="Collapsed">
-            <Grid.RowDefinitions>
-                <!-- 0. Header Bar -->
-                <RowDefinition Height="Auto" />
-                <!-- 1. Scrollable Form -->
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <!-- ==================== HEADER BAR ==================== -->
-            <Grid Grid.Row="0" Background="#0A658E" Padding="16,10" BorderBrush="#085375" BorderThickness="0,0,0,2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Button Click="OnFacilityTransferCloseClicked" Background="Transparent" BorderThickness="0" Padding="8,4" VerticalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <FontIcon Glyph="&#xE72B;" FontSize="14" Foreground="White" />
-                        <TextBlock Text="Back" FontSize="13" Foreground="White" />
-                    </StackPanel>
-                </Button>
-
-                <TextBlock Grid.Column="1" Text="Facility Transfer" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
-
-                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10">
-                    <Button Content="Save" Click="OnFacilityTransferCloseClicked" Background="#2B5886" Foreground="White" FontWeight="Bold" Height="30" Width="80" CornerRadius="3" BorderThickness="0" />
-                    <Button Content="Cancel" Click="OnFacilityTransferCloseClicked" Background="White" Foreground="#333333" BorderBrush="#CCCCCC" BorderThickness="1" Height="30" Width="80" CornerRadius="3" />
-                </StackPanel>
-            </Grid>
-
-            <!-- ==================== SCROLLABLE FORM ==================== -->
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                <StackPanel Padding="24,16,24,24" Spacing="16" MaxWidth="1000" HorizontalAlignment="Left">
-                    
-                    <!-- TOP METADATA ROW -->
-                    <Grid ColumnSpacing="30" RowSpacing="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        
-                        <!-- Date / Time -->
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-                            <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Transfer Date / Time :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            
-                            <!-- Date input with Spin Buttons -->
-                            <Grid Width="110" Height="26">
-                                <TextBox Text="07/10/2017" Padding="6,2,24,2" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="18">
-                                    <StackPanel Orientation="Vertical">
-                                        <Button Height="12" Width="18" Padding="0" Background="#F0F4F8" BorderThickness="0" CornerRadius="0,2,0,0">
-                                            <FontIcon Glyph="&#xE70E;" FontSize="6" Foreground="#555555" />
-                                        </Button>
-                                        <Button Height="12" Width="18" Padding="0" Background="#F0F4F8" BorderThickness="0" CornerRadius="0,0,2,0">
-                                            <FontIcon Glyph="&#xE70D;" FontSize="6" Foreground="#555555" />
-                                        </Button>
-                                    </StackPanel>
-                                </Border>
-                            </Grid>
-                            
-                            <!-- Time input with Spin Buttons -->
-                            <Grid Width="65" Height="26">
-                                <TextBox Text="1414" Padding="6,2,24,2" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="18">
-                                    <StackPanel Orientation="Vertical">
-                                        <Button Height="12" Width="18" Padding="0" Background="#F0F4F8" BorderThickness="0" CornerRadius="0,2,0,0">
-                                            <FontIcon Glyph="&#xE70E;" FontSize="6" Foreground="#555555" />
-                                        </Button>
-                                        <Button Height="12" Width="18" Padding="0" Background="#F0F4F8" BorderThickness="0" CornerRadius="0,0,2,0">
-                                            <FontIcon Glyph="&#xE70D;" FontSize="6" Foreground="#555555" />
-                                        </Button>
-                                    </StackPanel>
-                                </Border>
-                            </Grid>
-                            
-                            <TextBlock Text="CDT" Foreground="#333333" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0" />
-                        </StackPanel>
-
-                        <!-- Performed By -->
-                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-                            <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Performed By :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            <Grid Width="220" Height="26">
-                                <TextBox Text="TTP , Nurse" Padding="6,2,30,2" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
-                                    <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
-                                </Button>
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
-
-                    <!-- ==================== CURRENT (SENDING) HOSPITAL INFORMATION ==================== -->
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Current (Sending) Hospital Information" Foreground="#0A658E" FontSize="13" FontWeight="SemiBold" />
-                        <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
-                        
-                        <Grid ColumnSpacing="24" RowSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="120" />
-                                <ColumnDefinition Width="300" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="300" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <!-- Row 0 -->
-                            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Hospital Name :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="City Care Multispeciality Hospital" />
-                            </ComboBox>
-
-                            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Hospital Code :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBox Grid.Row="0" Grid.Column="3" Text="CCH001" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-
-                            <!-- Row 1 -->
-                            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Department :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="General Medicine" />
-                            </ComboBox>
-
-                            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2" VerticalAlignment="Top" Margin="0,4,0,0">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Address :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Text="123 Health Street, Chicago, IL 60601, USA" Height="62" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-
-                            <!-- Row 2 -->
-                            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Contact Person :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <Grid Grid.Row="2" Grid.Column="1" Height="26">
-                                <TextBox Text="Dr. Ramesh Sharma" Padding="6,2,30,2" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
-                                    <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
-                                </Button>
-                            </Grid>
-
-                            <!-- Row 3 -->
-                            <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Phone Number :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBox Grid.Row="3" Grid.Column="1" Text="+1 312 555 0198" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-
-                            <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Email :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBox Grid.Row="3" Grid.Column="3" Text="transferdesk@citycarehospital.com" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                        </Grid>
-                    </StackPanel>
-
-                    <!-- ==================== RECEIVING HOSPITAL INFORMATION ==================== -->
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Receiving Hospital Information" Foreground="#0A658E" FontSize="13" FontWeight="SemiBold" />
-                        <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
-                        
-                        <Grid ColumnSpacing="24" RowSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="120" />
-                                <ColumnDefinition Width="300" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="300" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <!-- Row 0 -->
-                            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Hospital Name :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="Metro Advanced Hospital" />
-                            </ComboBox>
-
-                            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Hospital Code :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBox Grid.Row="0" Grid.Column="3" Text="MAH002" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-
-                            <!-- Row 1 -->
-                            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Department :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="Cardiology" />
-                            </ComboBox>
-
-                            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2" VerticalAlignment="Top" Margin="0,4,0,0">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Address :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Text="456 Wellness Avenue, Chicago, IL 60611, USA" Height="62" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-
-                            <!-- Row 2 -->
-                            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Contact Person :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <Grid Grid.Row="2" Grid.Column="1" Height="26">
-                                <TextBox Text="Dr. Anita Verma" Padding="6,2,30,2" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
-                                    <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
-                                </Button>
-                            </Grid>
-
-                            <!-- Row 3 -->
-                            <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Phone Number :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBox Grid.Row="3" Grid.Column="1" Text="+1 312 555 0456" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-
-                            <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Email :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBox Grid.Row="3" Grid.Column="3" Text="admissions@metrohospital.com" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                        </Grid>
-                    </StackPanel>
-
-                    <!-- ==================== TRANSFER DETAILS ==================== -->
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Transfer Details" Foreground="#0A658E" FontSize="13" FontWeight="SemiBold" />
-                        <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
-                        
-                        <Grid ColumnSpacing="24" RowSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="270" />
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="270" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <!-- Row 0 -->
-                            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Reason for Transfer :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="Advanced Level of Care Required" />
-                            </ComboBox>
-
-                            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Estimated Departure Time :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <!-- Est Departure Date/Time -->
-                            <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" Spacing="4">
-                                <Grid Width="100" Height="26">
-                                    <TextBox Text="07/10/2017" Padding="6,2,20,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                    <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                                <Grid Width="55" Height="26">
-                                    <TextBox Text="1500" Padding="6,2,20,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                    <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                                <TextBlock Text="CDT" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-
-                            <!-- Row 1 -->
-                            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Mode of Transfer :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="Ambulance - ALS" />
-                            </ComboBox>
-
-                            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Estimated Arrival Time :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <!-- Est Arrival Date/Time -->
-                            <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" Spacing="4">
-                                <Grid Width="100" Height="26">
-                                    <TextBox Text="07/10/2017" Padding="6,2,20,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                    <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                                <Grid Width="55" Height="26">
-                                    <TextBox Text="1600" Padding="6,2,20,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                    <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                                <TextBlock Text="CDT" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-
-                            <!-- Row 2 -->
-                            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Priority :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <ComboBox Grid.Row="2" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="High" />
-                            </ComboBox>
-
-                            <TextBlock Grid.Row="2" Grid.Column="2" Text="Comments :" Foreground="#333333" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,0,0" />
-                            <TextBox Grid.Row="2" Grid.Column="3" Grid.RowSpan="3" Text="Patient requires advanced cardiac intervention not available in current hospital." Height="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-
-                            <!-- Row 3 -->
-                            <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Accompanied By :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <ComboBox Grid.Row="3" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="Nurse" />
-                            </ComboBox>
-
-                            <!-- Row 4 -->
-                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Accompanied Personnel :" Foreground="#333333" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            <TextBox Grid.Row="4" Grid.Column="1" Text="Nurse, Paramedic" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                        </Grid>
-                    </StackPanel>
-
-                    <!-- ==================== CLINICAL INFORMATION ==================== -->
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Clinical Information" Foreground="#0A658E" FontSize="13" FontWeight="SemiBold" />
-                        <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
-                        
-                        <Grid ColumnSpacing="24" RowSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="270" />
-                                <ColumnDefinition Width="120" />
-                                <ColumnDefinition Width="300" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <!-- Row 0 -->
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Condition at Transfer :" Foreground="#333333" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="Stable" />
-                            </ComboBox>
-
-                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Treatment Given :" Foreground="#333333" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,0,0" />
-                            <TextBox Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" Text="IV Fluids, Antibiotics, Oxygen Support, Pain Management" Height="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-
-                            <!-- Row 1 -->
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Vital Signs Summary :" Foreground="#333333" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="BP: 120/80 mmHg, Pulse: 88 bpm, SpO2: 96% (RA), Temp: 98.6°F" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-
-                            <!-- Row 2 -->
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Special Precautions :" Foreground="#333333" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            <ComboBox Grid.Row="2" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="Fall Risk" />
-                            </ComboBox>
-                        </Grid>
-                    </StackPanel>
-
-                    <!-- ==================== TRANSFER AUTHORIZATION ==================== -->
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Transfer Authorization" Foreground="#0A658E" FontSize="13" FontWeight="SemiBold" />
-                        <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
-                        
-                        <Grid ColumnSpacing="24" RowSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="270" />
-                                <ColumnDefinition Width="130" />
-                                <ColumnDefinition Width="290" />
-                            </Grid.ColumnDefinitions>
-                            
-                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Requested By :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <Grid Grid.Column="1" Height="26">
-                                <TextBox Text="Dr. Ramesh Sharma" Padding="6,2,30,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
-                                    <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
-                                </Button>
-                            </Grid>
-
-                            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Approved By :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <Grid Grid.Column="3" Height="26">
-                                <TextBox Text="Dr. Mehta, P." Padding="6,2,30,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
-                                    <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
-                                </Button>
-                            </Grid>
-                        </Grid>
-                        
-                        <Grid ColumnSpacing="24" RowSpacing="10" Margin="0,10,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="270" />
-                                <ColumnDefinition Width="130" />
-                                <ColumnDefinition Width="290" />
-                            </Grid.ColumnDefinitions>
-                            
-                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Requested Date / Time :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
-                                <Grid Width="100" Height="26">
-                                    <TextBox Text="07/10/2017" Padding="6,2,20,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                    <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                                <Grid Width="55" Height="26">
-                                    <TextBox Text="1200" Padding="6,2,20,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                    <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                                <TextBlock Text="CDT" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="2">
-                                <TextBlock Text="*" Foreground="#D9534F" FontWeight="Bold" FontSize="12" Margin="0,0,2,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Approved Date / Time :" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="4">
-                                <Grid Width="100" Height="26">
-                                    <TextBox Text="07/10/2017" Padding="6,2,20,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                    <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                                <Grid Width="55" Height="26">
-                                    <TextBox Text="1245" Padding="6,2,20,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                    <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                                <TextBlock Text="CDT" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-
-                    <!-- ==================== HANDOVER INFORMATION ==================== -->
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Handover Information" Foreground="#0A658E" FontSize="13" FontWeight="SemiBold" />
-                        <Border BorderBrush="#B5D0E6" BorderThickness="0,0,0,1" Margin="0,0,0,8" />
-                        
-                        <Grid ColumnSpacing="24" RowSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="270" />
-                                <ColumnDefinition Width="130" />
-                                <ColumnDefinition Width="290" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <!-- Row 0 -->
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Handover Completed :" Foreground="#333333" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="Yes" />
-                                <ComboBoxItem Content="No" />
-                            </ComboBox>
-
-                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Handover To :" Foreground="#333333" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            <Grid Grid.Row="0" Grid.Column="3" Height="26">
-                                <TextBox Text="Dr. Anita Verma" Padding="6,2,30,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                <Button Width="26" Height="24" HorizontalAlignment="Right" Background="#F0F4F8" BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" Padding="0" CornerRadius="0,2,2,0">
-                                    <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
-                                </Button>
-                            </Grid>
-
-                            <!-- Row 1 -->
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Handover Method :" Foreground="#333333" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Stretch">
-                                <ComboBoxItem Content="Verbal" />
-                                <ComboBoxItem Content="Written" />
-                                <ComboBoxItem Content="Electronic" />
-                            </ComboBox>
-
-                            <TextBlock Grid.Row="1" Grid.Column="2" Text="Handover Time :" Foreground="#333333" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" Spacing="4">
-                                <Grid Width="100" Height="26">
-                                    <TextBox Text="07/10/2017" Padding="6,2,20,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                    <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                                <Grid Width="55" Height="26">
-                                    <TextBox Text="1450" Padding="6,2,20,2" Height="26" FontSize="12" BorderBrush="#A0C2DE" BorderThickness="1" CornerRadius="2" />
-                                    <Border BorderBrush="#A0C2DE" BorderThickness="1,0,0,0" HorizontalAlignment="Right" Width="16">
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70E;" FontSize="5"/></Button>
-                                            <Button Height="12" Width="16" Padding="0" Background="#F0F4F8" BorderThickness="0"><FontIcon Glyph="&#xE70D;" FontSize="5"/></Button>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                                <TextBlock Text="CDT" Foreground="#333333" FontSize="12" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-
-                </StackPanel>
-            </ScrollViewer>
+            <!-- Right Status System & User Info -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="24" VerticalAlignment="Center">
+                <TextBlock Text="User: AxioVital Admin" Foreground="White" FontSize="10" />
+                <TextBlock Text="AXIOVITAL HEALTHCARE SYSTEM" Foreground="White" FontSize="10" FontWeight="Bold" />
+                <TextBlock Text="PROD" Foreground="White" FontSize="10" FontWeight="Bold" />
+                <TextBlock x:Name="FooterDateTimeText" Text="12/08/2026 03:12 AM" Foreground="White" FontSize="10" />
+            </StackPanel>
         </Grid>
 
     </Grid>

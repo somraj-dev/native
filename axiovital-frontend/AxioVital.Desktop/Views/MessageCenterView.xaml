@@ -1,0 +1,182 @@
+<UserControl
+    x:Class="AxioVital.Desktop.Views.MessageCenterView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="Segoe UI">
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <!-- Action Bar -->
+            <RowDefinition Height="Auto" />
+            <!-- Data Table -->
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Top Action Toolbar -->
+        <Grid Grid.Row="0" Background="#F0F4F8" Padding="10,4" BorderBrush="#CBD5E1" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" Spacing="20" VerticalAlignment="Center">
+
+                <!-- Communicate Dropdown Action -->
+                <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE789;" FontSize="10" Foreground="#C82333" VerticalAlignment="Center" />
+                    <TextBlock Text="Communicate" Foreground="#333333" FontSize="10.5" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    <FontIcon Glyph="&#xE70D;" FontSize="7" Foreground="#666666" VerticalAlignment="Center" Margin="1,1,0,0" />
+                </StackPanel>
+
+                <!-- Open Action -->
+                <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE8B7;" FontSize="10" Foreground="#D97706" VerticalAlignment="Center" />
+                    <TextBlock Text="Open" Foreground="#333333" FontSize="10.5" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <!-- Message Journal Action -->
+                <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE8A5;" FontSize="10" Foreground="#0A658E" VerticalAlignment="Center" />
+                    <TextBlock Text="Message Journal" Foreground="#333333" FontSize="10.5" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <!-- Forward Only Action -->
+                <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE72A;" FontSize="10" Foreground="#C82333" VerticalAlignment="Center" />
+                    <TextBlock Text="Forward Only" Foreground="#333333" FontSize="10.5" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <!-- Select Patient Action -->
+                <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE77B;" FontSize="10" Foreground="#0A658E" VerticalAlignment="Center" />
+                    <TextBlock Text="Select Patient" Foreground="#333333" FontSize="10.5" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <!-- Select All Action -->
+                <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE73D;" FontSize="10" Foreground="#0A658E" VerticalAlignment="Center" />
+                    <TextBlock Text="Select All" Foreground="#333333" FontSize="10.5" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+
+        <!-- Main Data Table with Column Headers -->
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="21" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Column Headers -->
+                <Grid Grid.Row="0" Background="#E2EAF0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="210" />
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="190" />
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="115" />
+                        <ColumnDefinition Width="115" />
+                        <ColumnDefinition Width="115" />
+                        <ColumnDefinition Width="105" />
+                        <ColumnDefinition Width="70" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="5,2">
+                        <TextBlock Text="Patient Name" Foreground="#334455" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    </Border>
+                    <Border Grid.Column="1" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="5,2">
+                        <TextBlock Text="Plan Name" Foreground="#334455" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    </Border>
+                    <Border Grid.Column="2" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="5,2">
+                        <TextBlock Text="Action" Foreground="#334455" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    </Border>
+                    <Border Grid.Column="3" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="5,2">
+                        <TextBlock Text="Details" Foreground="#334455" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    </Border>
+                    <Border Grid.Column="4" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="5,2">
+                        <TextBlock Text="Details" Foreground="#334455" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    </Border>
+                    <Border Grid.Column="5" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="5,2">
+                        <TextBlock Text="Comment" Foreground="#334455" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    </Border>
+                    <Border Grid.Column="6" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="5,2">
+                        <TextBlock Text="Originator Name" Foreground="#334455" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    </Border>
+                    <Border Grid.Column="7" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="5,2">
+                        <TextBlock Text="Create Date" Foreground="#334455" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    </Border>
+                    <Border Grid.Column="8" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="5,2">
+                        <TextBlock Text="Stop Date" Foreground="#334455" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    </Border>
+                    <Border Grid.Column="9" BorderBrush="#C2D3E0" BorderThickness="0,0,1,1" Padding="5,2">
+                        <TextBlock Text="Stop Type" Foreground="#334455" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    </Border>
+                    <Border Grid.Column="10" BorderBrush="#C2D3E0" BorderThickness="0,0,0,1" Padding="5,2">
+                        <TextBlock Text="Status" Foreground="#334455" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                    </Border>
+                </Grid>
+
+                <!-- Data Rows -->
+                <ItemsControl Grid.Row="1" x:Name="MessageCenterItemsControl">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding RowBackground}" BorderBrush="#E5EAEF" BorderThickness="0,0,0,1">
+                                <Grid Height="21">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="210" />
+                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="190" />
+                                        <ColumnDefinition Width="90" />
+                                        <ColumnDefinition Width="115" />
+                                        <ColumnDefinition Width="115" />
+                                        <ColumnDefinition Width="115" />
+                                        <ColumnDefinition Width="105" />
+                                        <ColumnDefinition Width="70" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" BorderBrush="#E2E6EA" BorderThickness="0,0,1,0" Padding="5,1">
+                                        <TextBlock Text="{Binding PatientName}" Foreground="#000000" FontWeight="Bold" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Grid.Column="1" BorderBrush="#E2E6EA" BorderThickness="0,0,1,0" Padding="5,1">
+                                        <TextBlock Text="{Binding PlanName}" Foreground="#0A658E" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Grid.Column="2" BorderBrush="#E2E6EA" BorderThickness="0,0,1,0" Padding="5,1">
+                                        <TextBlock Text="{Binding Action}" Foreground="#333333" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Grid.Column="3" BorderBrush="#E2E6EA" BorderThickness="0,0,1,0" Padding="5,1">
+                                        <TextBlock Text="{Binding DetailsDate}" Foreground="#778899" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Grid.Column="4" BorderBrush="#E2E6EA" BorderThickness="0,0,1,0" Padding="5,1">
+                                        <TextBlock Text="{Binding DetailsDesc}" Foreground="#333333" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Grid.Column="5" BorderBrush="#E2E6EA" BorderThickness="0,0,1,0" Padding="5,1">
+                                        <TextBlock Text="{Binding Comment}" Foreground="#555555" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Grid.Column="6" BorderBrush="#E2E6EA" BorderThickness="0,0,1,0" Padding="5,1">
+                                        <TextBlock Text="{Binding OriginatorName}" Foreground="#555555" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Grid.Column="7" BorderBrush="#E2E6EA" BorderThickness="0,0,1,0" Padding="5,1">
+                                        <TextBlock Text="{Binding CreateDate}" Foreground="#778899" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Grid.Column="8" BorderBrush="#E2E6EA" BorderThickness="0,0,1,0" Padding="5,1">
+                                        <TextBlock Text="{Binding StopDate}" Foreground="#778899" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Grid.Column="9" BorderBrush="#E2E6EA" BorderThickness="0,0,1,0" Padding="5,1">
+                                        <TextBlock Text="{Binding StopType}" Foreground="#333333" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Grid.Column="10" BorderBrush="#E2E6EA" BorderThickness="0,0,0,0" Padding="5,1">
+                                        <TextBlock Text="{Binding Status}" Foreground="#008000" FontWeight="Bold" FontSize="10" FontFamily="Segoe UI" VerticalAlignment="Center" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

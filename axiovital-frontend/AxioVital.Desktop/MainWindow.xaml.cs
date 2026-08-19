@@ -15,8 +15,8 @@ public sealed partial class MainWindow : Window
     {
         this.InitializeComponent();
 
-        // Launch initial full-screen AxioVital Environment Login Screen
-        RootFrame.Navigate(typeof(LoginPage));
+        // Launch initial full-screen AxioVital Environment Main View directly
+        RootFrame.Navigate(typeof(MainPage));
     }
 
     public void ToggleFullScreen()
