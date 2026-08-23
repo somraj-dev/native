@@ -161,6 +161,12 @@ if (Test-Path $priBuildPath) {
     Write-Host "       Copied AutoMerged resources.pri to publish directory." -ForegroundColor Green
 }
 
+$assetsSource = Join-Path $projectDir "Assets"
+if (Test-Path $assetsSource) {
+    Copy-Item $assetsSource $publishDir -Recurse -Force
+    Write-Host "       Copied Assets to publish directory." -ForegroundColor Green
+}
+
 # --- Step 6: Create SmartScreen Unblock Launcher in Publish Folder ---
 $launcherPath = Join-Path $publishDir "Run-AxioVital.bat"
 $launcherContent = @"

@@ -1,0 +1,673 @@
+<UserControl
+    x:Class="AxioVital.Desktop.Views.PhysicianHandoffView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="Segoe UI">
+
+    <Grid Background="#FFFFFF">
+        <Grid.RowDefinitions>
+            <!-- 1. Top Controls Bar (Flowsheet, Level, View Mode) -->
+            <RowDefinition Height="Auto" />
+            <!-- 2. Blue Sub-Banner (Last 300 Results in the Past 5 Years) -->
+            <RowDefinition Height="Auto" />
+            <!-- 3. Main Split View: Left Navigator + Right Matrix Table -->
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- ==================== 1. TOP CONTROLS TOOLBAR ==================== -->
+        <Grid Grid.Row="0" Background="#F0F4F8" Padding="12,4,12,4" BorderBrush="#CBD7DF" BorderThickness="0,0,0,1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Controls: Flowsheet & Level Dropdowns -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                <TextBlock Text="Flowsheet:" Foreground="#222222" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" />
+                
+                <!-- Flowsheet Dropdown Box -->
+                <Border Background="#FFFFFF" BorderBrush="#8FA3B5" BorderThickness="1" CornerRadius="2" Height="22" Width="185" Padding="7,0,6,0" VerticalAlignment="Center">
+                    <Grid>
+                        <TextBlock Text="All Results Flowsheet" Foreground="#111111" FontSize="10.5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <TextBlock Text="▾" Foreground="#445566" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                    </Grid>
+                </Border>
+
+                <!-- [...] Action Button -->
+                <Border Background="#FFFFFF" BorderBrush="#8FA3B5" BorderThickness="1" CornerRadius="2" Height="22" Width="26" VerticalAlignment="Center">
+                    <TextBlock Text="···" Foreground="#333333" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-2,0,0" />
+                </Border>
+
+                <!-- Level Label -->
+                <TextBlock Text="Level:" Foreground="#222222" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0,0,0" />
+
+                <!-- Level Dropdown Box -->
+                <Border Background="#FFFFFF" BorderBrush="#8FA3B5" BorderThickness="1" CornerRadius="2" Height="22" Width="145" Padding="7,0,6,0" VerticalAlignment="Center">
+                    <Grid>
+                        <TextBlock Text="ALLRESULTSECT" Foreground="#111111" FontSize="10.5" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <TextBlock Text="▾" Foreground="#445566" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                    </Grid>
+                </Border>
+            </StackPanel>
+
+            <!-- Right Controls: View Mode Radios -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
+                <!-- Table (Selected) -->
+                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center" PointerPressed="OnTableRadioPressed">
+                    <Grid Width="13" Height="13" VerticalAlignment="Center">
+                        <Ellipse x:Name="TableRadioRing" Width="13" Height="13" Stroke="#0B4466" StrokeThickness="1.5" Fill="White" />
+                        <Ellipse x:Name="TableRadioDot" Width="6.5" Height="6.5" Fill="#0B4466" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" />
+                    </Grid>
+                    <TextBlock x:Name="TableRadioText" Text="Table" FontSize="11" Foreground="#0B4466" FontWeight="SemiBold" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <!-- Group -->
+                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center" PointerPressed="OnGroupRadioPressed">
+                    <Grid Width="13" Height="13" VerticalAlignment="Center">
+                        <Ellipse x:Name="GroupRadioRing" Width="13" Height="13" Stroke="#777777" StrokeThickness="1.2" Fill="White" />
+                        <Ellipse x:Name="GroupRadioDot" Width="6.5" Height="6.5" Fill="#0B4466" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" />
+                    </Grid>
+                    <TextBlock x:Name="GroupRadioText" Text="Group" FontSize="11" Foreground="#111111" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <!-- List -->
+                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center" PointerPressed="OnListRadioPressed">
+                    <Grid Width="13" Height="13" VerticalAlignment="Center">
+                        <Ellipse x:Name="ListRadioRing" Width="13" Height="13" Stroke="#777777" StrokeThickness="1.2" Fill="White" />
+                        <Ellipse x:Name="ListRadioDot" Width="6.5" Height="6.5" Fill="#0B4466" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" />
+                    </Grid>
+                    <TextBlock x:Name="ListRadioText" Text="List" FontSize="11" Foreground="#111111" VerticalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <!-- ==================== 2. SUB-BANNER BAR ==================== -->
+        <Grid Grid.Row="1" Background="#7596A9" Height="23" Padding="12,0">
+            <TextBlock Text="Last 300 Results in the Past 5 Years" 
+                       Foreground="White" 
+                       FontSize="10.5" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" />
+        </Grid>
+
+        <!-- ==================== 3. MAIN SPLIT CONTENT ==================== -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <!-- Left Navigator Sidebar -->
+                <ColumnDefinition Width="190" />
+                <!-- Right Matrix Grid -->
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Navigator Pane -->
+            <Border Grid.Column="0" Background="#F8FAFC" BorderBrush="#CBD7DF" BorderThickness="0,0,1,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Navigator Header -->
+                    <Border Grid.Row="0" Background="#B8C8D4" BorderBrush="#CBD7DF" BorderThickness="0,0,0,1" Padding="8,5">
+                        <TextBlock Text="Navigator" Foreground="#112233" FontSize="10.5" FontWeight="Bold" VerticalAlignment="Center" />
+                    </Border>
+
+                    <!-- Checklist -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="8,8,6,8">
+                        <StackPanel Spacing="7">
+                            <!-- Checked: Sample Information -->
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <Border Width="13" Height="13" Background="#0A658E" CornerRadius="2">
+                                    <TextBlock Text="✓" Foreground="White" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-1,0,0" />
+                                </Border>
+                                <TextBlock Text="Sample Information" FontSize="10.5" FontWeight="Bold" Foreground="#111111" VerticalAlignment="Center" />
+                            </StackPanel>
+
+                            <!-- Checked: CBC and Peripheral Smear -->
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <Border Width="13" Height="13" Background="#0A658E" CornerRadius="2">
+                                    <TextBlock Text="✓" Foreground="White" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-1,0,0" />
+                                </Border>
+                                <TextBlock Text="CBC and Peripheral Sm..." FontSize="10.5" FontWeight="Bold" Foreground="#111111" VerticalAlignment="Center" />
+                            </StackPanel>
+
+                            <!-- Checked: Coagulation -->
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <Border Width="13" Height="13" Background="#0A658E" CornerRadius="2">
+                                    <TextBlock Text="✓" Foreground="White" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-1,0,0" />
+                                </Border>
+                                <TextBlock Text="Coagulation" FontSize="10.5" FontWeight="Bold" Foreground="#111111" VerticalAlignment="Center" />
+                            </StackPanel>
+
+                            <!-- Checked: General Chemistry -->
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <Border Width="13" Height="13" Background="#0A658E" CornerRadius="2">
+                                    <TextBlock Text="✓" Foreground="White" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-1,0,0" />
+                                </Border>
+                                <TextBlock Text="General Chemistry" FontSize="10.5" FontWeight="Bold" Foreground="#111111" VerticalAlignment="Center" />
+                            </StackPanel>
+
+                            <!-- Unchecked: Bacterial Serology and Mol... -->
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <Border Width="13" Height="13" Background="White" BorderBrush="#99AAB8" BorderThickness="1" CornerRadius="2" />
+                                <TextBlock Text="Bacterial Serology and Mol..." FontSize="10" Foreground="#555555" VerticalAlignment="Center" />
+                            </StackPanel>
+
+                            <!-- Unchecked: Discharge Documentation -->
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <Border Width="13" Height="13" Background="White" BorderBrush="#99AAB8" BorderThickness="1" CornerRadius="2" />
+                                <TextBlock Text="Discharge Documentation" FontSize="10" Foreground="#555555" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- Right Results Flowsheet Matrix Table -->
+            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <Grid Background="#FFFFFF" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <!-- Column 0: Test / Result Name -->
+                        <ColumnDefinition Width="210" />
+                        <!-- Date Columns with Star Width to fill 100% of space evenly -->
+                        <ColumnDefinition Width="*" MinWidth="105" />
+                        <ColumnDefinition Width="*" MinWidth="105" />
+                        <ColumnDefinition Width="*" MinWidth="105" />
+                        <ColumnDefinition Width="*" MinWidth="105" />
+                        <ColumnDefinition Width="*" MinWidth="105" />
+                        <ColumnDefinition Width="*" MinWidth="105" />
+                        <ColumnDefinition Width="*" MinWidth="105" />
+                        <ColumnDefinition Width="*" MinWidth="105" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <!-- 0: Column Headers (Dates) -->
+                        <RowDefinition Height="30" />
+                        <!-- 1: Section: Sample Information -->
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="24" />
+                        <!-- 3: Section: CBC and Peripheral Smear -->
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <!-- 21: Section: Coagulation -->
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <!-- 24: Section: General Chemistry -->
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                    </Grid.RowDefinitions>
+
+                    <!-- ==================== 0. COLUMN HEADERS ==================== -->
+                    <Border Grid.Row="0" Grid.Column="0" Background="#EDF3F7" BorderBrush="#CBD7DF" BorderThickness="0,0,1,1" Padding="8,4">
+                        <TextBlock Text="Results" Foreground="#334455" FontSize="10" FontWeight="Bold" VerticalAlignment="Center" />
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="1" Background="#EDF3F7" BorderBrush="#CBD7DF" BorderThickness="0,0,1,1" Padding="4,2">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="06-Jun-2018" Foreground="#334455" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" />
+                            <TextBlock Text="08:10 PDT" Foreground="#556677" FontSize="8.5" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="2" Background="#EDF3F7" BorderBrush="#CBD7DF" BorderThickness="0,0,1,1" Padding="4,2">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="06-Jun-2018" Foreground="#334455" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" />
+                            <TextBlock Text="12:10 PDT" Foreground="#556677" FontSize="8.5" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="3" Background="#EDF3F7" BorderBrush="#CBD7DF" BorderThickness="0,0,1,1" Padding="4,2">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="06-Jun-2018" Foreground="#334455" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" />
+                            <TextBlock Text="16:00 PDT" Foreground="#556677" FontSize="8.5" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="4" Background="#EDF3F7" BorderBrush="#CBD7DF" BorderThickness="0,0,1,1" Padding="4,2">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="05-Jun-2018" Foreground="#334455" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" />
+                            <TextBlock Text="12:48 PDT" Foreground="#556677" FontSize="8.5" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="5" Background="#EDF3F7" BorderBrush="#CBD7DF" BorderThickness="0,0,1,1" Padding="4,2">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="05-Jun-2018" Foreground="#334455" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" />
+                            <TextBlock Text="11:30 PDT" Foreground="#556677" FontSize="8.5" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="6" Background="#EDF3F7" BorderBrush="#CBD7DF" BorderThickness="0,0,1,1" Padding="4,2">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="27-May-2018" Foreground="#334455" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" />
+                            <TextBlock Text="18:21 PDT" Foreground="#556677" FontSize="8.5" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="7" Background="#EDF3F7" BorderBrush="#CBD7DF" BorderThickness="0,0,1,1" Padding="4,2">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="27-May-2018" Foreground="#334455" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" />
+                            <TextBlock Text="04:40 PDT" Foreground="#556677" FontSize="8.5" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="8" Background="#EDF3F7" BorderBrush="#CBD7DF" BorderThickness="0,0,0,1" Padding="4,2">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="20-May-2018" Foreground="#334455" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" />
+                            <TextBlock Text="08:30 PDT" Foreground="#556677" FontSize="8.5" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- ==================== 1. SECTION: SAMPLE INFORMATION ==================== -->
+                    <Border Grid.Row="1" Grid.ColumnSpan="9" Background="#D9E5EE" BorderBrush="#CBD7DF" BorderThickness="0,0,0,1" Padding="8,2">
+                        <TextBlock Text="Sample Information" Foreground="#0A4C6D" FontSize="10" FontWeight="Bold" VerticalAlignment="Center" />
+                    </Border>
+
+                    <!-- Row: Type of Specimen Collection -->
+                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Type of Specimen Collection" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="2" Grid.Column="1" BorderBrush="#111111" BorderThickness="1.5" Background="#FFFFFF" Margin="1" Padding="4,2"><TextBlock Text="Capillary" Foreground="#111111" FontSize="9.5" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="2" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="Unknown" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="2" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="2" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="Unknown" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="2" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="Line" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="2" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="Line" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="2" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="2" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- ==================== 2. SECTION: CBC AND PERIPHERAL SMEAR ==================== -->
+                    <Border Grid.Row="3" Grid.ColumnSpan="9" Background="#D9E5EE" BorderBrush="#CBD7DF" BorderThickness="0,0,0,1" Padding="8,2">
+                        <TextBlock Text="CBC and Peripheral Smear" Foreground="#0A4C6D" FontSize="10" FontWeight="Bold" VerticalAlignment="Center" />
+                    </Border>
+
+                    <!-- Row 4: White Blood Cells -->
+                    <Border Grid.Row="4" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="White Blood Cells" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="4" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="4.5" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="4" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="4" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="4" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="4.9" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="4" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.7" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="4" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="1.7" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="4" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="4" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 5: Red Blood Cells -->
+                    <Border Grid.Row="5" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Red Blood Cells" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="5" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="4.14" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="5" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="5" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="5" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="4.12" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="5" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 3.56" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="5" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="4.10" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="5" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="5" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 6: Hemoglobin -->
+                    <Border Grid.Row="6" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Hemoglobin" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="6" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 107" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="6" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="6" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="6" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 119" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="6" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 103" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="6" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 107" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="6" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="6" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 7: Hematocrit -->
+                    <Border Grid.Row="7" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Hematocrit" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="7" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 0.316" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="7" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="7" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="7" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 0.352" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="7" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 0.303" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="7" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 0.313" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="7" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="7" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 8: Mean Corpuscular Volume -->
+                    <Border Grid.Row="8" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Mean Corpuscular Volume" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="8" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 77.1" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="8" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="8" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="8" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 78.2" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="8" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 75.7" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="8" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 76.3" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="8" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="8" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 9: Mean Corpuscular Hemoglobin -->
+                    <Border Grid.Row="9" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Mean Corpuscular Hemoglobin" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="9" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="25.8" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="9" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="9" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="9" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="26.7" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="9" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="26.1" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="9" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="26.1" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="9" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="9" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 10: RDW-CV -->
+                    <Border Grid.Row="10" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="RDW-CV" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="10" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 0.183" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="10" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="10" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="10" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 0.162" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="10" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 0.189" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="10" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.147" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="10" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="10" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 11: Platelet Count -->
+                    <Border Grid.Row="11" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Platelet Count" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="11" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 158" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="11" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="11" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="11" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="291" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="11" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 152" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="11" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 151" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="11" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="11" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 12: Mean Platelet Volume -->
+                    <Border Grid.Row="12" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Mean Platelet Volume" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="12" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="9.8" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="12" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="12" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="12" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="9.3" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="12" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="9.9" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="12" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="9.8" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="12" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="12" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 13: Neutrophils -->
+                    <Border Grid.Row="13" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Neutrophils" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="13" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="2.04" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="13" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="13" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="13" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="1.88" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="13" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="4.73" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="13" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="3.07" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="13" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="13" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 14: Lymphocytes -->
+                    <Border Grid.Row="14" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Lymphocytes" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="14" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="1.54" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="14" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="14" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="14" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="1.88" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="14" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="2.69" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="14" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="1.93" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="14" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="14" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 15: Monocytes -->
+                    <Border Grid.Row="15" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Monocytes" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="15" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.44" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="15" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="15" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="15" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.57" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="15" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.50" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="15" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.33" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="15" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="15" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 16: Eosinophils -->
+                    <Border Grid.Row="16" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Eosinophils" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="16" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.28" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="16" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="16" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="16" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 0.32" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="16" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.47" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="16" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.31" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="16" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="16" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 17: Basophils -->
+                    <Border Grid.Row="17" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Basophils" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="17" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.05" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="17" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="17" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="17" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.07" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="17" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.08" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="17" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.10" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="17" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="17" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 18: Blood Film Screen -->
+                    <Border Grid.Row="18" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Blood Film Screen" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="18" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="18" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="18" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="18" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="Automated diff" Foreground="#222222" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="18" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="18" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="Automated diff" Foreground="#222222" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="18" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="18" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 19: RBC Morphology -->
+                    <Border Grid.Row="19" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="RBC Morphology" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="19" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="Non-specific poi" Foreground="#222222" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="19" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="19" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="19" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="Non-specific poi" Foreground="#222222" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="19" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="19" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="Non-specific poi" Foreground="#222222" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="19" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="Non-specific poi" Foreground="#222222" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="19" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 20: Platelet Comments -->
+                    <Border Grid.Row="20" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Platelet Comments" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="20" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="20" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="20" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="20" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="20" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="20" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="20" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="20" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- ==================== 3. SECTION: COAGULATION ==================== -->
+                    <Border Grid.Row="21" Grid.ColumnSpan="9" Background="#D9E5EE" BorderBrush="#CBD7DF" BorderThickness="0,0,0,1" Padding="8,2">
+                        <TextBlock Text="Coagulation" Foreground="#0A4C6D" FontSize="10" FontWeight="Bold" VerticalAlignment="Center" />
+                    </Border>
+
+                    <!-- Row 22: Heparin LMW Time of Last Dose -->
+                    <Border Grid.Row="22" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Heparin LMW Time of Last Dose" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="22" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="22" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="Unknown" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="22" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="22" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="22" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="22" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="22" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="22" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 23: Heparin Low Molecular Weight -->
+                    <Border Grid.Row="23" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Heparin Low Molecular Weight" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="23" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="23" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 0.41" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="23" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="23" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="23" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="23" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="23" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="23" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- ==================== 4. SECTION: GENERAL CHEMISTRY ==================== -->
+                    <Border Grid.Row="24" Grid.ColumnSpan="9" Background="#D9E5EE" BorderBrush="#CBD7DF" BorderThickness="0,0,0,1" Padding="8,2">
+                        <TextBlock Text="General Chemistry" Foreground="#0A4C6D" FontSize="10" FontWeight="Bold" VerticalAlignment="Center" />
+                    </Border>
+
+                    <!-- Row 25: Sodium -->
+                    <Border Grid.Row="25" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Sodium" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="25" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 146" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="25" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="140" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="25" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="25" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="139" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="25" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="25" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="141" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="25" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="144" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="25" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 26: Potassium -->
+                    <Border Grid.Row="26" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Potassium" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="26" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="4.2" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="26" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* 4.4" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="26" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="26" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="4.4" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="26" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 3.4" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="26" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="26" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="3.8" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="26" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 27: Calcium Total -->
+                    <Border Grid.Row="27" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Calcium Total" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="27" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="2.24" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="27" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="2.38" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="27" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="27" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 2.21" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="27" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="27" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 2.10" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="27" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="27" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 28: Magnesium -->
+                    <Border Grid.Row="28" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Magnesium" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="28" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 0.67" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="28" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* L 0.72" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="28" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="28" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="0.77" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="28" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="28" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 0.67" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="28" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 0.71" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="28" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 29: Phosphate -->
+                    <Border Grid.Row="29" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Phosphate" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="29" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 1.64" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="29" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* H 1.55" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="29" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="29" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 1.78" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="29" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="29" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 1.55" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="29" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 1.72" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="29" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 30: Urea -->
+                    <Border Grid.Row="30" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Urea" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="30" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="2.9" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="30" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* 4.0" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="30" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="30" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="4.0" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="30" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="30" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 2.7" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="30" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L 1.8" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="30" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 31: Creatinine -->
+                    <Border Grid.Row="31" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Creatinine" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="31" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* 90" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="31" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* 85" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="31" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="31" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* H 108" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="31" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="31" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* 81" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="31" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* 72" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="31" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 32: Bilirubin Unconjugated -->
+                    <Border Grid.Row="32" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Bilirubin Unconjugated" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="32" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L &lt; 2" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="32" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* L &lt; 2" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="32" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="32" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L &lt; 2" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="32" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="32" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="L &lt; 2" Foreground="#1A56DB" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="32" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="32" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 33: Bilirubin Conjugated -->
+                    <Border Grid.Row="33" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Bilirubin Conjugated" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="33" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="&lt; 2" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="33" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* &lt; 2" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="33" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="33" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="&lt; 2" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="33" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="33" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="&lt; 2" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="33" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="33" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 34: Alanine Aminotransferase -->
+                    <Border Grid.Row="34" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Alanine Aminotransferase" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="34" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 58" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="34" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* H 43" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="34" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="34" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 37" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="34" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="34" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 52" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="34" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="34" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 35: Aspartate Aminotransferase -->
+                    <Border Grid.Row="35" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Aspartate Aminotransferase" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="35" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 72" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="35" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* H 66" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="35" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="35" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="41" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="35" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="35" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 44" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="35" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="35" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 36: Alkaline Phosphatase -->
+                    <Border Grid.Row="36" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Alkaline Phosphatase" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="36" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="80" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="36" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="76" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="36" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="36" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="64" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="36" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="36" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="78" Foreground="#222222" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="36" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="36" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                    <!-- Row 37: Gamma Glutamyltransferase -->
+                    <Border Grid.Row="37" Grid.Column="0" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="8,3"><TextBlock Text="Gamma Glutamyltransferase" Foreground="#222222" FontSize="9.5" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="37" Grid.Column="1" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 60" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="37" Grid.Column="2" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="* H 50" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="37" Grid.Column="3" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="37" Grid.Column="4" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 50" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="37" Grid.Column="5" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="37" Grid.Column="6" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3"><TextBlock Text="H 46" Foreground="#D92D20" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                    <Border Grid.Row="37" Grid.Column="7" BorderBrush="#E5ECF0" BorderThickness="0,0,1,1" Padding="4,3" />
+                    <Border Grid.Row="37" Grid.Column="8" BorderBrush="#E5ECF0" BorderThickness="0,0,0,1" Padding="4,3" />
+
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

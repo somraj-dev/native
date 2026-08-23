@@ -37,6 +37,11 @@ public partial class MainPage : Page
         timer.Interval = TimeSpan.FromSeconds(1);
         timer.Tick += (s, e) => UpdateFooterDateTime();
         timer.Start();
+
+        this.Loaded += (s, e) =>
+        {
+            SearchBox?.Focus(FocusState.Programmatic);
+        };
     }
 
     private void UpdateFooterDateTime()
@@ -85,6 +90,10 @@ public partial class MainPage : Page
         if (SchedulerViewControl != null) SchedulerViewControl.Visibility = (targetView == SchedulerViewControl) ? Visibility.Visible : Visibility.Collapsed;
         if (OngoingActivitiesViewControl != null) OngoingActivitiesViewControl.Visibility = (targetView == OngoingActivitiesViewControl) ? Visibility.Visible : Visibility.Collapsed;
         if (CustomisedViewControl != null) CustomisedViewControl.Visibility = (targetView == CustomisedViewControl) ? Visibility.Visible : Visibility.Collapsed;
+        if (QualityMeasuresViewControl != null) QualityMeasuresViewControl.Visibility = (targetView == QualityMeasuresViewControl) ? Visibility.Visible : Visibility.Collapsed;
+        if (PhysicianHandoffViewControl != null) PhysicianHandoffViewControl.Visibility = (targetView == PhysicianHandoffViewControl) ? Visibility.Visible : Visibility.Collapsed;
+        if (UpToDateViewControl != null) UpToDateViewControl.Visibility = (targetView == UpToDateViewControl) ? Visibility.Visible : Visibility.Collapsed;
+        if (AnalyticsViewControl != null) AnalyticsViewControl.Visibility = (targetView == AnalyticsViewControl) ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private void OnTabStripItemClick(object sender, ItemClickEventArgs e)
@@ -122,6 +131,18 @@ public partial class MainPage : Page
                 break;
             case "customised":
                 ShowCustomisedView();
+                break;
+            case "quality_measures":
+                ShowQualityMeasuresView();
+                break;
+            case "physician_handoff":
+                ShowPhysicianHandoffView();
+                break;
+            case "uptodate":
+                ShowUpToDateView();
+                break;
+            case "analytics":
+                ShowAnalyticsView();
                 break;
             case "home":
                 ShowHomeView();
@@ -188,6 +209,11 @@ public partial class MainPage : Page
         ShowOrdersView();
     }
 
+    private void OnQualityMeasuresTabPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        ShowQualityMeasuresView();
+    }
+
     private void OnOngoingActivitiesTabPointerPressed(object sender, PointerRoutedEventArgs e)
     {
         ShowOngoingActivitiesView();
@@ -203,45 +229,61 @@ public partial class MainPage : Page
         ShowLabsView();
     }
 
+    private void OnPhysicianHandoffTabPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        ShowPhysicianHandoffView();
+    }
+
+    private void ResetSubNavTabHighlights()
+    {
+        var neutralColor = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 51, 51, 51));
+
+        if (MessageCenterTabBorder != null) { MessageCenterTabBorder.BorderBrush = null; MessageCenterTabBorder.BorderThickness = new Thickness(0); }
+        if (MessageCenterTabText != null) { MessageCenterTabText.Foreground = neutralColor; MessageCenterTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal; }
+
+        if (PatientListTabBorder != null) { PatientListTabBorder.BorderBrush = null; PatientListTabBorder.BorderThickness = new Thickness(0); }
+        if (PatientListTabText != null) { PatientListTabText.Foreground = neutralColor; PatientListTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal; }
+
+        if (PhysicianHandoffTabBorder != null) { PhysicianHandoffTabBorder.BorderBrush = null; PhysicianHandoffTabBorder.BorderThickness = new Thickness(0); }
+        if (PhysicianHandoffTabText != null) { PhysicianHandoffTabText.Foreground = neutralColor; PhysicianHandoffTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal; }
+
+        if (QualityMeasuresTabBorder != null) { QualityMeasuresTabBorder.BorderBrush = null; QualityMeasuresTabBorder.BorderThickness = new Thickness(0); }
+        if (QualityMeasuresTabText != null) { QualityMeasuresTabText.Foreground = neutralColor; QualityMeasuresTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal; }
+
+        if (CustomisedTabBorder != null) { CustomisedTabBorder.BorderBrush = null; CustomisedTabBorder.BorderThickness = new Thickness(0); }
+        if (CustomisedTabText != null) { CustomisedTabText.Foreground = neutralColor; CustomisedTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal; }
+
+        if (OngoingActivitiesTabBorder != null) { OngoingActivitiesTabBorder.BorderBrush = null; OngoingActivitiesTabBorder.BorderThickness = new Thickness(0); }
+        if (OngoingActivitiesTabText != null) { OngoingActivitiesTabText.Foreground = neutralColor; OngoingActivitiesTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal; }
+
+        if (UpToDateTabBorder != null) { UpToDateTabBorder.BorderBrush = null; UpToDateTabBorder.BorderThickness = new Thickness(0); }
+        if (UpToDateTabText != null) { UpToDateTabText.Foreground = neutralColor; UpToDateTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal; }
+    }
+
+    private void HighlightSubNavTab(Border? tabBorder, TextBlock? tabText)
+    {
+        ResetSubNavTabHighlights();
+        if (tabBorder != null)
+        {
+            tabBorder.BorderBrush = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 10, 101, 142));
+            tabBorder.BorderThickness = new Thickness(0, 0, 0, 2);
+        }
+        if (tabText != null)
+        {
+            tabText.Foreground = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 10, 101, 142));
+            tabText.FontWeight = Microsoft.UI.Text.FontWeights.Bold;
+        }
+    }
+
     public void ShowPatientListView()
     {
-        if (MessageCenterTabBorder != null)
-        {
-            MessageCenterTabBorder.BorderBrush = null;
-            MessageCenterTabBorder.BorderThickness = new Thickness(0);
-            MessageCenterTabText.Foreground = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 51, 51, 51));
-            MessageCenterTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        }
-
-        if (PatientListTabBorder != null)
-        {
-            PatientListTabBorder.BorderBrush = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 10, 101, 142));
-            PatientListTabBorder.BorderThickness = new Thickness(0, 0, 0, 2);
-            PatientListTabText.Foreground = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 10, 101, 142));
-            PatientListTabText.FontWeight = Microsoft.UI.Text.FontWeights.Bold;
-        }
-
+        HighlightSubNavTab(PatientListTabBorder, PatientListTabText);
         OpenOrActivateTab("patient_list", "Patient Profile: JOHN DOE", "Patient List", PatientListViewControl);
     }
 
     public void ShowPatientProfileView()
     {
-        if (MessageCenterTabBorder != null)
-        {
-            MessageCenterTabBorder.BorderBrush = null;
-            MessageCenterTabBorder.BorderThickness = new Thickness(0);
-            MessageCenterTabText.Foreground = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 51, 51, 51));
-            MessageCenterTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        }
-
-        if (PatientListTabBorder != null)
-        {
-            PatientListTabBorder.BorderBrush = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 10, 101, 142));
-            PatientListTabBorder.BorderThickness = new Thickness(0, 0, 0, 2);
-            PatientListTabText.Foreground = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 10, 101, 142));
-            PatientListTabText.FontWeight = Microsoft.UI.Text.FontWeights.Bold;
-        }
-
+        HighlightSubNavTab(PatientListTabBorder, PatientListTabText);
         OpenOrActivateTab("patient_profile", "Patient Profile: JOHN DOE", "Patient Profile", PatientProfileViewControl, isCloseable: false);
     }
 
@@ -252,22 +294,7 @@ public partial class MainPage : Page
 
     public void ShowMessageCenterView()
     {
-        if (MessageCenterTabBorder != null)
-        {
-            MessageCenterTabBorder.BorderBrush = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 10, 101, 142));
-            MessageCenterTabBorder.BorderThickness = new Thickness(0, 0, 0, 2);
-            MessageCenterTabText.Foreground = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 10, 101, 142));
-            MessageCenterTabText.FontWeight = Microsoft.UI.Text.FontWeights.Bold;
-        }
-
-        if (PatientListTabBorder != null)
-        {
-            PatientListTabBorder.BorderBrush = null;
-            PatientListTabBorder.BorderThickness = new Thickness(0);
-            PatientListTabText.Foreground = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 51, 51, 51));
-            PatientListTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        }
-
+        HighlightSubNavTab(MessageCenterTabBorder, MessageCenterTabText);
         OpenOrActivateTab("message_center", "General Messages: JOHN DOE", "Message Center", MessageCenterViewControl);
     }
 
@@ -283,17 +310,54 @@ public partial class MainPage : Page
 
     public void ShowLabsView()
     {
-        OpenOrActivateTab("labs", "Results Review", "Results Review", LabsViewControl);
+        ResetSubNavTabHighlights();
+        OpenOrActivateTab("labs", "Labs", "Labs", LabsViewControl);
     }
 
     public void ShowOngoingActivitiesView()
     {
+        HighlightSubNavTab(OngoingActivitiesTabBorder, OngoingActivitiesTabText);
         OpenOrActivateTab("ongoing_activities", "Ongoing Activities", "Ongoing Activities", OngoingActivitiesViewControl);
     }
 
     public void ShowCustomisedView()
     {
+        HighlightSubNavTab(CustomisedTabBorder, CustomisedTabText);
         OpenOrActivateTab("customised", "Customised Organizer", "Customised Organizer", CustomisedViewControl);
+    }
+
+    public void ShowQualityMeasuresView()
+    {
+        HighlightSubNavTab(QualityMeasuresTabBorder, QualityMeasuresTabText);
+        OpenOrActivateTab("quality_measures", "Quality Measures", "Quality Measures", QualityMeasuresViewControl);
+    }
+
+    public void ShowPhysicianHandoffView()
+    {
+        HighlightSubNavTab(PhysicianHandoffTabBorder, PhysicianHandoffTabText);
+        OpenOrActivateTab("physician_handoff", "Physician Handoff", "Physician Handoff", PhysicianHandoffViewControl);
+    }
+
+    private void OnUpToDateTabPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        ShowUpToDateView();
+    }
+
+    public void ShowUpToDateView()
+    {
+        HighlightSubNavTab(UpToDateTabBorder, UpToDateTabText);
+        OpenOrActivateTab("uptodate", "UpToDate", "UpToDate", UpToDateViewControl);
+    }
+
+    private void OnAnalyticsTabPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        ShowAnalyticsView();
+    }
+
+    public void ShowAnalyticsView()
+    {
+        ResetSubNavTabHighlights();
+        OpenOrActivateTab("analytics", "Analytics", "Analytics", AnalyticsViewControl);
     }
 
     private bool _isPageFullScreen = false;
@@ -330,6 +394,11 @@ public partial class MainPage : Page
 
     private void OnPatientActionsMenuButtonClick(object sender, RoutedEventArgs e)
     {
+    }
+
+    private void OnSearchBarBorderPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        SearchBox?.Focus(FocusState.Programmatic);
     }
 
     public void ToggleQuickPanel()

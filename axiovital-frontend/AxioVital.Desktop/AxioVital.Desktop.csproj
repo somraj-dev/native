@@ -19,6 +19,7 @@
     <WindowsAppSdkUndockedRegFreeWinRTInitialize>true</WindowsAppSdkUndockedRegFreeWinRTInitialize>
     <EnableMsixTooling>true</EnableMsixTooling>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
     <DefaultLanguage>en-US</DefaultLanguage>
     <DefaultResourceLanguage>en-US</DefaultResourceLanguage>
     <NoWarn>$(NoWarn);MVVMTK0045</NoWarn>

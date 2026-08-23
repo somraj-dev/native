@@ -71,14 +71,21 @@
                     <TextBlock x:Name="PatientListTabText" Text="Patient List" Foreground="#0A658E" FontSize="11" FontWeight="Bold" />
                 </Border>
 
-                <TextBlock Text="Physician Handoff" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <!-- Physician Handoff Tab Button -->
+                <Border x:Name="PhysicianHandoffTabBorder" Padding="0,0,0,3" PointerPressed="OnPhysicianHandoffTabPointerPressed">
+                    <TextBlock x:Name="PhysicianHandoffTabText" Text="Physician Handoff" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                </Border>
                 <TextBlock Text="Care Workflow" Foreground="#333333" FontSize="11" FontWeight="Normal" />
-                <TextBlock Text="Quality Measures" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <Border x:Name="QualityMeasuresTabBorder" Padding="0,0,0,3" PointerPressed="OnQualityMeasuresTabPointerPressed">
+                    <TextBlock x:Name="QualityMeasuresTabText" Text="Quality Measures" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                </Border>
                 <Border x:Name="CustomisedTabBorder" Padding="0,0,0,3" PointerPressed="OnCustomisedTabPointerPressed">
                     <TextBlock x:Name="CustomisedTabText" Text="Customised" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 </Border>
                 <TextBlock Text="Reports" Foreground="#111111" FontSize="11" FontWeight="Bold" />
-                <TextBlock Text="UpToDate" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <Border x:Name="UpToDateTabBorder" Padding="0,0,0,3" PointerPressed="OnUpToDateTabPointerPressed">
+                    <TextBlock x:Name="UpToDateTabText" Text="UpToDate" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                </Border>
                 <Border x:Name="OngoingActivitiesTabBorder" Padding="0,0,0,3" PointerPressed="OnOngoingActivitiesTabPointerPressed">
                     <TextBlock x:Name="OngoingActivitiesTabText" Text="Ongoing Activities" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 </Border>
@@ -100,7 +107,7 @@
                 <TextBlock Text="Order Sets" Foreground="#111111" FontSize="11" FontWeight="Bold" PointerPressed="OnOrderSetsTabPointerPressed" />
                 <TextBlock Text="Care Pathways" Foreground="#444444" FontSize="11" />
                 <TextBlock x:Name="LabsCategoryTab" Text="Labs" Foreground="#444444" FontSize="11" PointerPressed="OnLabsTabPointerPressed" />
-                <TextBlock Text="Analytics" Foreground="#444444" FontSize="11" />
+                <TextBlock x:Name="AnalyticsCategoryTab" Text="Analytics" Foreground="#444444" FontSize="11" PointerPressed="OnAnalyticsTabPointerPressed" />
             </StackPanel>
 
             <FontIcon Grid.Column="1" Glyph="&#xE712;" FontSize="12" Foreground="#666666" VerticalAlignment="Center" />
@@ -118,10 +125,42 @@
 
             <!-- Quick Tools Right -->
             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
-                <Border Background="#021826" CornerRadius="5" Padding="8,2,8,2" Height="24" VerticalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-                        <TextBlock Text="🔍" FontFamily="Segoe UI Emoji" FontSize="11" VerticalAlignment="Center" />
-                        <TextBox PlaceholderText="Search by Patient or Order..." Background="Transparent" Foreground="White" BorderThickness="0" FontSize="11" Width="185" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                <Border Background="#011B2C" CornerRadius="3" Padding="6,1,8,1" Height="23" VerticalAlignment="Center" PointerPressed="OnSearchBarBorderPointerPressed">
+                    <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                        <!-- Custom Cyan Lens / Purple Handle Magnifying Glass Icon -->
+                        <Canvas Width="14" Height="14" VerticalAlignment="Center" Margin="0,0,2,0">
+                            <Line X1="7" Y1="7" X2="12" Y2="12" Stroke="#8C3A8C" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
+                            <Ellipse Canvas.Left="1" Canvas.Top="1" Width="8" Height="8" Fill="#4ECBF5" Stroke="#8C3A8C" StrokeThickness="1.4" />
+                        </Canvas>
+                        <TextBox x:Name="SearchBox"
+                                 PlaceholderText="Search by Patient or Order..." 
+                                 Background="Transparent" 
+                                 Foreground="White" 
+                                 BorderThickness="0" 
+                                 FontSize="11" 
+                                 Width="185" 
+                                 Padding="0" 
+                                 MinHeight="0"
+                                 MinWidth="0"
+                                 VerticalAlignment="Center" 
+                                 VerticalContentAlignment="Center">
+                            <TextBox.Resources>
+                                <SolidColorBrush x:Key="TextControlBackground" Color="Transparent" />
+                                <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent" />
+                                <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent" />
+                                <SolidColorBrush x:Key="TextControlBackgroundDisabled" Color="Transparent" />
+                                <SolidColorBrush x:Key="TextControlBorderBrush" Color="Transparent" />
+                                <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="Transparent" />
+                                <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="Transparent" />
+                                <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="Transparent" />
+                                <SolidColorBrush x:Key="TextControlForeground" Color="White" />
+                                <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="White" />
+                                <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White" />
+                                <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="#7D9DB4" />
+                                <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="#94B5CC" />
+                                <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="#7D9DB4" />
+                            </TextBox.Resources>
+                        </TextBox>
                     </StackPanel>
                 </Border>
                 <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center" PointerPressed="OnFullScreenPointerPressed">
@@ -260,6 +299,10 @@
             <views:SchedulerView x:Name="SchedulerViewControl" Visibility="Collapsed" />
             <views:OngoingActivitiesView x:Name="OngoingActivitiesViewControl" Visibility="Collapsed" />
             <views:CustomisedView x:Name="CustomisedViewControl" Visibility="Collapsed" />
+            <views:QualityMeasuresView x:Name="QualityMeasuresViewControl" Visibility="Collapsed" />
+            <views:PhysicianHandoffView x:Name="PhysicianHandoffViewControl" Visibility="Collapsed" />
+            <views:UpToDateView x:Name="UpToDateViewControl" Visibility="Collapsed" />
+            <views:AnalyticsView x:Name="AnalyticsViewControl" Visibility="Collapsed" />
         </Grid>
 
 

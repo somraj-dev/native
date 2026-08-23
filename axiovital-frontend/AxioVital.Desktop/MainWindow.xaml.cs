@@ -15,6 +15,16 @@ public sealed partial class MainWindow : Window
     {
         this.InitializeComponent();
 
+        try
+        {
+            var iconPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, "Assets", "app.ico");
+            if (System.IO.File.Exists(iconPath))
+            {
+                this.AppWindow.SetIcon(iconPath);
+            }
+        }
+        catch { }
+
         // Launch initial full-screen AxioVital Environment Main View directly
         RootFrame.Navigate(typeof(MainPage));
     }

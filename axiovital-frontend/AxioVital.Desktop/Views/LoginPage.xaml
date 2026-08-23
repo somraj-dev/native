@@ -10,10 +10,16 @@
     <Grid Padding="24">
         <!-- 1. Top Left Header Brand -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Spacing="8">
-            <Grid Width="24" Height="24">
-                <Ellipse Fill="White" />
-                <FontIcon Glyph="&#xE774;" FontSize="16" Foreground="#005C8A" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </Grid>
+            <Border Width="24" Height="24" Background="Black" CornerRadius="4">
+                <Viewbox Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Canvas Width="500" Height="500">
+                        <Path Fill="White" Data="M 138 290 C 130 270 135 242 153 226 C 180 202 214 180 255 180 C 285 180 307 195 307 225 C 307 248 288 268 250 252 C 205 234 165 240 152 284 C 148 296 142 298 138 290 Z" />
+                        <Path Fill="White" Data="M 362 210 C 370 230 365 258 347 274 C 320 298 286 320 245 320 C 215 320 193 305 193 275 C 193 252 212 232 250 248 C 295 266 335 260 348 216 C 352 204 358 202 362 210 Z" />
+                        <Path Fill="White" Data="M 153 226 C 190 170 300 170 307 245 C 290 252 270 248 250 238 C 210 218 175 220 153 226 Z" />
+                        <Path Fill="White" Data="M 347 274 C 310 330 200 330 193 255 C 210 248 230 252 250 262 C 290 282 325 280 347 274 Z" />
+                    </Canvas>
+                </Viewbox>
+            </Border>
             <TextBlock Text="AxioVital" Foreground="White" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" />
         </StackPanel>
 
