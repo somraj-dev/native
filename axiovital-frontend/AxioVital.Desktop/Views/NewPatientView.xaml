@@ -1,0 +1,639 @@
+<UserControl
+    x:Class="AxioVital.Desktop.Views.NewPatientView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="Segoe UI, Tahoma, sans-serif"
+    RequestedTheme="Light"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center">
+
+    <UserControl.Resources>
+        <!-- Classic Windows Aero / Medical EHR Dialog Styles -->
+        <Style x:Key="WinClassicLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Foreground" Value="#003399" />
+            <Setter Property="FontFamily" Value="Segoe UI, Tahoma" />
+            <Setter Property="Margin" Value="0,0,0,1" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+        </Style>
+
+        <Style x:Key="WinClassicInputStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="11.5" />
+            <Setter Property="Height" Value="21" />
+            <Setter Property="MinHeight" Value="21" />
+            <Setter Property="Padding" Value="4,0,4,0" />
+            <Setter Property="BorderBrush" Value="#7F9DB9" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="Foreground" Value="#000000" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="WinClassicButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Height" Value="21" />
+            <Setter Property="MinHeight" Value="21" />
+            <Setter Property="Padding" Value="6,0" />
+            <Setter Property="Background" Value="#E6E6E6" />
+            <Setter Property="BorderBrush" Value="#737373" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="1" />
+            <Setter Property="Foreground" Value="#000000" />
+        </Style>
+    </UserControl.Resources>
+
+    <!-- Outer Window Frame Container (1:1 Exact Classic Windows 7 Aero Dialog) -->
+    <Border Width="870"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            BorderBrush="#4C78A4" 
+            BorderThickness="1" 
+            CornerRadius="6" 
+            Background="#ECE9D8"
+            PointerPressed="OnDialogRootPointerPressed">
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <!-- 0. Windows 7 Aero Glass Title Bar (30px) -->
+                <RowDefinition Height="30" />
+                <!-- 1. Main Inner Form Content -->
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- ==================== 0. AERO TITLE BAR ==================== -->
+            <Border Grid.Row="0" CornerRadius="5,5,0,0" BorderBrush="#85A9CB" BorderThickness="0,0,0,1">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#D5E8FA" Offset="0.0" />
+                        <GradientStop Color="#ADCDEB" Offset="0.5" />
+                        <GradientStop Color="#96BECE" Offset="0.51" />
+                        <GradientStop Color="#B1D1EE" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid Padding="6,2,4,2">
+                    <!-- Left Title with Medical Red Cross Icon -->
+                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <Border Width="16" Height="16" Background="#B81C1C" CornerRadius="8" BorderBrush="#800000" BorderThickness="1">
+                            <TextBlock Text="✚" FontSize="10" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-2,0,0" />
+                        </Border>
+                        <TextBlock x:Name="WindowTitleText" Text="David Anderson - 49 - Patient Details" FontSize="12" Foreground="#000000" FontWeight="Normal" VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Right Window Control Buttons (Minimize, Maximize, Close) -->
+                    <StackPanel Orientation="Horizontal" Spacing="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Border Width="26" Height="18" Background="#D5E5F5" BorderBrush="#7096BA" BorderThickness="1" CornerRadius="2">
+                            <TextBlock Text="─" FontSize="9" FontWeight="Bold" Foreground="#334455" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-4,0,0" />
+                        </Border>
+                        <Border Width="26" Height="18" Background="#D5E5F5" BorderBrush="#7096BA" BorderThickness="1" CornerRadius="2">
+                            <TextBlock Text="□" FontSize="10" Foreground="#334455" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-2,0,0" />
+                        </Border>
+                        <Border Width="42" Height="18" Background="#E86565" BorderBrush="#B23535" BorderThickness="1" CornerRadius="2" PointerPressed="OnCloseClick">
+                            <TextBlock Text="✕" FontSize="10" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ==================== 1. MAIN FORM BODY ==================== -->
+            <Grid Grid.Row="1" Background="#ECE9D8" Padding="6,4,6,6">
+                <Grid.ColumnDefinitions>
+                    <!-- Left Navigation Sidebar: 125px -->
+                    <ColumnDefinition Width="125" />
+                    <!-- Right Main Content Area: ~730px -->
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- ===== LEFT NAVIGATION SIDEBAR ===== -->
+                <Grid Grid.Column="0" Margin="0,0,4,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Navigation Items List (Sunken Panel) -->
+                    <Border Grid.Row="0" Background="#ECE9D8" BorderBrush="#8E9DAE" BorderThickness="1" Padding="0" MinHeight="480">
+                        <StackPanel>
+                            <!-- 1. Patient Details (Selected: Solid Grey Bar with White Text) -->
+                            <Border Background="#7B7B7B" Padding="8,3">
+                                <TextBlock Text="Patient Details" FontSize="11" Foreground="#FFFFFF" />
+                            </Border>
+
+                            <!-- 2. Referrals -->
+                            <Border Padding="8,3" Background="Transparent">
+                                <TextBlock Text="Referrals" FontSize="11" Foreground="#000000" />
+                            </Border>
+
+                            <!-- 3. Accounts -->
+                            <StackPanel>
+                                <Border Padding="8,3" Background="Transparent">
+                                    <TextBlock Text="Accounts" FontSize="11" Foreground="#000000" />
+                                </Border>
+                                <!-- Indented: Private (BA-CN) -->
+                                <Border Padding="18,1,4,3" Background="Transparent">
+                                    <TextBlock Text="Private (BA-CN)" FontSize="10.5" Foreground="#000000" />
+                                </Border>
+                            </StackPanel>
+
+                            <!-- 4. Notes -->
+                            <Border Padding="8,3" Background="Transparent">
+                                <TextBlock Text="Notes" FontSize="11" Foreground="#000000" />
+                            </Border>
+
+                            <!-- 5. Correspondence -->
+                            <Border Padding="8,3" Background="Transparent">
+                                <TextBlock Text="Correspondence" FontSize="11" Foreground="#000000" />
+                            </Border>
+
+                            <!-- 6. Bookings -->
+                            <Border Padding="8,3" Background="Transparent">
+                                <TextBlock Text="Bookings" FontSize="11" Foreground="#000000" />
+                            </Border>
+
+                            <!-- 7. Recalls -->
+                            <Border Padding="8,3" Background="Transparent">
+                                <TextBlock Text="Recalls" FontSize="11" Foreground="#000000" />
+                            </Border>
+
+                            <!-- 8. Estimates -->
+                            <Border Padding="8,3" Background="Transparent">
+                                <TextBlock Text="Estimates" FontSize="11" Foreground="#000000" />
+                            </Border>
+
+                            <!-- 9. ImageLite -->
+                            <Border Padding="8,3" Background="Transparent">
+                                <TextBlock Text="ImageLite" FontSize="11" Foreground="#000000" />
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Bottom Left Action Buttons -->
+                    <StackPanel Grid.Row="1" Spacing="4" Margin="0,8,0,0">
+                        <!-- F3 - SMS Message (Disabled look) -->
+                        <Border Height="26" Background="#ECE9D8" BorderBrush="#8A9AA8" BorderThickness="1" Padding="2,0">
+                            <TextBlock Text="F3 - SMS Message" FontSize="11" Foreground="#888888" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+
+                        <!-- F9 - Medical Director (Active button) -->
+                        <Button Content="F9 - Medical Director" HorizontalAlignment="Stretch" Height="26" Style="{StaticResource WinClassicButtonStyle}" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- ===== RIGHT FORM CONTAINER ===== -->
+                <Grid Grid.Column="1" Margin="2,0,0,0">
+                    <Grid.RowDefinitions>
+                        <!-- Form Fields Area -->
+                        <RowDefinition Height="*" />
+                        <!-- Bottom Red Alert Bar -->
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Spacing="4">
+
+                        <!-- TOP HEADER WITH WATERMARK & DEMOGRAPHICS -->
+                        <Grid>
+                            <!-- Script Watermark "patient details" Top-Right (Behind/Above inputs) -->
+                            <TextBlock Text="patient details" 
+                                       FontFamily="Georgia, Times New Roman, serif" 
+                                       FontStyle="Italic" 
+                                       FontSize="22" 
+                                       Foreground="#8E9789" 
+                                       HorizontalAlignment="Right" 
+                                       VerticalAlignment="Top" 
+                                       Margin="0,-4,12,0" 
+                                       IsHitTestVisible="False" />
+
+                            <!-- TOP DEMOGRAPHICS ROWS -->
+                            <StackPanel Spacing="3">
+                                
+                                <!-- Row 1: Title, First Name, Initial, Surname, Single Name, Date of birth, Age, Status -->
+                                <Grid HorizontalAlignment="Left">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="58" />   <!-- Title -->
+                                        <ColumnDefinition Width="135" />  <!-- First Name -->
+                                        <ColumnDefinition Width="38" />   <!-- Initial -->
+                                        <ColumnDefinition Width="150" />  <!-- Surname -->
+                                        <ColumnDefinition Width="86" />   <!-- Single Name -->
+                                        <ColumnDefinition Width="92" />   <!-- Date of birth -->
+                                        <ColumnDefinition Width="92" />   <!-- Age -->
+                                        <ColumnDefinition Width="75" />   <!-- Status -->
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Title -->
+                                    <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                                        <TextBlock Text="Title" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputTitle" Text="Mr" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" TextChanged="OnNameFieldChanged" />
+                                    </StackPanel>
+
+                                    <!-- First Name -->
+                                    <StackPanel Grid.Column="1" Margin="0,0,4,0">
+                                        <TextBlock Text="First Name" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputFirstName" Text="David" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" TextChanged="OnNameFieldChanged" />
+                                    </StackPanel>
+
+                                    <!-- Initial -->
+                                    <StackPanel Grid.Column="2" Margin="0,0,4,0">
+                                        <TextBlock Text="Initial" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputInitial" Text="" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                    </StackPanel>
+
+                                    <!-- Surname -->
+                                    <StackPanel Grid.Column="3" Margin="0,0,6,0">
+                                        <TextBlock Text="Surname" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputSurname" Text="Anderson" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" TextChanged="OnNameFieldChanged" />
+                                    </StackPanel>
+
+                                    <!-- Single Name Checkbox -->
+                                    <CheckBox Grid.Column="4" Content="Single Name" FontSize="11" Foreground="#000000" VerticalAlignment="Bottom" Margin="0,0,2,2" Padding="4,0,0,0" MinHeight="0" />
+
+                                    <!-- Date of birth -->
+                                    <StackPanel Grid.Column="5" Margin="0,0,4,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Date of " Style="{StaticResource WinClassicLabelStyle}" Margin="0" />
+                                            <TextBlock Text="b" TextDecorations="Underline" Style="{StaticResource WinClassicLabelStyle}" Margin="0" />
+                                            <TextBlock Text="irth" Style="{StaticResource WinClassicLabelStyle}" Margin="0" />
+                                        </StackPanel>
+                                        <TextBox x:Name="InputDob" Text="4/11/1955" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" TextChanged="OnDobChanged" />
+                                    </StackPanel>
+
+                                    <!-- Age -->
+                                    <StackPanel Grid.Column="6" Margin="0,0,4,0">
+                                        <TextBlock Text="Age" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputAge" Text="57 years" Foreground="#000000" IsReadOnly="True" Background="#ECE9D8" Style="{StaticResource WinClassicInputStyle}" />
+                                    </StackPanel>
+
+                                    <!-- Status -->
+                                    <StackPanel Grid.Column="7">
+                                        <TextBlock Text="Status" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <ComboBox x:Name="ComboStatus" SelectedIndex="0" Height="21" FontSize="11" Padding="4,0" MinHeight="21" HorizontalAlignment="Stretch" BorderBrush="#7F9DB9" Background="White" Foreground="#000000">
+                                            <ComboBoxItem Content="Active" IsSelected="True" Foreground="#000000" />
+                                            <ComboBoxItem Content="Inactive" Foreground="#000000" />
+                                            <ComboBoxItem Content="Archived" Foreground="#000000" />
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Row 2: Gender, Known as, Deceased, Deceased Date -->
+                                <Grid HorizontalAlignment="Left">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="90" />   <!-- Gender -->
+                                        <ColumnDefinition Width="375" />  <!-- Known as -->
+                                        <ColumnDefinition Width="80" />   <!-- Deceased -->
+                                        <ColumnDefinition Width="92" />   <!-- Deceased Date -->
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Gender -->
+                                    <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                                        <TextBlock Text="Gender" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputGender" Text="Male" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                    </StackPanel>
+
+                                    <!-- Known as -->
+                                    <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                        <TextBlock Text="Known as" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputKnownAs" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                    </StackPanel>
+
+                                    <!-- Deceased Checkbox -->
+                                    <CheckBox x:Name="CheckDeceased" Grid.Column="2" Content="Deceased" FontSize="11" Foreground="#000000" VerticalAlignment="Bottom" Margin="0,0,4,2" Padding="4,0,0,0" MinHeight="0" Checked="OnDeceasedChecked" Unchecked="OnDeceasedUnchecked" />
+
+                                    <!-- Deceased Date -->
+                                    <StackPanel Grid.Column="3">
+                                        <TextBlock Text="Deceased Date" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputDeceasedDate" Text="" Foreground="#000000" IsEnabled="False" Background="#ECE9D8" Style="{StaticResource WinClassicInputStyle}" />
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Row 3: Record No (Aligned above right column) -->
+                        <Grid>
+                            <StackPanel HorizontalAlignment="Right" Margin="0,0,172,0">
+                                <TextBlock Text="Record No" Style="{StaticResource WinClassicLabelStyle}" />
+                                <TextBox x:Name="InputRecordNo" Text="49" Foreground="#000000" Background="#FFFFFF" Width="92" Style="{StaticResource WinClassicInputStyle}" TextChanged="OnNameFieldChanged" />
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- ==================== MAIN SPLIT SECTION (LEFT & RIGHT) ==================== -->
+                        <Grid Margin="0,2,0,0">
+                            <Grid.ColumnDefinitions>
+                                <!-- Left Column: Address, Phones, Medicare (~465px) -->
+                                <ColumnDefinition Width="465" />
+                                <!-- Right Column: Accounts, Doctor, Health Fund (~260px) -->
+                                <ColumnDefinition Width="260" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- ===== LEFT COLUMN ===== -->
+                            <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,6,0">
+
+                                <!-- 1. Address Section with Property Tabs -->
+                                <StackPanel Spacing="0">
+                                    <!-- Tabs: Residential (Active) & Postal -->
+                                    <StackPanel Orientation="Horizontal" Spacing="1" Margin="2,0,0,0">
+                                        <Border x:Name="TabResidential" Background="#ECE9D8" BorderBrush="#90A0B0" BorderThickness="1,1,1,0" CornerRadius="2,2,0,0" Padding="8,2" PointerPressed="OnAddressTabPressed" Tag="res">
+                                            <TextBlock Text="Residential" FontSize="11" Foreground="#000000" FontWeight="SemiBold" />
+                                        </Border>
+                                        <Border x:Name="TabPostal" Background="#DFDDD0" BorderBrush="#A0B0C0" BorderThickness="1,1,1,0" CornerRadius="2,2,0,0" Padding="8,2" PointerPressed="OnAddressTabPressed" Tag="postal">
+                                            <TextBlock Text="Postal" FontSize="11" Foreground="#000000" />
+                                        </Border>
+                                    </StackPanel>
+
+                                    <!-- Address Pane Box -->
+                                    <Border Background="#ECE9D8" BorderBrush="#90A0B0" BorderThickness="1" Padding="6,5" CornerRadius="0,2,2,2">
+                                        <StackPanel Spacing="3">
+                                            <!-- Address Line 1 -->
+                                            <TextBox x:Name="InputAddressLine1" Text="61 Wallace Street" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                            <!-- Address Line 2 -->
+                                            <TextBox x:Name="InputAddressLine2" Text="" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+
+                                            <!-- Suburb, State, Postcode -->
+                                            <Grid Margin="0,1,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="22" />
+                                                    <ColumnDefinition Width="70" />
+                                                    <ColumnDefinition Width="70" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBox x:Name="InputSuburb" Grid.Column="0" Text="MELBOURNE" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" Margin="0,0,2,0" />
+                                                <Button Grid.Column="1" Content="..." Height="21" Padding="0" Style="{StaticResource WinClassicButtonStyle}" Margin="0,0,4,0" Click="OnSuburbLookupClick" />
+                                                <TextBox x:Name="InputState" Grid.Column="2" Text="VIC" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" Margin="0,0,4,0" />
+                                                <TextBox x:Name="InputPostcode" Grid.Column="3" Text="3000" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                            </Grid>
+
+                                            <!-- Preferred Mailing Address Checkbox -->
+                                            <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,2,0,0">
+                                                <CheckBox x:Name="CheckPreferredMailing" Content="Preferred Mailing Address" IsChecked="True" FontSize="11" Foreground="#000000" MinHeight="0" Padding="4,0,0,0" />
+                                                <TextBlock Text="(Address Line 1 and Suburb are required)" FontSize="10.5" Foreground="#0066CC" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+
+                                <!-- 2. Phone Numbers Row (Home, Work, Mobile) -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="150" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                                        <TextBlock Text="Home" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputHomePhone" Text="(03) 1234 5678" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="0,0,4,0">
+                                        <TextBlock Text="Work" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputWorkPhone" Text="(03) 1234 5679" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Mobile" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputMobilePhone" Text="0411234567" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- 3. Email & Do Not Send SMS -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="325" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                                        <TextBlock Text="E-mail" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputEmail" Text="david.anderson@demotownpolytechnic.edu.au" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                    </StackPanel>
+                                    <CheckBox x:Name="CheckNoSms" Grid.Column="1" Content="Do not send SMS" FontSize="11" Foreground="#000000" VerticalAlignment="Bottom" Margin="0,0,0,1" Padding="4,0,0,0" MinHeight="0" />
+                                </Grid>
+
+                                <!-- 4. Comment & First Visit Date -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="360" />
+                                        <ColumnDefinition Width="90" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,6,0">
+                                        <TextBlock Text="Comment" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputComment" Text="" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="First visit date" Style="{StaticResource WinClassicLabelStyle}" />
+                                        <TextBox x:Name="InputFirstVisitDate" Text="" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- 5. Occupation -->
+                                <StackPanel>
+                                    <TextBlock Text="Occupation" Style="{StaticResource WinClassicLabelStyle}" />
+                                    <Grid HorizontalAlignment="Left" Width="140">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="20" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="InputOccupation" Grid.Column="0" Text="Test Engineer" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" Margin="0,0,2,0" />
+                                        <Button Grid.Column="1" Content="..." Height="21" Padding="0" Style="{StaticResource WinClassicButtonStyle}" />
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- 6. Medicare & Veteran Group Box -->
+                                <Border BorderBrush="#90A0B0" BorderThickness="1" Background="#ECE9D8" Padding="6,4">
+                                    <StackPanel Spacing="3">
+                                        <!-- Row: Radios + Medicare No + Expiry + Ref -->
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80" />
+                                                <ColumnDefinition Width="155" />
+                                                <ColumnDefinition Width="70" />
+                                                <ColumnDefinition Width="32" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Radios -->
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                <RadioButton x:Name="RadioMedicare" Content="Medicare" IsChecked="True" FontSize="11" Foreground="#000000" GroupName="MedType" MinHeight="0" Padding="4,0,0,0" Margin="0,0,0,2" />
+                                                <RadioButton x:Name="RadioVeteran" Content="Veteran" FontSize="11" Foreground="#000000" GroupName="MedType" MinHeight="0" Padding="4,0,0,0" />
+                                            </StackPanel>
+
+                                            <!-- Medicare No -->
+                                            <StackPanel Grid.Column="1" Margin="4,0,4,0">
+                                                <TextBlock Text="Medicare No" Style="{StaticResource WinClassicLabelStyle}" />
+                                                <TextBox x:Name="InputMedicareNo" Text="3500 26512 1" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                            </StackPanel>
+
+                                            <!-- Expiry -->
+                                            <StackPanel Grid.Column="2" Margin="0,0,4,0">
+                                                <TextBlock Text="Expiry" Style="{StaticResource WinClassicLabelStyle}" />
+                                                <TextBox x:Name="InputMedicareExpiry" Text="12/2014" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                            </StackPanel>
+
+                                            <!-- Ref -->
+                                            <StackPanel Grid.Column="3">
+                                                <TextBlock Text="Ref" Style="{StaticResource WinClassicLabelStyle}" />
+                                                <TextBox x:Name="InputMedicareRef" Text="1" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!-- Status & Verify Button -->
+                                        <Grid Margin="0,2,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                                                <TextBlock Text="Last verified using Medicare Australia:" FontSize="10.5" Foreground="#003399" />
+                                                <TextBlock x:Name="MedicareVerificationStatusText" Text="Not yet verified." FontSize="10.5" Foreground="#003399" />
+                                            </StackPanel>
+                                            <Button Grid.Column="1" Content="Verify with Medicare Australia..." Height="21" FontSize="10.5" Style="{StaticResource WinClassicButtonStyle}" Click="OnVerifyMedicareClick" />
+                                        </Grid>
+
+                                        <CheckBox x:Name="CheckVerifyBeforeInvoice" Content="Verify patient before invoicing." FontSize="10.5" Foreground="#000000" MinHeight="0" Padding="4,0,0,0" />
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- 7. DVA Card Different Name Group Box -->
+                                <Border BorderBrush="#90A0B0" BorderThickness="1" Background="#ECE9D8" Padding="6,4">
+                                    <StackPanel Spacing="2">
+                                        <CheckBox x:Name="CheckDvaDifferentName" Content="Patient's name is different on the DVA Card" FontSize="11" Foreground="#000000" MinHeight="0" Padding="4,0,0,0" />
+                                        <Grid Margin="0,2,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" Margin="0,0,6,0">
+                                                <TextBlock Text="Alias Given Name" FontSize="10.5" Foreground="#808080" />
+                                                <TextBox x:Name="InputAliasGivenName" Text="" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="Alias Surname" FontSize="10.5" Foreground="#808080" />
+                                                <TextBox x:Name="InputAliasSurname" Text="" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+
+                            </StackPanel>
+
+                            <!-- ===== RIGHT COLUMN (ACCOUNTS, REFERRING DOCTOR, HEALTH FUND) ===== -->
+                            <StackPanel Grid.Column="1" Spacing="6">
+
+                                <!-- 1. Accounts Header & Table Box -->
+                                <StackPanel Spacing="2">
+                                    <Grid>
+                                        <TextBlock Text="Accounts" Style="{StaticResource WinClassicLabelStyle}" FontWeight="Bold" VerticalAlignment="Center" />
+                                        <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                            <CheckBox Content="Hide Inactive" FontSize="10.5" Foreground="#000000" MinHeight="0" Padding="4,0,0,0" />
+                                            <Button Content="new..." Height="20" Padding="4,0" FontSize="10" Style="{StaticResource WinClassicButtonStyle}" Click="OnNewAccountClick" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- Classic Grid Table -->
+                                    <Border BorderBrush="#7F9DB9" BorderThickness="1" Background="#FFFFFF">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="18" />
+                                                <RowDefinition Height="18" />
+                                                <RowDefinition Height="18" />
+                                                <RowDefinition Height="18" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="68" />
+                                                <ColumnDefinition Width="54" />
+                                                <ColumnDefinition Width="58" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Header -->
+                                            <Border Grid.Row="0" Grid.ColumnSpan="4" Background="#ECE9D8" BorderBrush="#A0B0C0" BorderThickness="0,0,0,1" />
+                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Practitioner" FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="Class" FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Acct. Ref." FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="0" Grid.Column="3" Text="Balance" FontSize="10" Foreground="#000000" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" />
+
+                                            <!-- Row 1: BA-CN (Selected with soft blue highlight) -->
+                                            <Border Grid.Row="1" Grid.ColumnSpan="4" Background="#C4D8EC" BorderBrush="#E2E8F0" BorderThickness="0,0,0,1" />
+                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="BA-CN" FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="Priv" FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="1" Grid.Column="2" Text="27" FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="1" Grid.Column="3" Text="707.65" FontSize="10" Foreground="#000000" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" />
+
+                                            <!-- Row 2: DS -->
+                                            <Border Grid.Row="2" Grid.ColumnSpan="4" Background="#FFFFFF" BorderBrush="#E2E8F0" BorderThickness="0,0,0,1" />
+                                            <TextBlock Grid.Row="2" Grid.Column="0" Text="DS" FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="2" Grid.Column="1" Text="DSMBP" FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="2" Grid.Column="2" Text="28" FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="2" Grid.Column="3" Text="0.00" FontSize="10" Foreground="#000000" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" />
+
+                                            <!-- Row 3: GK-CN -->
+                                            <Border Grid.Row="3" Grid.ColumnSpan="4" Background="#FFFFFF" />
+                                            <TextBlock Grid.Row="3" Grid.Column="0" Text="GK-CN" FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="3" Grid.Column="1" Text="Priv" FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="3" Grid.Column="2" Text="29" FontSize="10" Foreground="#000000" VerticalAlignment="Center" Margin="4,0,0,0" />
+                                            <TextBlock Grid.Row="3" Grid.Column="3" Text="0.00" FontSize="10" Foreground="#000000" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" />
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+
+                                <!-- 2. Referring Doctor -->
+                                <StackPanel Spacing="1">
+                                    <TextBlock Text="Referring Doctor" Style="{StaticResource WinClassicLabelStyle}" />
+                                    <ComboBox x:Name="ComboReferringDoctor" SelectedIndex="0" Height="21" FontSize="11" Padding="4,0" MinHeight="21" HorizontalAlignment="Stretch" BorderBrush="#7F9DB9" Background="White" Foreground="#000000">
+                                        <ComboBoxItem Content="Dr M Lobel (for any)" IsSelected="True" Foreground="#000000" />
+                                        <ComboBoxItem Content="Dr Sarah Jenkins" Foreground="#000000" />
+                                        <ComboBoxItem Content="Dr Robert Vance" Foreground="#000000" />
+                                    </ComboBox>
+                                    <TextBlock Text="Expires 09/2014 (12 month)" FontSize="10" Foreground="#000000" />
+                                </StackPanel>
+
+                                <!-- 3. Health Fund Membership Summary Group Box -->
+                                <Border BorderBrush="#90A0B0" BorderThickness="1" Background="#ECE9D8" Padding="6,4">
+                                    <StackPanel Spacing="3">
+                                        <TextBlock Text="Health Fund Membership Summary" FontSize="10.5" Foreground="#003399" FontWeight="SemiBold" />
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="75" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                                                <TextBlock Text="Health Fund" Style="{StaticResource WinClassicLabelStyle}" />
+                                                <TextBox x:Name="InputHealthFund" Text="CBHS Health Fund Ltd" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="Expiry Date" Style="{StaticResource WinClassicLabelStyle}" />
+                                                <TextBox x:Name="InputHealthFundExpiry" Text="21/01/2016" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="105" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                                                <TextBlock Text="Membership No." Style="{StaticResource WinClassicLabelStyle}" />
+                                                <TextBox x:Name="InputMembershipNo" Text="MHF12345678" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="Level of Cover" Style="{StaticResource WinClassicLabelStyle}" />
+                                                <TextBox x:Name="InputLevelOfCover" Text="Top" Foreground="#000000" Background="#FFFFFF" Style="{StaticResource WinClassicInputStyle}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- ==================== BOTTOM RED ALERT BAR ==================== -->
+                    <Border Grid.Row="1" Background="#FF0000" BorderBrush="#D40000" BorderThickness="1" Padding="4,0" Margin="0,6,0,0" Height="26">
+                        <Grid>
+                            <TextBlock x:Name="InputAlertText" Text="Patient deaf in left ear" Foreground="White" FontWeight="Bold" FontSize="11.5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Button Content="Alerts..." Height="18" Padding="6,0" FontSize="10" Style="{StaticResource WinClassicButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Click="OnAlertsClick" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

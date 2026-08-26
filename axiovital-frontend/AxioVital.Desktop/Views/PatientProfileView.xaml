@@ -4,172 +4,473 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="using:AxioVital.Desktop.Views"
     mc:Ignorable="d">
 
     <Grid Background="#F0F3F5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="175" />
+            <!-- Left Sidebar Navigation Menu: 195px -->
+            <ColumnDefinition Width="195" />
+            <!-- Main Content Area -->
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Left Sidebar Navigation Menu -->
-        <Grid Grid.Column="0" Background="#0D486B">
+        <!-- ==================== LEFT SIDEBAR NAVIGATION MENU ==================== -->
+        <Grid Grid.Column="0" Background="#0C3D5E">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!-- Menu Title Header Bar with Pin Icon -->
-            <Grid Grid.Row="0" Padding="10,5,10,5" Background="#062A42">
-                <TextBlock Text="Menu" Foreground="White" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="4" VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xE718;" FontSize="10" Foreground="#FF4444" VerticalAlignment="Center" />
-                    <FontIcon Glyph="&#xE76B;" FontSize="9" Foreground="#CCCCCC" VerticalAlignment="Center" />
-                </StackPanel>
+            <!-- Menu Title Header Bar with Pin Icon (Matching Exact Image 1:1) -->
+            <Grid Grid.Row="0" Padding="14,7,12,7" Background="#072B44">
+                <TextBlock Text="Menu" Foreground="White" FontSize="12.5" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Segoe UI" />
+                <!-- Red/Pink Pushpin Glyph -->
+                <FontIcon Glyph="&#xE718;" FontSize="11" Foreground="#FF3B69" HorizontalAlignment="Right" VerticalAlignment="Center" />
             </Grid>
 
-            <!-- Scrollable Navigation Items -->
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <StackPanel Spacing="0">
-                    <TextBlock Text="Documentation" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="Outside Records" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" Margin="0,0,0,10" />
-
-                    <TextBlock Text="Allergies" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="Clinical Media" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="Diagnoses and Problems" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="Form Browser" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="Growth Chart" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="Insurance" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="Histories" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="Interactive View and I&amp;O" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="MAR Summary" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="Medication List" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" Margin="0,0,0,10" />
-
-                    <TextBlock Text="Recommendations" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="Smart App Validator" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="mTuitive - OpNote Test - IE" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="mTuitive - OpNote Test - Edge" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-
-                    <!-- Selected Item: Op Note - Prod - Edge -->
-                    <Border Background="#041D2D" Padding="10,6,10,6" BorderBrush="#005B8A" BorderThickness="0,0,0,0">
-                        <TextBlock Text="Op Note - Prod - Edge" Foreground="White" FontSize="11" FontWeight="Bold" />
+            <!-- Scrollable Navigation Items in Exact Reference Order -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,2,0,8">
+                <StackPanel x:Name="SidebarNavPanel" Spacing="0">
+                    
+                    <!-- 1. Provider View -->
+                    <Border x:Name="NavProviderViewBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavProviderViewPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavProviderViewBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavProviderViewText" Grid.Column="1" Text="Provider View" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
                     </Border>
 
-                    <TextBlock Text="WorkflowView Edge" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="mTuitive Dev - Edge" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
-                    <TextBlock Text="mTuitive Debug EDGE" Foreground="#E0EDF5" FontSize="11" Padding="10,5,10,5" />
+                    <!-- 2. Results Review -->
+                    <Border x:Name="NavResultsReviewBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavResultsReviewPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavResultsReviewBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavResultsReviewText" Grid.Column="1" Text="Results Review" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 3. Orders -->
+                    <Border x:Name="NavOrdersBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavOrdersPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavOrdersBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavOrdersText" Grid.Column="1" Text="Orders" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 4. Documentation -->
+                    <Border x:Name="NavDocBorder" Background="#0E4B75" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavDocPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavDocBar" Grid.Column="0" Background="#00A2ED" />
+                            <TextBlock x:Name="NavDocText" Grid.Column="1" Text="Documentation" Foreground="#FFFFFF" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 5. Outside Records (with spacing divider below) -->
+                    <Border x:Name="NavOutsideRecordsBorder" Background="Transparent" Margin="0,0,0,8" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavOutsideRecordsPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavOutsideRecordsBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavOutsideRecordsText" Grid.Column="1" Text="Outside Records" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 6. Allergies -->
+                    <Border x:Name="NavAllergiesBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavAllergiesPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavAllergiesBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavAllergiesText" Grid.Column="1" Text="Allergies" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 7. Clinical Media -->
+                    <Border x:Name="NavClinicalMediaBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavClinicalMediaPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavClinicalMediaBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavClinicalMediaText" Grid.Column="1" Text="Clinical Media" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 8. Diagnoses and Problems -->
+                    <Border x:Name="NavDiagnosesBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavDiagnosesPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavDiagnosesBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavDiagnosesText" Grid.Column="1" Text="Diagnoses and Problems" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 9. Form Browser -->
+                    <Border x:Name="NavFormBrowserBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavFormBrowserPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavFormBrowserBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavFormBrowserText" Grid.Column="1" Text="Form Browser" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 10. Growth Chart -->
+                    <Border x:Name="NavGrowthChartBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavGrowthChartPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavGrowthChartBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavGrowthChartText" Grid.Column="1" Text="Growth Chart" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 11. Insurance -->
+                    <Border x:Name="NavInsuranceBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavInsurancePressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavInsuranceBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavInsuranceText" Grid.Column="1" Text="Insurance" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 12. Histories -->
+                    <Border x:Name="NavHistoriesBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavHistoriesPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavHistoriesBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavHistoriesText" Grid.Column="1" Text="Histories" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 13. Interactive View and I&O -->
+                    <Border x:Name="NavInteractiveViewBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavInteractiveViewPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavInteractiveViewBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavInteractiveViewText" Grid.Column="1" Text="Interactive View and I&amp;O" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 14. MAR Summary -->
+                    <Border x:Name="NavMarBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavMarPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavMarBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavMarText" Grid.Column="1" Text="MAR Summary" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 15. Medication List -->
+                    <Border x:Name="NavMedicationBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavMedicationPressed">
+                        <Grid Height="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="NavMedicationBar" Grid.Column="0" Background="Transparent" />
+                            <TextBlock x:Name="NavMedicationText" Grid.Column="1" Text="Medication List" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
+                        </Grid>
+                    </Border>
+
                 </StackPanel>
             </ScrollViewer>
         </Grid>
 
-        <!-- Form Area matching Reference Image 1 1:1 -->
-        <ScrollViewer Grid.Column="1" Background="#F0F3F5" Padding="32,24,32,24">
-            <StackPanel Spacing="18" Width="720" HorizontalAlignment="Left">
+        <!-- ==================== MAIN CONTENT AREA ==================== -->
+        <Grid Grid.Column="1">
+            <!-- Dynamic Views Container -->
+            <Grid>
+                <!-- 1. PROVIDER VIEW -->
+                <ScrollViewer x:Name="ProviderViewPanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="16" MaxWidth="900" HorizontalAlignment="Left">
+                        <TextBlock Text="Provider Clinical Summary &amp; Handoff View" FontSize="15" FontWeight="Bold" Foreground="#0F172A" />
+                        
+                        <!-- Quick Vitals & Clinical Snapshot Grid -->
+                        <Grid Background="#F8FAFC" BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="4" Padding="14">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                <!-- Field 1: Implant Lot #: (optional) -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="180" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,4,0,0">
-                        <TextBlock Text="Implant Lot #:" Foreground="#333333" FontSize="11" />
-                        <TextBlock Text=" (optional)" Foreground="#777777" FontSize="11" FontStyle="Italic" />
-                    </StackPanel>
-                    
-                    <Grid Grid.Column="1" Width="380" HorizontalAlignment="Left">
-                        <TextBox Height="80" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="#B0BEC5" BorderThickness="1" CornerRadius="0" Background="White" Padding="4" />
-                        <TextBlock Text="" Foreground="#AAAAAA" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,3,3" IsHitTestVisible="False" />
-                    </Grid>
-                </Grid>
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <TextBlock Text="BLOOD PRESSURE" FontSize="9" FontWeight="Bold" Foreground="#64748B" />
+                                <TextBlock Text="128/82 mmHg" FontSize="13" FontWeight="Bold" Foreground="#0F172A" />
+                                <TextBlock Text="Normal (08:30 AM)" FontSize="9" Foreground="#10B981" />
+                            </StackPanel>
 
-                <!-- Field 2: Was dermal matrix used?: (optional) -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="180" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,2,0,0">
-                        <TextBlock Text="Was dermal matrix used?:" Foreground="#333333" FontSize="11" />
-                        <TextBlock Text=" (optional)" Foreground="#777777" FontSize="11" FontStyle="Italic" />
-                    </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="2">
+                                <TextBlock Text="HEART RATE" FontSize="9" FontWeight="Bold" Foreground="#64748B" />
+                                <TextBlock Text="74 bpm" FontSize="13" FontWeight="Bold" Foreground="#0F172A" />
+                                <TextBlock Text="Sinus Rhythm" FontSize="9" Foreground="#10B981" />
+                            </StackPanel>
 
-                    <StackPanel Grid.Column="1" Spacing="4">
-                        <RadioButton Content="Yes" FontSize="11" Foreground="#333333" Height="20" MinWidth="0" Padding="6,0,0,0" />
-                        <RadioButton Content="No" FontSize="11" Foreground="#333333" Height="20" MinWidth="0" Padding="6,0,0,0" />
-                        <RadioButton Content="Unknown" FontSize="11" Foreground="#333333" Height="20" MinWidth="0" Padding="6,0,0,0" />
-                    </StackPanel>
-                </Grid>
+                            <StackPanel Grid.Row="0" Grid.Column="2" Spacing="2">
+                                <TextBlock Text="TEMP / SPO2" FontSize="9" FontWeight="Bold" Foreground="#64748B" />
+                                <TextBlock Text="36.8 °C / 99%" FontSize="13" FontWeight="Bold" Foreground="#0F172A" />
+                                <TextBlock Text="Room Air" FontSize="9" Foreground="#64748B" />
+                            </StackPanel>
 
-                <!-- Field 3: Operative Description: (optional) -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="180" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="Operative Description:" Foreground="#333333" FontSize="11" />
-                        <TextBlock Text=" (optional)" Foreground="#777777" FontSize="11" FontStyle="Italic" />
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
-                        <ComboBox PlaceholderText="Choose an option" Width="260" Height="26" BorderBrush="#B0BEC5" CornerRadius="0" FontSize="11" Background="White" Padding="6,2,6,2" />
-                        <TextBlock Text="Other..." Foreground="#006699" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Grid>
-
-                <!-- Field 4: Comments: (optional) -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="180" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,4,0,0">
-                        <TextBlock Text="Comments:" Foreground="#333333" FontSize="11" />
-                        <TextBlock Text=" (optional)" Foreground="#777777" FontSize="11" FontStyle="Italic" />
-                    </StackPanel>
-
-                    <Grid Grid.Column="1" Width="380" HorizontalAlignment="Left">
-                        <TextBox Height="80" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="#B0BEC5" BorderThickness="1" CornerRadius="0" Background="White" Padding="4" />
-                        <TextBlock Text="" Foreground="#AAAAAA" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,3,3" IsHitTestVisible="False" />
-                    </Grid>
-                </Grid>
-
-                <!-- Yellow Section Banner: Other Comments -->
-                <StackPanel Spacing="14" Margin="0,12,0,0">
-                    <Border Background="#FFE600" Padding="8,3,8,3" HorizontalAlignment="Left" CornerRadius="0">
-                        <TextBlock Text="Other Comments" Foreground="Black" FontSize="12" FontWeight="Bold" />
-                    </Border>
-
-                    <!-- Yellow Field Label & Text Box -->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="180" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Border Grid.Column="0" Background="#FFE600" Padding="4,2,4,2" HorizontalAlignment="Left" VerticalAlignment="Top" CornerRadius="0">
-                            <TextBlock Text="Other Comments:" Foreground="Black" FontSize="11" FontWeight="Bold" />
-                        </Border>
-
-                        <Grid Grid.Column="1" Width="380" HorizontalAlignment="Left">
-                            <TextBox Height="75"
-                                     Text="I am signing this report at the direction of administration, in the absence of Cerner Surgeon 1."
-                                     TextWrapping="Wrap"
-                                     AcceptsReturn="True"
-                                     Foreground="#222222"
-                                     FontSize="11"
-                                     BorderBrush="#B0BEC5"
-                                     BorderThickness="1"
-                                     CornerRadius="0"
-                                     Background="White"
-                                     Padding="4" />
-                            <TextBlock Text="" Foreground="#AAAAAA" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,3,3" IsHitTestVisible="False" />
+                            <StackPanel Grid.Row="0" Grid.Column="3" Spacing="2">
+                                <TextBlock Text="RESUSCITATION STATUS" FontSize="9" FontWeight="Bold" Foreground="#64748B" />
+                                <TextBlock Text="Full Code" FontSize="13" FontWeight="Bold" Foreground="#2563EB" />
+                                <TextBlock Text="Verified by Dr. Miller" FontSize="9" Foreground="#64748B" />
+                            </StackPanel>
                         </Grid>
-                    </Grid>
-                </StackPanel>
 
-            </StackPanel>
-        </ScrollViewer>
+                        <TextBlock Text="Active Inpatient Care Plan" FontSize="12.5" FontWeight="Bold" Foreground="#1E293B" Margin="0,6,0,0" />
+                        <StackPanel x:Name="ProviderNotesContainer" Spacing="8" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 2. RESULTS REVIEW -->
+                <ScrollViewer x:Name="ResultsReviewPanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="16" MaxWidth="900" HorizontalAlignment="Left">
+                        <TextBlock Text="Diagnostic Results &amp; Laboratory Review" FontSize="15" FontWeight="Bold" Foreground="#0F172A" />
+                        <StackPanel x:Name="ResultsListContainer" Spacing="10" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 3. ORDERS -->
+                <ScrollViewer x:Name="OrdersPanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="16" MaxWidth="900" HorizontalAlignment="Left">
+                        <TextBlock Text="Physician Clinical Orders &amp; Directives" FontSize="15" FontWeight="Bold" Foreground="#0F172A" />
+                        <StackPanel x:Name="OrdersListContainer" Spacing="8" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 4. DOCUMENTATION VIEW -->
+                <ScrollViewer x:Name="DocumentationPanel" Visibility="Visible" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="14" MaxWidth="850" HorizontalAlignment="Left">
+                        <TextBlock Text="Clinical Documentation &amp; Notes" FontSize="14" FontWeight="Bold" Foreground="#0F172A" />
+                        <StackPanel x:Name="DocumentationListContainer" Spacing="10" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 5. OUTSIDE RECORDS VIEW -->
+                <ScrollViewer x:Name="OutsideRecordsPanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="14" MaxWidth="850" HorizontalAlignment="Left">
+                        <TextBlock Text="Outside Health Records &amp; HIE Documents" FontSize="14" FontWeight="Bold" Foreground="#0F172A" />
+                        <StackPanel x:Name="OutsideRecordsListContainer" Spacing="10" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 6. ALLERGIES VIEW -->
+                <ScrollViewer x:Name="AllergiesPanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="14" MaxWidth="850" HorizontalAlignment="Left">
+                        <TextBlock Text="Verified Allergies &amp; Adverse Reactions" FontSize="14" FontWeight="Bold" Foreground="#0F172A" />
+                        <StackPanel x:Name="AllergiesListContainer" Spacing="8" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 7. CLINICAL MEDIA -->
+                <ScrollViewer x:Name="ClinicalMediaPanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="14" MaxWidth="850" HorizontalAlignment="Left">
+                        <TextBlock Text="Clinical Media, Imaging &amp; Photographs" FontSize="14" FontWeight="Bold" Foreground="#0F172A" />
+                        <StackPanel x:Name="ClinicalMediaContainer" Spacing="10" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 8. DIAGNOSES AND PROBLEMS VIEW -->
+                <ScrollViewer x:Name="DiagnosesPanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="14" MaxWidth="850" HorizontalAlignment="Left">
+                        <TextBlock Text="Diagnoses &amp; Chronic Problem List" FontSize="14" FontWeight="Bold" Foreground="#0F172A" />
+                        <StackPanel x:Name="DiagnosesListContainer" Spacing="8" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 9. FORM BROWSER VIEW (Op Note & Clinical Forms) -->
+                <ScrollViewer x:Name="FormBrowserPanel" Visibility="Collapsed" Background="#F0F3F5" Padding="32,24,32,24">
+                    <StackPanel Spacing="16" Width="740" HorizontalAlignment="Left">
+                        <TextBlock Text="Operative Note &amp; Clinical Documentation Form" FontSize="13" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,4" />
+
+                        <!-- Field 1: Implant Lot #: (optional) -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,4,0,0">
+                                <TextBlock Text="Implant Lot #:" Foreground="#333333" FontSize="11" />
+                                <TextBlock Text=" (optional)" Foreground="#777777" FontSize="11" FontStyle="Italic" />
+                            </StackPanel>
+                            
+                            <Grid Grid.Column="1" Width="400" HorizontalAlignment="Left">
+                                <TextBox x:Name="FormImplantLotBox" Height="70" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="#B0BEC5" BorderThickness="1" CornerRadius="0" Background="White" Padding="6,4" FontSize="11" Foreground="#0F172A" />
+                            </Grid>
+                        </Grid>
+
+                        <!-- Field 2: Was dermal matrix used?: (optional) -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,2,0,0">
+                                <TextBlock Text="Was dermal matrix used?:" Foreground="#333333" FontSize="11" />
+                                <TextBlock Text=" (optional)" Foreground="#777777" FontSize="11" FontStyle="Italic" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Spacing="4">
+                                <RadioButton x:Name="FormDermalYes" Content="Yes" FontSize="11" Foreground="#333333" Height="20" MinWidth="0" Padding="6,0,0,0" />
+                                <RadioButton x:Name="FormDermalNo" Content="No" IsChecked="True" FontSize="11" Foreground="#333333" Height="20" MinWidth="0" Padding="6,0,0,0" />
+                                <RadioButton x:Name="FormDermalUnknown" Content="Unknown" FontSize="11" Foreground="#333333" Height="20" MinWidth="0" Padding="6,0,0,0" />
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Field 3: Operative Description: (optional) -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="Operative Description:" Foreground="#333333" FontSize="11" />
+                                <TextBlock Text=" (optional)" Foreground="#777777" FontSize="11" FontStyle="Italic" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
+                                <ComboBox x:Name="FormOpDescriptionCombo" PlaceholderText="Choose an option" Width="280" Height="26" BorderBrush="#B0BEC5" CornerRadius="0" FontSize="11" Background="White" Padding="6,2,6,2" />
+                                <TextBlock Text="Other..." Foreground="#006699" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Field 4: Comments: (optional) -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,4,0,0">
+                                <TextBlock Text="Comments:" Foreground="#333333" FontSize="11" />
+                                <TextBlock Text=" (optional)" Foreground="#777777" FontSize="11" FontStyle="Italic" />
+                            </StackPanel>
+
+                            <Grid Grid.Column="1" Width="400" HorizontalAlignment="Left">
+                                <TextBox x:Name="FormCommentsBox" Height="70" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="#B0BEC5" BorderThickness="1" CornerRadius="0" Background="White" Padding="6,4" FontSize="11" Foreground="#0F172A" />
+                            </Grid>
+                        </Grid>
+
+                        <!-- Yellow Section Banner: Other Comments -->
+                        <StackPanel Spacing="12" Margin="0,8,0,0">
+                            <Border Background="#FFE600" Padding="8,3,8,3" HorizontalAlignment="Left" CornerRadius="0">
+                                <TextBlock Text="Other Comments" Foreground="Black" FontSize="12" FontWeight="Bold" />
+                            </Border>
+
+                            <!-- Yellow Field Label & Text Box -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="180" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" Background="#FFE600" Padding="4,2,4,2" HorizontalAlignment="Left" VerticalAlignment="Top" CornerRadius="0">
+                                    <TextBlock Text="Other Comments:" Foreground="Black" FontSize="11" FontWeight="Bold" />
+                                </Border>
+
+                                <Grid Grid.Column="1" Width="400" HorizontalAlignment="Left">
+                                    <TextBox x:Name="FormOtherCommentsBox" Height="75"
+                                             Text="I am signing this report at the direction of administration, in the absence of Cerner Surgeon 1."
+                                             TextWrapping="Wrap"
+                                             AcceptsReturn="True"
+                                             Foreground="#222222"
+                                             FontSize="11"
+                                             BorderBrush="#B0BEC5"
+                                             BorderThickness="1"
+                                             CornerRadius="0"
+                                             Background="White"
+                                             Padding="6,4" />
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 10. GROWTH CHART VIEW (Portfolio Slicer & Yearly Movements) -->
+                <views:GrowthChartView x:Name="GrowthChartPanel" Visibility="Collapsed" />
+
+                <!-- 11. INSURANCE VIEW -->
+                <ScrollViewer x:Name="InsurancePanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="14" MaxWidth="850" HorizontalAlignment="Left">
+                        <TextBlock Text="Insurance, Guarantor &amp; Coverage" FontSize="14" FontWeight="Bold" Foreground="#0F172A" />
+                        <StackPanel x:Name="InsuranceDetailsContainer" Spacing="10" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 12. HISTORIES CALENDAR CHART VIEW -->
+                <views:HistoriesChartView x:Name="HistoriesChartPanel" Visibility="Collapsed" />
+
+                <!-- 13. INTERACTIVE VIEW AND I&O -->
+                <ScrollViewer x:Name="InteractiveViewPanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="14" MaxWidth="850" HorizontalAlignment="Left">
+                        <TextBlock Text="Interactive View &amp; Intake / Output (I&amp;O) Flowsheet" FontSize="14" FontWeight="Bold" Foreground="#0F172A" />
+                        <StackPanel x:Name="IoListContainer" Spacing="10" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 14. MAR SUMMARY -->
+                <ScrollViewer x:Name="MarSummaryPanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="14" MaxWidth="850" HorizontalAlignment="Left">
+                        <TextBlock Text="Medication Administration Record (MAR) Summary" FontSize="14" FontWeight="Bold" Foreground="#0F172A" />
+                        <StackPanel x:Name="MarSummaryContainer" Spacing="10" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 15. MEDICATION LIST -->
+                <ScrollViewer x:Name="MedicationsPanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">
+                    <StackPanel Spacing="14" MaxWidth="850" HorizontalAlignment="Left">
+                        <TextBlock Text="Active Inpatient Medications &amp; Orders" FontSize="14" FontWeight="Bold" Foreground="#0F172A" />
+                        <StackPanel x:Name="MedicationsListContainer" Spacing="8" />
+                    </StackPanel>
+                </ScrollViewer>
+
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

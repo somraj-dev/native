@@ -1,0 +1,938 @@
+<UserControl
+    x:Class="AxioVital.Desktop.Views.GrowthChartView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="Segoe UI"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch">
+
+    <ScrollViewer Background="#FFFFFF" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch">
+        <StackPanel Spacing="10" Padding="14,10,14,20" HorizontalAlignment="Stretch">
+
+            <!-- ==================== 1. TOP TITLE HEADER ==================== -->
+            <TextBlock Text="Portfolio Slicer - Yearly Movements" 
+                       Foreground="#4A7FA8" 
+                       FontSize="15" 
+                       FontWeight="SemiBold" 
+                       Margin="0,0,0,0" />
+
+            <!-- ==================== 2. TOP SLICER / FILTER BAR (FULL WIDTH) ==================== -->
+            <Border Background="#F8FAFC" BorderBrush="#B8CCE0" BorderThickness="1" CornerRadius="3" Padding="10,8,10,8" HorizontalAlignment="Stretch">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left Slicer Box: Portfolio -->
+                    <Border Grid.Column="0" Margin="0,0,16,0">
+                        <StackPanel Spacing="5">
+                            <!-- Slicer Header -->
+                            <Grid>
+                                <TextBlock Text="Portfolio" FontSize="11.5" FontWeight="Bold" Foreground="#1E3A5F" />
+                                <FontIcon Glyph="&#xE71C;" FontSize="11" Foreground="#64748B" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                            </Grid>
+
+                            <!-- Slicer Pills Row 1 & 2 in Wrap/Horizontal Stack -->
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Border x:Name="PillHers" Background="#CBDCEB" BorderBrush="#9DBAD6" BorderThickness="1" CornerRadius="3" Padding="12,3" PointerPressed="OnPortfolioPillPressed" Tag="Hers">
+                                    <TextBlock Text="Hers" FontSize="11" Foreground="#1E3A5F" />
+                                </Border>
+                                <Border x:Name="PillHersTax" Background="#CBDCEB" BorderBrush="#9DBAD6" BorderThickness="1" CornerRadius="3" Padding="12,3" PointerPressed="OnPortfolioPillPressed" Tag="Hers-Tax">
+                                    <TextBlock Text="Hers-Tax" FontSize="11" Foreground="#1E3A5F" />
+                                </Border>
+                                <Border x:Name="PillHis" Background="#CBDCEB" BorderBrush="#9DBAD6" BorderThickness="1" CornerRadius="3" Padding="14,3" PointerPressed="OnPortfolioPillPressed" Tag="His">
+                                    <TextBlock Text="His" FontSize="11" Foreground="#1E3A5F" />
+                                </Border>
+                                <Border x:Name="PillHisCdn" Background="#CBDCEB" BorderBrush="#9DBAD6" BorderThickness="1" CornerRadius="3" Padding="12,3" PointerPressed="OnPortfolioPillPressed" Tag="His-CDN">
+                                    <TextBlock Text="His-CDN" FontSize="11" Foreground="#1E3A5F" />
+                                </Border>
+                                <Border x:Name="PillHisTax" Background="#CBDCEB" BorderBrush="#9DBAD6" BorderThickness="1" CornerRadius="3" Padding="12,3" PointerPressed="OnPortfolioPillPressed" Tag="His-Tax">
+                                    <TextBlock Text="His-Tax" FontSize="11" Foreground="#1E3A5F" />
+                                </Border>
+                                <Border x:Name="PillJoint" Background="#CBDCEB" BorderBrush="#9DBAD6" BorderThickness="1" CornerRadius="3" Padding="14,3" PointerPressed="OnPortfolioPillPressed" Tag="Joint">
+                                    <TextBlock Text="Joint" FontSize="11" Foreground="#1E3A5F" />
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Right Slicer Box: Report Currency -->
+                    <Border Grid.Column="1" BorderBrush="#CBD7E3" BorderThickness="1,0,0,0" Padding="16,0,0,0" MinWidth="260">
+                        <StackPanel Spacing="5">
+                            <!-- Slicer Header -->
+                            <Grid>
+                                <TextBlock Text="Report Currency" FontSize="11.5" FontWeight="Bold" Foreground="#1E3A5F" />
+                                <FontIcon Glyph="&#xE71C;" FontSize="11" Foreground="#64748B" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                            </Grid>
+
+                            <!-- Currency Pills -->
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Border x:Name="PillOrigCurrency" Background="#165B8C" BorderBrush="#0F4368" BorderThickness="1" CornerRadius="3" Padding="12,3" PointerPressed="OnCurrencyPillPressed" Tag="Original">
+                                    <TextBlock Text="*Original*" FontSize="11" Foreground="White" FontWeight="SemiBold" />
+                                </Border>
+                                <Border x:Name="PillCadCurrency" Background="#CBDCEB" BorderBrush="#9DBAD6" BorderThickness="1" CornerRadius="3" Padding="12,3" PointerPressed="OnCurrencyPillPressed" Tag="CAD">
+                                    <TextBlock Text="CAD" FontSize="11" Foreground="#1E3A5F" />
+                                </Border>
+                                <Border x:Name="PillUsdCurrency" Background="#CBDCEB" BorderBrush="#9DBAD6" BorderThickness="1" CornerRadius="3" Padding="12,3" PointerPressed="OnCurrencyPillPressed" Tag="USD">
+                                    <TextBlock Text="USD" FontSize="11" Foreground="#1E3A5F" />
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- ==================== 3. SECTION: YEARLY MOVEMENTS SUMMARY TABLE (FULL WIDTH) ==================== -->
+            <Border BorderBrush="#165B8C" BorderThickness="1" Background="#FFFFFF" HorizontalAlignment="Stretch">
+                <StackPanel HorizontalAlignment="Stretch">
+                    <!-- Sub-Header Title Bar with Filter Badge -->
+                    <Grid Background="#F0F5FA" Padding="8,4,8,4" BorderBrush="#D0DEEB" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch">
+                        <!-- Left Filter Badge -->
+                        <Border HorizontalAlignment="Left" Background="#E6EFF7" BorderBrush="#94B8D7" BorderThickness="1" CornerRadius="2" Padding="6,2">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <TextBlock Text="Years - Last 7" FontSize="9.5" FontWeight="SemiBold" Foreground="#1E3A5F" />
+                                <TextBlock Text="Yes" FontSize="9.5" Foreground="#334455" />
+                                <FontIcon Glyph="&#xE71C;" FontSize="8.5" Foreground="#64748B" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Center Title & Formula -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+                            <TextBlock Text="Yearly movements" FontSize="12.5" FontWeight="Bold" Foreground="#111827" />
+                            <TextBlock Text="Growth = TotalValue - StartValue - Deposits" FontSize="10" Foreground="#0284C7" FontStyle="Italic" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Data Grid Table Stretched Across Full Width -->
+                    <Grid Background="#FFFFFF" HorizontalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="26" /> <!-- Header -->
+                            <RowDefinition Height="22" /> <!-- 2013 -->
+                            <RowDefinition Height="22" /> <!-- 2012 -->
+                            <RowDefinition Height="22" /> <!-- 2011 -->
+                            <RowDefinition Height="22" /> <!-- 2010 -->
+                            <RowDefinition Height="22" /> <!-- 2009 -->
+                            <RowDefinition Height="22" /> <!-- 2008 -->
+                            <RowDefinition Height="24" /> <!-- Grand Total -->
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" MinWidth="60" />  <!-- Year -->
+                            <ColumnDefinition Width="1.1*" MinWidth="85" />  <!-- Start Value -->
+                            <ColumnDefinition Width="1.0*" MinWidth="75" />  <!-- Deposits -->
+                            <ColumnDefinition Width="1.0*" MinWidth="75" />  <!-- Dividends -->
+                            <ColumnDefinition Width="1.1*" MinWidth="85" />  <!-- Capital Gain -->
+                            <ColumnDefinition Width="1.2*" MinWidth="95" />  <!-- Ending Value -->
+                            <ColumnDefinition Width="1.0*" MinWidth="80" />  <!-- Cap Gain % -->
+                            <ColumnDefinition Width="1.0*" MinWidth="80" />  <!-- Dividend % -->
+                            <ColumnDefinition Width="1.0*" MinWidth="75" />  <!-- Profit % -->
+                            <ColumnDefinition Width="1.2*" MinWidth="95" />  <!-- Exch Rate Impact -->
+                            <ColumnDefinition Width="1.1*" MinWidth="85" />  <!-- Exch Rate Impact % -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- ===== HEADER ROW ===== -->
+                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="11" Background="#165B8C" />
+                        
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="8,0,0,0" Spacing="4">
+                            <TextBlock Text="Year" Foreground="White" FontSize="10.5" FontWeight="Bold" />
+                            <FontIcon Glyph="&#xE81E;" FontSize="8.5" Foreground="#A0CBE8" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Start Value" Foreground="White" FontSize="10.5" FontWeight="Bold" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Deposits" Foreground="White" FontSize="10.5" FontWeight="Bold" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="0" Grid.Column="3" Text="Dividends" Foreground="White" FontSize="10.5" FontWeight="Bold" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="0" Grid.Column="4" Text="Capital Gain" Foreground="White" FontSize="10.5" FontWeight="Bold" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="0" Grid.Column="5" Text="Ending Value" Foreground="White" FontSize="10.5" FontWeight="Bold" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="0" Grid.Column="6" Text="Cap Gain %" Foreground="White" FontSize="10.5" FontWeight="Bold" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="0" Grid.Column="7" Text="Dividend %" Foreground="White" FontSize="10.5" FontWeight="Bold" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="0" Grid.Column="8" Text="Profit %" Foreground="White" FontSize="10.5" FontWeight="Bold" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        
+                        <!-- Light Accent Headers for Exch Rate -->
+                        <Border Grid.Row="0" Grid.Column="9" Background="#1B6FA8" />
+                        <TextBlock Grid.Row="0" Grid.Column="9" Text="Exch Rate Impact" Foreground="White" FontSize="10" FontWeight="Bold" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="0" Grid.Column="10" Background="#1B6FA8" />
+                        <TextBlock Grid.Row="0" Grid.Column="10" Text="Exch Rate Impact %" Foreground="White" FontSize="9.5" FontWeight="Bold" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- ===== ROW 1: 2013 ===== -->
+                        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" BorderBrush="#E5E9F0" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="2013" FontSize="10.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="452,846" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="68,800" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="9,564" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="1" Grid.Column="4" Text="66,087" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="1" Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="597,298" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="▲" FontSize="8.5" Foreground="#16A34A" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="1" Grid.Column="6" Text="12.59 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="1" Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="1.82 %" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="✔" FontSize="9" Foreground="#16A34A" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="1" Grid.Column="8" Text="14.41 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="1" Grid.Column="9" Background="#C6F6D5" Margin="2,1,2,1" CornerRadius="1">
+                            <TextBlock Text="22,886" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        </Border>
+                        <TextBlock Grid.Row="1" Grid.Column="10" Text="4.36 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- ===== ROW 2: 2012 ===== -->
+                        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="11" BorderBrush="#E5E9F0" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="2012" FontSize="10.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="331,991" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="81,000" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="9,247" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="2" Grid.Column="4" Text="30,608" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="2" Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="452,846" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="▲" FontSize="8.5" Foreground="#16A34A" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="2" Grid.Column="6" Text="7.80 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="2" Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="2.36 %" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="✔" FontSize="9" Foreground="#16A34A" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="2" Grid.Column="8" Text="10.16 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="2" Grid.Column="9" Background="#E0F2FE" Margin="2,1,2,1" CornerRadius="1">
+                            <TextBlock Text="-4,762" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        </Border>
+                        <TextBlock Grid.Row="2" Grid.Column="10" Text="-1.21 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- ===== ROW 3: 2011 ===== -->
+                        <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="11" BorderBrush="#E5E9F0" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="2011" FontSize="10.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="266,104" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="3" Grid.Column="2" Text="85,800" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="3" Grid.Column="3" Text="6,172" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="3" Grid.Column="4" Text="-26,085" FontSize="10.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="3" Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="331,991" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="▼" FontSize="8.5" Foreground="#DC2626" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="3" Grid.Column="6" Text="-8.72 %" FontSize="10.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="3" Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="2.06 %" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="✖" FontSize="8.5" Foreground="#DC2626" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="3" Grid.Column="8" Text="-6.66 %" FontSize="10.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="3" Grid.Column="9" Text="6,520" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="3" Grid.Column="10" Text="2.18 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- ===== ROW 4: 2010 ===== -->
+                        <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="11" BorderBrush="#E5E9F0" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="2010" FontSize="10.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="169,825" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="4" Grid.Column="2" Text="67,800" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="4,642" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="4" Grid.Column="4" Text="23,837" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="4" Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="266,104" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="▲" FontSize="8.5" Foreground="#16A34A" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="4" Grid.Column="6" Text="10.94 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="4" Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="2.13 %" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="✔" FontSize="9" Foreground="#16A34A" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="4" Grid.Column="8" Text="13.07 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="4" Grid.Column="9" Background="#FED7D7" Margin="2,1,2,1" CornerRadius="1">
+                            <TextBlock Text="-8,769" FontSize="10.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        </Border>
+                        <TextBlock Grid.Row="4" Grid.Column="10" Text="-4.02 %" FontSize="10.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- ===== ROW 5: 2009 ===== -->
+                        <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="11" BorderBrush="#E5E9F0" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="2009" FontSize="10.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="5" Grid.Column="1" Text="42,618" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="5" Grid.Column="2" Text="97,800" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="5" Grid.Column="3" Text="2,102" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="5" Grid.Column="4" Text="27,305" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="5" Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="169,825" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="▲" FontSize="8.5" Foreground="#16A34A" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="5" Grid.Column="6" Text="25.71 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="5" Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="1.98 %" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="✔" FontSize="9" Foreground="#16A34A" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="5" Grid.Column="8" Text="27.68 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="5" Grid.Column="9" Background="#FED7D7" Margin="2,1,2,1" CornerRadius="1">
+                            <TextBlock Text="-10,119" FontSize="10.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        </Border>
+                        <TextBlock Grid.Row="5" Grid.Column="10" Text="-9.53 %" FontSize="10.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- ===== ROW 6: 2008 ===== -->
+                        <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="11" BorderBrush="#E5E9F0" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="2008" FontSize="10.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="6" Grid.Column="1" Text="" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="6" Grid.Column="2" Text="57,200" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="6" Grid.Column="3" Text="1,027" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="6" Grid.Column="4" Text="-15,608" FontSize="10.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="6" Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="42,618" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="▼" FontSize="8.5" Foreground="#DC2626" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="6" Grid.Column="6" Text="-73.25 %" FontSize="10.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <StackPanel Grid.Row="6" Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Spacing="4">
+                            <TextBlock Text="4.82 %" FontSize="10.5" Foreground="#111827" />
+                            <TextBlock Text="✖" FontSize="8.5" Foreground="#DC2626" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="6" Grid.Column="8" Text="-68.43 %" FontSize="10.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="6" Grid.Column="9" Background="#C6F6D5" Margin="2,1,2,1" CornerRadius="1">
+                            <TextBlock Text="6,524" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        </Border>
+                        <TextBlock Grid.Row="6" Grid.Column="10" Text="30.62 %" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- ===== ROW 7: GRAND TOTAL FOOTER ===== -->
+                        <Border Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="11" Background="#F8FAFC" BorderBrush="#165B8C" BorderThickness="0,1,0,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="0" Text="Grand Total" FontSize="10.5" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="1" Text="" FontSize="10.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="2" Text="458,400" FontSize="10.5" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="3" Text="32,754" FontSize="10.5" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="4" Text="106,144" FontSize="10.5" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="5" Text="597,298" FontSize="10.5" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="6" Text="35.54 %" FontSize="10.5" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="7" Text="10.97 %" FontSize="10.5" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="8" Text="46.51 %" FontSize="10.5" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="7" Grid.Column="9" Background="#C6F6D5" Margin="2,2,2,2" CornerRadius="1">
+                            <TextBlock Text="12,280" FontSize="10.5" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        </Border>
+                        <TextBlock Grid.Row="7" Grid.Column="10" Text="4.11 %" FontSize="10.5" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ==================== 4. SECTION: DUAL CHARTS SIDE-BY-SIDE (FULL WIDTH) ==================== -->
+            <Border BorderBrush="#165B8C" BorderThickness="1" Background="#FFFFFF" HorizontalAlignment="Stretch">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="1" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- ===== LEFT CHART: Yearly movements (Stacked Bar & Trendline) ===== -->
+                    <StackPanel Grid.Column="0" Padding="8,6,8,6" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Yearly movements" FontSize="11.5" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#111827" Margin="0,0,0,2" />
+
+                        <!-- Chart Responsive Viewbox Container -->
+                        <Viewbox Stretch="Fill" Height="210" HorizontalAlignment="Stretch" Margin="0,0,0,0">
+                            <Grid Width="540" Height="210" Background="Transparent">
+                                <!-- Y-Axis Grid Lines and Labels -->
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" /> <!-- 800,000 -->
+                                        <RowDefinition Height="*" /> <!-- 700,000 -->
+                                        <RowDefinition Height="*" /> <!-- 600,000 -->
+                                        <RowDefinition Height="*" /> <!-- 500,000 -->
+                                        <RowDefinition Height="*" /> <!-- 400,000 -->
+                                        <RowDefinition Height="*" /> <!-- 300,000 -->
+                                        <RowDefinition Height="*" /> <!-- 200,000 -->
+                                        <RowDefinition Height="*" /> <!-- 100,000 -->
+                                        <RowDefinition Height="*" /> <!-- 0 (Axis Baseline) -->
+                                        <RowDefinition Height="*" /> <!-- -100,000 -->
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Grid Lines -->
+                                    <Rectangle Grid.Row="0" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="48,0,0,0" />
+                                    <Rectangle Grid.Row="1" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="48,0,0,0" />
+                                    <Rectangle Grid.Row="2" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="48,0,0,0" />
+                                    <Rectangle Grid.Row="3" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="48,0,0,0" />
+                                    <Rectangle Grid.Row="4" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="48,0,0,0" />
+                                    <Rectangle Grid.Row="5" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="48,0,0,0" />
+                                    <Rectangle Grid.Row="6" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="48,0,0,0" />
+                                    <Rectangle Grid.Row="7" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="48,0,0,0" />
+                                    <Rectangle Grid.Row="8" Fill="#64748B" Height="1.5" VerticalAlignment="Top" Margin="48,0,0,0" /> <!-- Zero Line -->
+                                    <Rectangle Grid.Row="9" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="48,0,0,0" />
+
+                                    <!-- Y-Axis Tick Labels -->
+                                    <TextBlock Grid.Row="0" Text="800,000" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="1" Text="700,000" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="2" Text="600,000" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="3" Text="500,000" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="4" Text="400,000" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="5" Text="300,000" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="6" Text="200,000" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="7" Text="100,000" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="8" Text="0" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="34,-4,0,0" />
+                                    <TextBlock Grid.Row="9" Text="-100,000" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                </Grid>
+
+                                <!-- Stacked Bars Grid (6 Equal Columns for 2008 to 2013) -->
+                                <Grid Margin="55,0,10,22">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" /> <!-- 2008: center 85 -->
+                                        <ColumnDefinition Width="*" /> <!-- 2009: center 165 -->
+                                        <ColumnDefinition Width="*" /> <!-- 2010: center 245 -->
+                                        <ColumnDefinition Width="*" /> <!-- 2011: center 325 -->
+                                        <ColumnDefinition Width="*" /> <!-- 2012: center 405 -->
+                                        <ColumnDefinition Width="*" /> <!-- 2013: center 485 -->
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- 2008 Bar Column -->
+                                    <Grid Grid.Column="0">
+                                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,21" Width="38">
+                                            <Rectangle Height="14" Fill="#9A3824" /> <!-- Deposits -->
+                                        </StackPanel>
+                                        <Rectangle Height="4" Fill="#6DAA32" Width="38" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,17" /> <!-- Negative Cap Gain -->
+                                    </Grid>
+
+                                    <!-- 2009 Bar Column -->
+                                    <Grid Grid.Column="1">
+                                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,21" Width="38">
+                                            <Rectangle Height="8" Fill="#6DAA32" /> <!-- Cap Gain -->
+                                            <Rectangle Height="24" Fill="#9A3824" /> <!-- Deposits -->
+                                            <Rectangle Height="10" Fill="#3A86C8" /> <!-- Start Value -->
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- 2010 Bar Column -->
+                                    <Grid Grid.Column="2">
+                                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,21" Width="38">
+                                            <Rectangle Height="7" Fill="#6DAA32" /> <!-- Cap Gain -->
+                                            <Rectangle Height="17" Fill="#9A3824" /> <!-- Deposits -->
+                                            <Rectangle Height="42" Fill="#3A86C8" /> <!-- Start Value -->
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- 2011 Bar Column -->
+                                    <Grid Grid.Column="3">
+                                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,21" Width="38">
+                                            <Rectangle Height="21" Fill="#9A3824" /> <!-- Deposits -->
+                                            <Rectangle Height="66" Fill="#3A86C8" /> <!-- Start Value -->
+                                        </StackPanel>
+                                        <Rectangle Height="6" Fill="#6DAA32" Width="38" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15" /> <!-- Negative Cap Gain -->
+                                    </Grid>
+
+                                    <!-- 2012 Bar Column -->
+                                    <Grid Grid.Column="4">
+                                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,21" Width="38">
+                                            <Rectangle Height="8" Fill="#6DAA32" /> <!-- Cap Gain -->
+                                            <Rectangle Height="20" Fill="#9A3824" /> <!-- Deposits -->
+                                            <Rectangle Height="82" Fill="#3A86C8" /> <!-- Start Value -->
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- 2013 Bar Column -->
+                                    <Grid Grid.Column="5">
+                                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,21" Width="38">
+                                            <Rectangle Height="16" Fill="#6DAA32" /> <!-- Cap Gain -->
+                                            <Rectangle Height="17" Fill="#9A3824" /> <!-- Deposits -->
+                                            <Rectangle Height="113" Fill="#3A86C8" /> <!-- Start Value -->
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+
+                                <!-- Path Line Overlay & Callout Tags -->
+                                <Canvas Margin="0,0,0,0">
+                                    <!-- Connecting Black Line (Total Value) -->
+                                    <Path Data="M 94,152 L 174,122 L 254,97 L 334,82 L 414,54 L 494,22" Stroke="#1E293B" StrokeThickness="1.5" />
+
+                                    <!-- Red Trendline (Ascending Arrow) -->
+                                    <Path Data="M 94,154 L 494,20" Stroke="#DC2626" StrokeThickness="1.5" />
+                                    <Path Data="M 498,19 L 490,16 L 492,24 Z" Fill="#DC2626" />
+
+                                    <!-- Total Value Points & Value Labels -->
+                                    <Ellipse Canvas.Left="90" Canvas.Top="148" Width="8" Height="8" Fill="#1E293B" />
+                                    <TextBlock Canvas.Left="76" Canvas.Top="136" Text="42,618" FontSize="8" FontWeight="SemiBold" Foreground="#111827" />
+
+                                    <Ellipse Canvas.Left="170" Canvas.Top="118" Width="8" Height="8" Fill="#1E293B" />
+                                    <TextBlock Canvas.Left="156" Canvas.Top="106" Text="169,825" FontSize="8" FontWeight="SemiBold" Foreground="#111827" />
+
+                                    <Ellipse Canvas.Left="250" Canvas.Top="93" Width="8" Height="8" Fill="#1E293B" />
+                                    <TextBlock Canvas.Left="236" Canvas.Top="81" Text="266,104" FontSize="8" FontWeight="SemiBold" Foreground="#111827" />
+
+                                    <Ellipse Canvas.Left="330" Canvas.Top="78" Width="8" Height="8" Fill="#1E293B" />
+                                    <TextBlock Canvas.Left="316" Canvas.Top="66" Text="331,991" FontSize="8" FontWeight="SemiBold" Foreground="#111827" />
+
+                                    <Ellipse Canvas.Left="410" Canvas.Top="50" Width="8" Height="8" Fill="#1E293B" />
+                                    <TextBlock Canvas.Left="396" Canvas.Top="38" Text="452,846" FontSize="8" FontWeight="SemiBold" Foreground="#111827" />
+
+                                    <Ellipse Canvas.Left="490" Canvas.Top="18" Width="8" Height="8" Fill="#1E293B" />
+                                    <TextBlock Canvas.Left="474" Canvas.Top="6" Text="597,298" FontSize="8" FontWeight="SemiBold" Foreground="#111827" />
+                                </Canvas>
+
+                                <!-- X-Axis Labels -->
+                                <Grid VerticalAlignment="Bottom" Margin="55,0,10,2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="2008" FontSize="9.5" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Column="1" Text="2009" FontSize="9.5" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Column="2" Text="2010" FontSize="9.5" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Column="3" Text="2011" FontSize="9.5" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Column="4" Text="2012" FontSize="9.5" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Column="5" Text="2013" FontSize="9.5" Foreground="#64748B" HorizontalAlignment="Center" />
+                                </Grid>
+                            </Grid>
+                        </Viewbox>
+
+                        <!-- Chart Legend -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12" Margin="0,6,0,2">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <Rectangle Width="10" Height="7" Fill="#3A86C8" />
+                                <TextBlock Text="Start Value" FontSize="9" Foreground="#334455" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <Rectangle Width="10" Height="7" Fill="#9A3824" />
+                                <TextBlock Text="Deposits" FontSize="9" Foreground="#334455" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <Rectangle Width="10" Height="7" Fill="#6DAA32" />
+                                <TextBlock Text="Capital Gain" FontSize="9" Foreground="#334455" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <Ellipse Width="6" Height="6" Fill="#1E293B" />
+                                <TextBlock Text="Total Value" FontSize="9" Foreground="#334455" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <TextBlock Text="→" Foreground="#DC2626" FontSize="10" FontWeight="Bold" Margin="0,-2,0,0" />
+                                <TextBlock Text="Trendline" FontSize="9" Foreground="#334455" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Center Divider -->
+                    <Rectangle Grid.Column="1" Fill="#CBD7DF" />
+
+                    <!-- ===== RIGHT CHART: Capital Gain % Compared with Index Return ===== -->
+                    <StackPanel Grid.Column="2" Padding="8,6,8,6" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Capital Gain % Compared with Index Return" FontSize="11.5" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#111827" Margin="0,0,0,2" />
+
+                        <!-- Chart Responsive Viewbox Container -->
+                        <Viewbox Stretch="Fill" Height="210" HorizontalAlignment="Stretch" Margin="0,0,0,0">
+                            <Grid Width="540" Height="210" Background="Transparent">
+                                <!-- Y-Axis Grid Lines and Labels -->
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" /> <!-- 30.00 % -->
+                                        <RowDefinition Height="*" /> <!-- 20.00 % -->
+                                        <RowDefinition Height="*" /> <!-- 10.00 % -->
+                                        <RowDefinition Height="*" /> <!-- 0.00 % (Zero Baseline) -->
+                                        <RowDefinition Height="*" /> <!-- -10.00 % -->
+                                        <RowDefinition Height="*" /> <!-- -20.00 % -->
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Grid Lines -->
+                                    <Rectangle Grid.Row="0" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="44,0,0,0" />
+                                    <Rectangle Grid.Row="1" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="44,0,0,0" />
+                                    <Rectangle Grid.Row="2" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="44,0,0,0" />
+                                    <Rectangle Grid.Row="3" Fill="#64748B" Height="1.5" VerticalAlignment="Top" Margin="44,0,0,0" /> <!-- Zero Line -->
+                                    <Rectangle Grid.Row="4" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="44,0,0,0" />
+                                    <Rectangle Grid.Row="5" Fill="#E2E8F0" Height="1" VerticalAlignment="Top" Margin="44,0,0,0" />
+
+                                    <!-- Y-Axis Tick Labels -->
+                                    <TextBlock Grid.Row="0" Text="30.00 %" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="1" Text="20.00 %" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="2" Text="10.00 %" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="3" Text="0.00 %" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,-4,0,0" />
+                                    <TextBlock Grid.Row="4" Text="-10.00 %" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                    <TextBlock Grid.Row="5" Text="-20.00 %" FontSize="8.5" Foreground="#64748B" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,-4,0,0" />
+                                </Grid>
+
+                                <!-- Index Return Vertical Reference Bars (5 Columns for 2009 to 2013) -->
+                                <Grid Margin="50,0,10,22">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" /> <!-- 2009: center 98 -->
+                                        <ColumnDefinition Width="*" /> <!-- 2010: center 194 -->
+                                        <ColumnDefinition Width="*" /> <!-- 2011: center 290 -->
+                                        <ColumnDefinition Width="*" /> <!-- 2012: center 386 -->
+                                        <ColumnDefinition Width="*" /> <!-- 2013: center 482 -->
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Grid.Column="0" Fill="#F1F5F9" Width="14" HorizontalAlignment="Center" Height="140" VerticalAlignment="Bottom" Margin="0,0,0,21" />
+                                    <Rectangle Grid.Column="1" Fill="#F1F5F9" Width="14" HorizontalAlignment="Center" Height="90" VerticalAlignment="Bottom" Margin="0,0,0,21" />
+                                    <Rectangle Grid.Column="2" Fill="#F1F5F9" Width="14" HorizontalAlignment="Center" Height="70" VerticalAlignment="Bottom" Margin="0,0,0,0" />
+                                    <Rectangle Grid.Column="3" Fill="#F1F5F9" Width="14" HorizontalAlignment="Center" Height="80" VerticalAlignment="Bottom" Margin="0,0,0,21" />
+                                    <Rectangle Grid.Column="4" Fill="#F1F5F9" Width="14" HorizontalAlignment="Center" Height="110" VerticalAlignment="Bottom" Margin="0,0,0,21" />
+                                </Grid>
+
+                                <!-- Path for Cap Gain % Line and Index Points -->
+                                <Canvas Margin="0,0,0,0">
+                                    <!-- Cap Gain Line: 2009 (25.71%), 2010 (10.94%), 2011 (-8.72%), 2012 (7.80%), 2013 (12.59%) -->
+                                    <Path Data="M 98,24 L 194,70 L 290,130 L 386,80 L 482,64" Stroke="#1E293B" StrokeThickness="1.5" />
+
+                                    <!-- Points & Labels -->
+                                    <!-- 2009 Point -->
+                                    <Path Data="M 98,20 L 102,24 L 98,28 L 94,24 Z" Fill="#1E293B" />
+                                    <TextBlock Canvas.Left="106" Canvas.Top="18" Text="25.71 %" FontSize="8.5" FontWeight="SemiBold" Foreground="#111827" />
+                                    <Ellipse Canvas.Left="95" Canvas.Top="30" Width="6" Height="6" Fill="#DC2626" /> <!-- CAD -->
+                                    <Ellipse Canvas.Left="95" Canvas.Top="40" Width="6" Height="6" Fill="#16A34A" /> <!-- USD -->
+
+                                    <!-- 2010 Point -->
+                                    <Path Data="M 194,66 L 198,70 L 194,74 L 190,70 Z" Fill="#1E293B" />
+                                    <TextBlock Canvas.Left="202" Canvas.Top="64" Text="10.94 %" FontSize="8.5" FontWeight="SemiBold" Foreground="#111827" />
+
+                                    <!-- 2011 Point -->
+                                    <Path Data="M 290,126 L 294,130 L 290,134 L 286,130 Z" Fill="#1E293B" />
+                                    <TextBlock Canvas.Left="298" Canvas.Top="124" Text="-8.72 %" FontSize="8.5" FontWeight="SemiBold" Foreground="#DC2626" />
+                                    <Ellipse Canvas.Left="287" Canvas.Top="140" Width="6" Height="6" Fill="#DC2626" /> <!-- CAD -->
+
+                                    <!-- 2012 Point -->
+                                    <Path Data="M 386,76 L 390,80 L 386,84 L 382,80 Z" Fill="#1E293B" />
+                                    <TextBlock Canvas.Left="394" Canvas.Top="74" Text="7.80 %" FontSize="8.5" FontWeight="SemiBold" Foreground="#111827" />
+                                    <Ellipse Canvas.Left="383" Canvas.Top="90" Width="6" Height="6" Fill="#DC2626" /> <!-- CAD -->
+
+                                    <!-- 2013 Point -->
+                                    <Path Data="M 482,60 L 486,64 L 482,68 L 478,64 Z" Fill="#1E293B" />
+                                    <TextBlock Canvas.Left="466" Canvas.Top="50" Text="12.59 %" FontSize="8.5" FontWeight="SemiBold" Foreground="#111827" />
+                                    <Ellipse Canvas.Left="479" Canvas.Top="87" Width="6" Height="6" Fill="#DC2626" /> <!-- CAD -->
+                                </Canvas>
+
+                                <!-- X-Axis Labels -->
+                                <Grid VerticalAlignment="Bottom" Margin="50,0,10,2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="2009" FontSize="9.5" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Column="1" Text="2010" FontSize="9.5" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Column="2" Text="2011" FontSize="9.5" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Column="3" Text="2012" FontSize="9.5" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Column="4" Text="2013" FontSize="9.5" Foreground="#64748B" HorizontalAlignment="Center" />
+                                </Grid>
+                            </Grid>
+                        </Viewbox>
+
+                        <!-- Chart Legend -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16" Margin="0,6,0,2">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <Rectangle Width="12" Height="1.5" Fill="#1E293B" VerticalAlignment="Center" />
+                                <TextBlock Text="Cap Gain %" FontSize="9" Foreground="#334455" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <Ellipse Width="6" Height="6" Fill="#DC2626" VerticalAlignment="Center" />
+                                <TextBlock Text="CAD Index %" FontSize="9" Foreground="#334455" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <Ellipse Width="6" Height="6" Fill="#16A34A" VerticalAlignment="Center" />
+                                <TextBlock Text="USD Index %" FontSize="9" Foreground="#334455" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ==================== 5. SECTION: YEARLY VALUE CHANGE BY SYMBOL (FULL WIDTH MATRIX HEATMAP) ==================== -->
+            <Border BorderBrush="#165B8C" BorderThickness="1" Background="#FFFFFF" HorizontalAlignment="Stretch">
+                <StackPanel HorizontalAlignment="Stretch">
+                    <!-- Sub-Header Title Bar with Filter Badge -->
+                    <Grid Background="#F0F5FA" Padding="8,4,8,4" BorderBrush="#D0DEEB" BorderThickness="0,0,0,1" HorizontalAlignment="Stretch">
+                        <!-- Left Filter Badge -->
+                        <Border HorizontalAlignment="Left" Background="#E6EFF7" BorderBrush="#94B8D7" BorderThickness="1" CornerRadius="2" Padding="6,2">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <TextBlock Text="Years - Last 9" FontSize="9.5" FontWeight="SemiBold" Foreground="#1E3A5F" />
+                                <TextBlock Text="Yes" FontSize="9.5" Foreground="#334455" />
+                                <FontIcon Glyph="&#xE71C;" FontSize="8.5" Foreground="#64748B" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Center Title -->
+                        <TextBlock Text="Yearly value change by Symbol" FontSize="12.5" FontWeight="Bold" Foreground="#165B8C" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+
+                    <!-- Heatmap Matrix Table Stretched Across Full Width -->
+                    <Grid Background="#FFFFFF" HorizontalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20" /> <!-- Super Header: Capital Gain Year -->
+                            <RowDefinition Height="24" /> <!-- Column Header -->
+                            <RowDefinition Height="20" /> <!-- XFN.TO -->
+                            <RowDefinition Height="20" /> <!-- AMZN -->
+                            <RowDefinition Height="20" /> <!-- VTI -->
+                            <RowDefinition Height="20" /> <!-- PFE -->
+                            <RowDefinition Height="20" /> <!-- MSFT -->
+                            <RowDefinition Height="20" /> <!-- XIU.TO -->
+                            <RowDefinition Height="20" /> <!-- COST -->
+                            <RowDefinition Height="20" /> <!-- UBA -->
+                            <RowDefinition Height="20" /> <!-- TGT -->
+                            <RowDefinition Height="20" /> <!-- GE -->
+                            <RowDefinition Height="20" /> <!-- VWO -->
+                            <RowDefinition Height="20" /> <!-- VNQ -->
+                            <RowDefinition Height="20" /> <!-- WMT -->
+                            <RowDefinition Height="20" /> <!-- HD -->
+                            <RowDefinition Height="20" /> <!-- DELL -->
+                            <RowDefinition Height="20" /> <!-- GLD -->
+                            <RowDefinition Height="20" /> <!-- BND -->
+                            <RowDefinition Height="20" /> <!-- GTY -->
+                            <RowDefinition Height="20" /> <!-- C -->
+                            <RowDefinition Height="20" /> <!-- AMD -->
+                            <RowDefinition Height="24" /> <!-- Grand Total -->
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.8*" MinWidth="100" /> <!-- Symbol -->
+                            <ColumnDefinition Width="1.0*" MinWidth="75" />  <!-- 2008 -->
+                            <ColumnDefinition Width="1.0*" MinWidth="75" />  <!-- 2009 -->
+                            <ColumnDefinition Width="1.0*" MinWidth="75" />  <!-- 2010 -->
+                            <ColumnDefinition Width="1.0*" MinWidth="75" />  <!-- 2011 -->
+                            <ColumnDefinition Width="1.0*" MinWidth="75" />  <!-- 2012 -->
+                            <ColumnDefinition Width="1.1*" MinWidth="80" />  <!-- 2013 -->
+                            <ColumnDefinition Width="1.2*" MinWidth="90" />  <!-- Grand Total -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Super Header: Capital Gain Year ▾ -->
+                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="8" Background="#165B8C" />
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="8,0,0,0" Spacing="4">
+                            <TextBlock Text="Capital Gain Year" FontSize="9.5" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" />
+                            <TextBlock Text="▾" FontSize="8" Foreground="#A0CBE8" VerticalAlignment="Center" />
+                        </StackPanel>
+
+                        <!-- Column Headers -->
+                        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="8" Background="#1B6FA8" BorderBrush="#CBD7E3" BorderThickness="0,0,0,1" />
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="8,0,0,0" Spacing="4" VerticalAlignment="Center">
+                            <TextBlock Text="Symbol" FontSize="10" FontWeight="Bold" Foreground="White" />
+                            <FontIcon Glyph="&#xE81E;" FontSize="8.5" Foreground="#A0CBE8" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="2008" FontSize="10" FontWeight="Bold" Foreground="White" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="2009" FontSize="10" FontWeight="Bold" Foreground="White" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="2010" FontSize="10" FontWeight="Bold" Foreground="White" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="1" Grid.Column="4" Text="2011" FontSize="10" FontWeight="Bold" Foreground="White" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="1" Grid.Column="5" Text="2012" FontSize="10" FontWeight="Bold" Foreground="White" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="1" Grid.Column="6" Text="2013" FontSize="10" FontWeight="Bold" Foreground="White" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="1" Grid.Column="7" Text="Grand Total" FontSize="10" FontWeight="Bold" Foreground="White" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 1: XFN.TO -->
+                        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="XFN.TO" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <Border Grid.Row="2" Grid.Column="1" Background="#FED7D7"><TextBlock Text="-2,799" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="4,982" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="2,278" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="2" Grid.Column="4" Background="#FED7D7"><TextBlock Text="-6,076" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="2" Grid.Column="5" Background="#C6F6D5"><TextBlock Text="9,957" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="2" Grid.Column="6" Background="#9AE6B4"><TextBlock Text="23,145" FontSize="9.5" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="2" Grid.Column="7" Text="31,488" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 2: AMZN -->
+                        <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="AMZN" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="247" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="3" Grid.Column="2" Text="3,098" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="3" Grid.Column="3" Text="2,415" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="3" Grid.Column="4" Text="-424" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="3" Grid.Column="5" Background="#C6F6D5"><TextBlock Text="5,140" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="3" Grid.Column="6" Background="#C6F6D5"><TextBlock Text="12,180" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="3" Grid.Column="7" Text="22,657" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 3: VTI -->
+                        <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="VTI" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="-282" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="4" Grid.Column="2" Text="3,406" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="1,971" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="4" Grid.Column="4" Text="-348" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="4" Grid.Column="5" Text="3,022" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="4" Grid.Column="6" Background="#C6F6D5"><TextBlock Text="8,417" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="4" Grid.Column="7" Text="16,185" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 4: PFE -->
+                        <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="PFE" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="5" Grid.Column="1" Text="248" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="5" Grid.Column="2" Text="1,161" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="5" Grid.Column="3" Text="-660" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="5" Grid.Column="4" Background="#C6F6D5"><TextBlock Text="4,006" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="5" Grid.Column="5" Text="3,337" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="5" Grid.Column="6" Background="#C6F6D5"><TextBlock Text="6,943" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="5" Grid.Column="7" Text="15,036" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 5: MSFT -->
+                        <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="MSFT" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="6" Grid.Column="1" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="6" Grid.Column="2" Text="1,681" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="6" Grid.Column="3" Text="-745" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="6" Grid.Column="4" Text="-469" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="6" Grid.Column="5" Text="428" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="6" Grid.Column="6" Background="#C6F6D5"><TextBlock Text="6,844" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="6" Grid.Column="7" Text="7,738" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 6: XIU.TO -->
+                        <Border Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="7" Grid.Column="0" Text="XIU.TO" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <Border Grid.Row="7" Grid.Column="1" Background="#FED7D7"><TextBlock Text="-1,374" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="7" Grid.Column="2" Text="3,933" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="3" Text="2,379" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="7" Grid.Column="4" Background="#FED7D7"><TextBlock Text="-4,332" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="7" Grid.Column="5" Text="1,949" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="6" Text="4,205" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="7" Grid.Column="7" Text="6,760" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 7: COST -->
+                        <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="8" Grid.Column="0" Text="COST" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="8" Grid.Column="1" Text="-499" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="8" Grid.Column="2" Text="726" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="8" Grid.Column="3" Text="1,182" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="8" Grid.Column="4" Text="1,000" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="8" Grid.Column="5" Text="1,414" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="8" Grid.Column="6" Text="2,670" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="8" Grid.Column="7" Text="6,493" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 8: UBA -->
+                        <Border Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="9" Grid.Column="0" Text="UBA" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="9" Grid.Column="1" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="9" Grid.Column="2" Text="781" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="9" Grid.Column="3" Text="2,237" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="9" Grid.Column="4" Text="-849" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="9" Grid.Column="5" Text="1,152" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="9" Grid.Column="6" Text="-769" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="9" Grid.Column="7" Text="2,552" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 9: TGT -->
+                        <Border Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="10" Grid.Column="0" Text="TGT" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="10" Grid.Column="1" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="10" Grid.Column="2" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="10" Grid.Column="3" Text="818" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="10" Grid.Column="4" Text="-980" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="10" Grid.Column="5" Text="875" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="10" Grid.Column="6" Text="524" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="10" Grid.Column="7" Text="1,236" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 10: GE -->
+                        <Border Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="11" Grid.Column="0" Text="GE" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="11" Grid.Column="1" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="11" Grid.Column="2" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="11" Grid.Column="3" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="11" Grid.Column="4" Text="-148" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="11" Grid.Column="5" Text="170" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="11" Grid.Column="6" Text="1,109" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="11" Grid.Column="7" Text="1,131" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 11: VWO -->
+                        <Border Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="12" Grid.Column="0" Text="VWO" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <Border Grid.Row="12" Grid.Column="1" Background="#FED7D7"><TextBlock Text="-3,446" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="12" Grid.Column="2" Text="3,560" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="12" Grid.Column="3" Text="2,634" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="12" Grid.Column="4" Background="#FED7D7"><TextBlock Text="-4,085" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="12" Grid.Column="5" Background="#C6F6D5"><TextBlock Text="4,912" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="12" Grid.Column="6" Text="-2,479" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="12" Grid.Column="7" Text="1,097" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 12: VNQ -->
+                        <Border Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="13" Grid.Column="0" Text="VNQ" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="13" Grid.Column="1" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="13" Grid.Column="2" Text="302" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="13" Grid.Column="3" Text="319" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="13" Grid.Column="4" Text="27" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="13" Grid.Column="5" Text="390" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="13" Grid.Column="6" Text="-15" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="13" Grid.Column="7" Text="1,023" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 13: WMT -->
+                        <Border Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="14" Grid.Column="0" Text="WMT" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="14" Grid.Column="1" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="14" Grid.Column="2" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="14" Grid.Column="3" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="14" Grid.Column="4" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="14" Grid.Column="5" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="14" Grid.Column="6" Text="515" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="14" Grid.Column="7" Text="515" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 14: HD -->
+                        <Border Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="15" Grid.Column="0" Text="HD" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="15" Grid.Column="1" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="15" Grid.Column="2" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="15" Grid.Column="3" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="15" Grid.Column="4" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="15" Grid.Column="5" Text="115" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="15" Grid.Column="6" Text="304" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="15" Grid.Column="7" Text="419" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 15: DELL -->
+                        <Border Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="16" Grid.Column="0" Text="DELL" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="16" Grid.Column="1" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="16" Grid.Column="2" Background="#FED7D7"><TextBlock Text="-22" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="16" Grid.Column="3" Background="#FED7D7"><TextBlock Text="-22" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="16" Grid.Column="4" Background="#FED7D7"><TextBlock Text="-90" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="16" Grid.Column="5" Background="#FED7D7"><TextBlock Text="-2,870" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="16" Grid.Column="6" Text="2,926" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="16" Grid.Column="7" Text="-79" FontSize="9.5" FontWeight="SemiBold" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 16: GLD -->
+                        <Border Grid.Row="17" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="17" Grid.Column="0" Text="GLD" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="17" Grid.Column="1" Text="283" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="17" Grid.Column="2" Text="1,655" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="17" Grid.Column="3" Text="2,827" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="17" Grid.Column="4" Text="1,524" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="17" Grid.Column="5" Text="1,822" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="17" Grid.Column="6" Background="#FED7D7"><TextBlock Text="-8,264" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="17" Grid.Column="7" Text="-154" FontSize="9.5" FontWeight="SemiBold" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 17: BND -->
+                        <Border Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="18" Grid.Column="0" Text="BND" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="18" Grid.Column="1" Text="4" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="18" Grid.Column="2" Text="77" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="18" Grid.Column="3" Text="61" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="18" Grid.Column="4" Text="1,008" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="18" Grid.Column="5" Text="130" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="18" Grid.Column="6" Text="-1,773" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="18" Grid.Column="7" Text="-492" FontSize="9.5" FontWeight="SemiBold" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 18: GTY -->
+                        <Border Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="19" Grid.Column="0" Text="GTY" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="19" Grid.Column="1" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="19" Grid.Column="2" Text="" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="19" Grid.Column="3" Text="1,277" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="19" Grid.Column="4" Background="#FED7D7"><TextBlock Text="-2,426" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="19" Grid.Column="5" Text="575" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="19" Grid.Column="6" Text="52" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="19" Grid.Column="7" Text="-522" FontSize="9.5" FontWeight="SemiBold" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 19: C -->
+                        <Border Grid.Row="20" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="20" Grid.Column="0" Text="C" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <Border Grid.Row="20" Grid.Column="1" Background="#FED7D7"><TextBlock Text="-5,445" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="20" Grid.Column="2" Background="#FED7D7"><TextBlock Text="-3,148" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="20" Grid.Column="3" Background="#C6F6D5"><TextBlock Text="5,397" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="20" Grid.Column="4" Background="#FED7D7"><TextBlock Text="-8,501" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="20" Grid.Column="5" Background="#C6F6D5"><TextBlock Text="5,366" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="20" Grid.Column="6" Background="#C6F6D5"><TextBlock Text="5,411" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="20" Grid.Column="7" Text="-920" FontSize="9.5" FontWeight="SemiBold" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 20: AMD -->
+                        <Border Grid.Row="21" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" />
+                        <TextBlock Grid.Row="21" Grid.Column="0" Text="AMD" FontSize="9.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <Border Grid.Row="21" Grid.Column="1" Background="#FED7D7"><TextBlock Text="-2,546" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="21" Grid.Column="2" Background="#C6F6D5"><TextBlock Text="5,114" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="21" Grid.Column="3" Text="-531" FontSize="9.5" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Border Grid.Row="21" Grid.Column="4" Background="#FED7D7"><TextBlock Text="-4,921" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <Border Grid.Row="21" Grid.Column="5" Background="#FED7D7"><TextBlock Text="-7,275" FontSize="9.5" Foreground="#991B1B" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" /></Border>
+                        <TextBlock Grid.Row="21" Grid.Column="6" Text="4,142" FontSize="9.5" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="21" Grid.Column="7" Text="-6,018" FontSize="9.5" FontWeight="SemiBold" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                        <!-- Row 21: Grand Total -->
+                        <Border Grid.Row="22" Grid.Column="0" Grid.ColumnSpan="8" Background="#F8FAFC" BorderBrush="#165B8C" BorderThickness="0,1,0,0" />
+                        <TextBlock Grid.Row="22" Grid.Column="0" Text="Grand Total" FontSize="10" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBlock Grid.Row="22" Grid.Column="1" Text="-15,608" FontSize="10" FontWeight="Bold" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="22" Grid.Column="2" Text="27,305" FontSize="10" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="22" Grid.Column="3" Text="23,837" FontSize="10" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="22" Grid.Column="4" Text="-26,085" FontSize="10.5" FontWeight="Bold" Foreground="#DC2626" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="22" Grid.Column="5" Text="30,608" FontSize="10" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="22" Grid.Column="6" Text="66,087" FontSize="10" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Row="22" Grid.Column="7" Text="106,144" FontSize="10.5" FontWeight="Bold" Foreground="#111827" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

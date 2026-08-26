@@ -27,12 +27,24 @@ Write-Host "================================================" -ForegroundColor C
 Write-Host ""
 
 # --- Step 1: Clean ---
+# Terminate any running instances so file locks are released
+Get-Process "AxioVital.Desktop" -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+Start-Sleep -Milliseconds 400
+
 if (-not $SkipClean) {
     Write-Host "[1/5] Cleaning previous build artifacts..." -ForegroundColor Yellow
     $objDir = Join-Path $projectDir "obj"
     $binDir = Join-Path $projectDir "bin"
-    if (Test-Path $objDir) { Remove-Item $objDir -Recurse -Force }
-    if (Test-Path $binDir) { Remove-Item $binDir -Recurse -Force }
+    if (Test-Path $objDir) { 
+        try { Remove-Item $objDir -Recurse -Force -ErrorAction SilentlyContinue } catch { } 
+    }
+    if (Test-Path $binDir) { 
+        try { Remove-Item $binDir -Recurse -Force -ErrorAction Stop } 
+        catch {
+            # In case a log file is still momentarily held, delete items individually
+            Get-ChildItem -Path $binDir -Exclude "*.log" -Recurse -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+        } 
+    }
     Write-Host "       Clean complete." -ForegroundColor Green
 } else {
     Write-Host "[1/5] Skipping clean (--SkipClean)" -ForegroundColor DarkGray
@@ -40,7 +52,7 @@ if (-not $SkipClean) {
 
 # --- Step 2: Build Solution ---
 Write-Host "[2/5] Building AxioVital.Desktop ($Configuration | $RuntimeId)..." -ForegroundColor Yellow
-dotnet build $csprojPath -c $Configuration -r $RuntimeId
+dotnet build $csprojPath -c $Configuration -r $RuntimeId -fl -flp:verbosity=detailed
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: dotnet build failed with exit code $LASTEXITCODE" -ForegroundColor Red
     exit 1

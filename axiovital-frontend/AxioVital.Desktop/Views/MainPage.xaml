@@ -9,6 +9,7 @@
     mc:Ignorable="d"
     Background="#F4F5F7">
 
+
     <Grid>
         <Grid.RowDefinitions>
             <!-- 0. Topmost Nav Bar 1 -->
@@ -39,11 +40,350 @@
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                 <TextBlock Text="Home" Foreground="#111111" FontSize="11" FontWeight="Bold" PointerPressed="OnHomeTabPointerPressed" />
                 <TextBlock Text="Ledger" Foreground="#333333" FontSize="11" FontWeight="Normal" />
-                <TextBlock Text="ambulatory" Foreground="#333333" FontSize="11" FontWeight="Normal" />
-                <TextBlock Text="Clinical" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <Button x:Name="TopRibbonAmbulatoryButton" Background="Transparent" BorderThickness="1" BorderBrush="Transparent" Padding="8,2" MinHeight="0" MinWidth="0" VerticalAlignment="Center" CornerRadius="2">
+                    <TextBlock x:Name="TopRibbonAmbulatoryText" Text="ambulatory" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                    <Button.Flyout>
+                        <Flyout x:Name="TopRibbonAmbulatoryFlyout" Placement="BottomEdgeAlignedLeft" Opened="OnTopRibbonAmbulatoryFlyoutOpened" Closed="OnTopRibbonAmbulatoryFlyoutClosed">
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="BorderBrush" Value="#CBD5E1" />
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Setter Property="CornerRadius" Value="2" />
+                                    <Setter Property="MinHeight" Value="0" />
+                                    <Setter Property="MinWidth" Value="200" />
+                                    <Setter Property="MaxWidth" Value="240" />
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
+                            <Border Background="White" Width="210" Padding="0,4,0,4">
+                                <StackPanel x:Name="AmbulatoryDropdownList">
+                                    <!-- Item 1: Appointment Request -->
+                                    <Border Padding="16,6" Background="Transparent" PointerEntered="OnAmbulatoryItemPointerEntered" PointerExited="OnAmbulatoryItemPointerExited" PointerPressed="OnAmbulatoryCustomItemPressed" Tag="amb_appointment_request">
+                                        <TextBlock Text="Appointment Request" FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+
+                                    <!-- Separator -->
+                                    <Rectangle Fill="#E2E8F0" Height="1" Margin="8,4,8,4" />
+
+                                    <!-- Item 3: Referrals & Transfer -->
+                                    <Border Padding="16,6" Background="Transparent" PointerEntered="OnAmbulatoryItemPointerEntered" PointerExited="OnAmbulatoryItemPointerExited" PointerPressed="OnAmbulatoryCustomItemPressed" Tag="amb_referrals_transfer">
+                                        <TextBlock Text="Referrals &amp; Transfer" FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+
+                                    <!-- Item 4: Discharge List -->
+                                    <Border Padding="16,6" Background="Transparent" PointerEntered="OnAmbulatoryItemPointerEntered" PointerExited="OnAmbulatoryItemPointerExited" PointerPressed="OnAmbulatoryCustomItemPressed" Tag="amb_discharge_list">
+                                        <TextBlock Text="Discharge List" FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+                <Button x:Name="TopRibbonClinicalButton" Background="Transparent" BorderThickness="1" BorderBrush="Transparent" Padding="8,2" MinHeight="0" MinWidth="0" VerticalAlignment="Center" CornerRadius="2">
+                    <TextBlock x:Name="TopRibbonClinicalText" Text="Clinical" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                    <Button.Flyout>
+                        <Flyout x:Name="TopRibbonClinicalFlyout" Placement="BottomEdgeAlignedLeft" Opened="OnTopRibbonClinicalFlyoutOpened" Closed="OnTopRibbonClinicalFlyoutClosed">
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="BorderBrush" Value="#CBD5E1" />
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Setter Property="CornerRadius" Value="2" />
+                                    <Setter Property="MinHeight" Value="0" />
+                                    <Setter Property="MinWidth" Value="230" />
+                                    <Setter Property="MaxWidth" Value="250" />
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
+                            <Border Background="White" Width="235" Padding="0,4,0,4">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="540">
+                                    <StackPanel x:Name="ClinicalDropdownList">
+                                        <!-- Group 1: Core Clinical Views -->
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_provider_view">
+                                            <TextBlock Text="Provider View" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_results_review">
+                                            <TextBlock Text="Results Review" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_orders">
+                                            <TextBlock Text="Orders" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_documentation">
+                                            <TextBlock Text="Documentation" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_outside_records">
+                                            <TextBlock Text="Outside Records" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+
+                                        <!-- Separator -->
+                                        <Rectangle Height="1" Fill="#E2E8F0" Margin="10,3,10,3" />
+
+                                        <!-- Group 2: Specific Clinical Data & Panels -->
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_allergies">
+                                            <TextBlock Text="Allergies" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_clinical_media">
+                                            <TextBlock Text="Clinical Media" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_diagnoses">
+                                            <TextBlock Text="Diagnoses and Problems" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_form_browser">
+                                            <TextBlock Text="Form Browser" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_growth_chart">
+                                            <TextBlock Text="Growth Chart" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_histories">
+                                            <TextBlock Text="Histories" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_interactive_view">
+                                            <TextBlock Text="Interactive View and I/O" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_mar_summary">
+                                            <TextBlock Text="MAR Summary" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_medication_list">
+                                            <TextBlock Text="Medication List" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_patient_info">
+                                            <TextBlock Text="Patient Information" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_recommendations">
+                                            <TextBlock Text="Recommendations" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_smart_app_validator">
+                                            <TextBlock Text="Smart App Validator" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+
+                                        <!-- Separator -->
+                                        <Rectangle Height="1" Fill="#E2E8F0" Margin="10,3,10,3" />
+
+                                        <!-- Group 3: AxioNote & Edge Tools -->
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_axionote_note">
+                                            <TextBlock Text="AxioNote - Clinical Note" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border x:Name="ClinicalItemAxioNoteEdge" Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_axionote_edge">
+                                            <TextBlock Text="AxioNote - Edge Platform" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_axionote_enterprise">
+                                            <TextBlock Text="AxioNote - Enterprise" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_workflowview_edge">
+                                            <TextBlock Text="WorkflowView Edge" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_axionote_dev">
+                                            <TextBlock Text="AxioNote Dev - Edge" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_axionote_debug">
+                                            <TextBlock Text="AxioNote Debug EDGE" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+
+                                        <!-- Separator -->
+                                        <Rectangle Height="1" Fill="#E2E8F0" Margin="10,3,10,3" />
+
+                                        <!-- Group 4: Clinical Utilities & Billing -->
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_calculator">
+                                            <TextBlock Text="Clinical Calculator" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_adhoc_charting">
+                                            <TextBlock Text="Ad Hoc Charting" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                        <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_view_charges">
+                                            <TextBlock Text="View Charges" FontSize="11.5" Foreground="#1E293B" />
+                                        </Border>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Border>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
                 <TextBlock Text="Notifications" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 <TextBlock Text="Admin" Foreground="#333333" FontSize="11" FontWeight="Normal" />
-                <TextBlock Text="Help" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <Button x:Name="TopRibbonHelpButton" Background="Transparent" BorderThickness="0" Padding="6,2" MinHeight="0" MinWidth="0" VerticalAlignment="Center" CornerRadius="2">
+                    <TextBlock Text="Help" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                    <Button.Flyout>
+                        <Flyout x:Name="TopRibbonHelpFlyout" Placement="BottomEdgeAlignedLeft" Opened="OnTopRibbonHelpFlyoutOpened">
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="BorderBrush" Value="#CBD5E1" />
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Setter Property="CornerRadius" Value="2" />
+                                    <Setter Property="MinHeight" Value="0" />
+                                    <Setter Property="MinWidth" Value="220" />
+                                    <Setter Property="MaxWidth" Value="220" />
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
+                            <Border Background="White" Width="220" Padding="0,4,0,4">
+                                <StackPanel>
+                                    <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_welcome">
+                                        <TextBlock Text="Welcome" FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+                                    <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_commands">
+                                        <Grid>
+                                            <TextBlock Text="Show All Commands" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Ctrl+Shift+P" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- Editor Playground Button with nested Sub-Flyout -->
+                                    <Button x:Name="EditorPlaygroundMenuButton" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="Transparent" BorderThickness="0" Padding="0" MinHeight="0" MinWidth="0" PointerEntered="OnEditorPlaygroundPointerEntered" PointerExited="OnEditorPlaygroundPointerExited" Click="OnEditorPlaygroundMenuButtonClick">
+                                        <Border x:Name="HelpEditorPlaygroundRow" Padding="14,5" Background="Transparent">
+                                            <Grid>
+                                                <TextBlock x:Name="HelpEditorPlaygroundText" Text="Editor Playground" FontSize="11.5" Foreground="#1E293B" />
+                                                <FontIcon x:Name="HelpEditorPlaygroundIcon" Glyph="&#xE76C;" FontSize="10" Foreground="#64748B" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                            </Grid>
+                                        </Border>
+                                        <Button.Flyout>
+                                            <Flyout x:Name="EditorPlaygroundSubFlyout" Placement="RightEdgeAlignedTop">
+                                                <Flyout.FlyoutPresenterStyle>
+                                                    <Style TargetType="FlyoutPresenter">
+                                                        <Setter Property="Padding" Value="0" />
+                                                        <Setter Property="Margin" Value="0" />
+                                                        <Setter Property="Background" Value="White" />
+                                                        <Setter Property="BorderBrush" Value="#CBD5E1" />
+                                                        <Setter Property="BorderThickness" Value="1" />
+                                                        <Setter Property="CornerRadius" Value="2" />
+                                                        <Setter Property="MinHeight" Value="0" />
+                                                        <Setter Property="MinWidth" Value="260" />
+                                                        <Setter Property="MaxWidth" Value="260" />
+                                                    </Style>
+                                                </Flyout.FlyoutPresenterStyle>
+                                                <Border Background="White" Width="260" Padding="0,4,0,4">
+                                                    <StackPanel>
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_cmd_palette">
+                                                            <Grid>
+                                                                <TextBlock Text="Command Palette..." FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+P" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Padding="14,4.5" Background="#0A658E" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_open_view">
+                                                            <TextBlock Text="Open View..." FontSize="11.5" FontWeight="SemiBold" Foreground="White" />
+                                                        </Border>
+                                                        <Rectangle Height="1" Fill="#E2E8F0" Margin="10,2.5,10,2.5" />
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_appearance">
+                                                            <Grid>
+                                                                <TextBlock Text="Appearance" FontSize="11.5" Foreground="#1E293B" />
+                                                                <FontIcon Glyph="&#xE76C;" FontSize="10" Foreground="#64748B" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_editor_layout">
+                                                            <Grid>
+                                                                <TextBlock Text="Editor Layout" FontSize="11.5" Foreground="#1E293B" />
+                                                                <FontIcon Glyph="&#xE76C;" FontSize="10" Foreground="#64748B" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Rectangle Height="1" Fill="#E2E8F0" Margin="10,2.5,10,2.5" />
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_explorer">
+                                                            <Grid>
+                                                                <TextBlock Text="Explorer" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+E" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_search">
+                                                            <Grid>
+                                                                <TextBlock Text="Search" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+F" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_scm">
+                                                            <Grid>
+                                                                <TextBlock Text="Source Control" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+G G" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_run">
+                                                            <Grid>
+                                                                <TextBlock Text="Run" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+D" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_extensions">
+                                                            <Grid>
+                                                                <TextBlock Text="Extensions" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+X" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_testing">
+                                                            <TextBlock Text="Testing" FontSize="11.5" Foreground="#1E293B" />
+                                                        </Border>
+                                                        <Rectangle Height="1" Fill="#E2E8F0" Margin="10,2.5,10,2.5" />
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_problems">
+                                                            <Grid>
+                                                                <TextBlock Text="Problems" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+M" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_output">
+                                                            <Grid>
+                                                                <TextBlock Text="Output" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+U" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_debug_console">
+                                                            <Grid>
+                                                                <TextBlock Text="Debug Console" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+Y" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_terminal">
+                                                            <Grid>
+                                                                <TextBlock Text="Terminal" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+`" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                            </Grid>
+                                                        </Border>
+                                                        <Rectangle Height="1" Fill="#E2E8F0" Margin="10,2.5,10,2.5" />
+                                                        <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_word_wrap">
+                                                            <Grid>
+                                                                <TextBlock Text="Word Wrap" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Alt+Z" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+
+                                    <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_walkthrough">
+                                        <TextBlock Text="Open Walkthrough..." FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+                                    <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_feedback">
+                                        <TextBlock Text="Provide Feedback" FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+                                    <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_diagnostics">
+                                        <TextBlock Text="Download Diagnostics" FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+                                    <Rectangle Height="1" Fill="#E2E8F0" Margin="10,3,10,3" />
+                                    <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_license">
+                                        <TextBlock Text="View License" FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+                                    <Rectangle Height="1" Fill="#E2E8F0" Margin="10,3,10,3" />
+                                    <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_devtools">
+                                        <TextBlock Text="Toggle Developer Tools" FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+                                    <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_process_explorer">
+                                        <TextBlock Text="Open Process Explorer" FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+                                    <Rectangle Height="1" Fill="#E2E8F0" Margin="10,3,10,3" />
+                                    <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_updates">
+                                        <TextBlock Text="Check for Updates..." FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+                                    <Rectangle Height="1" Fill="#E2E8F0" Margin="10,3,10,3" />
+                                    <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_about">
+                                        <TextBlock Text="About" FontSize="11.5" Foreground="#1E293B" />
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
@@ -62,31 +402,47 @@
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                 <!-- Message Center Tab Button -->
-                <Border x:Name="MessageCenterTabBorder" Padding="0,0,0,3" PointerPressed="OnMessageCenterTabPointerPressed">
+                <Border x:Name="MessageCenterTabBorder" Padding="0,0,0,3" PointerPressed="OnMessageCenterTabPointerPressed" Background="Transparent">
                     <TextBlock x:Name="MessageCenterTabText" Text="Message Center" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 </Border>
 
                 <!-- Patient List Tab Button -->
-                <Border x:Name="PatientListTabBorder" BorderBrush="#0A658E" BorderThickness="0,0,0,2" Padding="0,0,0,3" PointerPressed="OnPatientListTabPointerPressed">
+                <Border x:Name="PatientListTabBorder" BorderBrush="#0A658E" BorderThickness="0,0,0,2.5" Padding="0,0,0,3" PointerPressed="OnPatientListTabPointerPressed" Background="Transparent">
                     <TextBlock x:Name="PatientListTabText" Text="Patient List" Foreground="#0A658E" FontSize="11" FontWeight="Bold" />
                 </Border>
 
                 <!-- Physician Handoff Tab Button -->
-                <Border x:Name="PhysicianHandoffTabBorder" Padding="0,0,0,3" PointerPressed="OnPhysicianHandoffTabPointerPressed">
+                <Border x:Name="PhysicianHandoffTabBorder" Padding="0,0,0,3" PointerPressed="OnPhysicianHandoffTabPointerPressed" Background="Transparent">
                     <TextBlock x:Name="PhysicianHandoffTabText" Text="Physician Handoff" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 </Border>
-                <TextBlock Text="Care Workflow" Foreground="#333333" FontSize="11" FontWeight="Normal" />
-                <Border x:Name="QualityMeasuresTabBorder" Padding="0,0,0,3" PointerPressed="OnQualityMeasuresTabPointerPressed">
+
+                <!-- Care Workflow Tab Button -->
+                <Border x:Name="CareWorkflowTabBorder" Padding="0,0,0,3" PointerPressed="OnCareWorkflowTabPointerPressed" Background="Transparent">
+                    <TextBlock x:Name="CareWorkflowTabText" Text="Care Workflow" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                </Border>
+
+                <!-- Quality Measures Tab Button -->
+                <Border x:Name="QualityMeasuresTabBorder" Padding="0,0,0,3" PointerPressed="OnQualityMeasuresTabPointerPressed" Background="Transparent">
                     <TextBlock x:Name="QualityMeasuresTabText" Text="Quality Measures" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 </Border>
-                <Border x:Name="CustomisedTabBorder" Padding="0,0,0,3" PointerPressed="OnCustomisedTabPointerPressed">
+
+                <!-- Customised Tab Button -->
+                <Border x:Name="CustomisedTabBorder" Padding="0,0,0,3" PointerPressed="OnCustomisedTabPointerPressed" Background="Transparent">
                     <TextBlock x:Name="CustomisedTabText" Text="Customised" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 </Border>
-                <TextBlock Text="Reports" Foreground="#111111" FontSize="11" FontWeight="Bold" />
-                <Border x:Name="UpToDateTabBorder" Padding="0,0,0,3" PointerPressed="OnUpToDateTabPointerPressed">
+
+                <!-- Reports Tab Button -->
+                <Border x:Name="ReportsTabBorder" Padding="0,0,0,3" PointerPressed="OnReportsTabPointerPressed" Background="Transparent">
+                    <TextBlock x:Name="ReportsTabText" Text="Reports" Foreground="#111111" FontSize="11" FontWeight="Bold" />
+                </Border>
+
+                <!-- UpToDate Tab Button -->
+                <Border x:Name="UpToDateTabBorder" Padding="0,0,0,3" PointerPressed="OnUpToDateTabPointerPressed" Background="Transparent">
                     <TextBlock x:Name="UpToDateTabText" Text="UpToDate" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 </Border>
-                <Border x:Name="OngoingActivitiesTabBorder" Padding="0,0,0,3" PointerPressed="OnOngoingActivitiesTabPointerPressed">
+
+                <!-- Ongoing Activities Tab Button -->
+                <Border x:Name="OngoingActivitiesTabBorder" Padding="0,0,0,3" PointerPressed="OnOngoingActivitiesTabPointerPressed" Background="Transparent">
                     <TextBlock x:Name="OngoingActivitiesTabText" Text="Ongoing Activities" Foreground="#333333" FontSize="11" FontWeight="Normal" />
                 </Border>
             </StackPanel>
@@ -102,12 +458,29 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
-                <TextBlock Text="Dashboard" Foreground="#444444" FontSize="11" />
-                <TextBlock Text="Scheduler" Foreground="#0A658E" FontSize="11" FontWeight="Bold" PointerPressed="OnSchedulerTabPointerPressed" />
-                <TextBlock Text="Order Sets" Foreground="#111111" FontSize="11" FontWeight="Bold" PointerPressed="OnOrderSetsTabPointerPressed" />
-                <TextBlock Text="Care Pathways" Foreground="#444444" FontSize="11" />
-                <TextBlock x:Name="LabsCategoryTab" Text="Labs" Foreground="#444444" FontSize="11" PointerPressed="OnLabsTabPointerPressed" />
-                <TextBlock x:Name="AnalyticsCategoryTab" Text="Analytics" Foreground="#444444" FontSize="11" PointerPressed="OnAnalyticsTabPointerPressed" />
+                <Border x:Name="DashboardCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnDashboardTabPointerPressed" Background="Transparent">
+                    <TextBlock x:Name="DashboardCategoryTabText" Text="Dashboard" Foreground="#444444" FontSize="11" />
+                </Border>
+
+                <Border x:Name="SchedulerCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnSchedulerTabPointerPressed" Background="Transparent">
+                    <TextBlock x:Name="SchedulerCategoryTabText" Text="Scheduler" Foreground="#0A658E" FontSize="11" FontWeight="Bold" />
+                </Border>
+
+                <Border x:Name="OrderSetsCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnOrderSetsTabPointerPressed" Background="Transparent">
+                    <TextBlock x:Name="OrderSetsCategoryTabText" Text="Order Sets" Foreground="#111111" FontSize="11" FontWeight="Bold" />
+                </Border>
+
+                <Border x:Name="CarePathwaysCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnCarePathwaysTabPointerPressed" Background="Transparent">
+                    <TextBlock x:Name="CarePathwaysCategoryTabText" Text="Care Pathways" Foreground="#444444" FontSize="11" />
+                </Border>
+
+                <Border x:Name="LabsCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnLabsTabPointerPressed" Background="Transparent">
+                    <TextBlock x:Name="LabsCategoryTabText" Text="Labs" Foreground="#444444" FontSize="11" />
+                </Border>
+
+                <Border x:Name="AnalyticsCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnAnalyticsTabPointerPressed" Background="Transparent">
+                    <TextBlock x:Name="AnalyticsCategoryTabText" Text="Analytics" Foreground="#444444" FontSize="11" />
+                </Border>
             </StackPanel>
 
             <FontIcon Grid.Column="1" Glyph="&#xE712;" FontSize="12" Foreground="#666666" VerticalAlignment="Center" />
@@ -140,10 +513,11 @@
                                  FontSize="11" 
                                  Width="185" 
                                  Padding="0" 
-                                 MinHeight="0"
-                                 MinWidth="0"
+                                 MinHeight="0" 
+                                 MinWidth="0" 
                                  VerticalAlignment="Center" 
-                                 VerticalContentAlignment="Center">
+                                 VerticalContentAlignment="Center" 
+                                 KeyDown="OnHeaderSearchBoxKeyDown">
                             <TextBox.Resources>
                                 <SolidColorBrush x:Key="TextControlBackground" Color="Transparent" />
                                 <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent" />
@@ -239,61 +613,151 @@
         </Grid>
 
         <!-- ==================== 5. DEEP BLUE PATIENT DEMOGRAPHIC BANNER ==================== -->
-        <Grid x:Name="PatientDemographicBanner" Grid.Row="5" Background="#0A5B86" Padding="12,4,12,4" MinHeight="42">
+        <Grid x:Name="PatientDemographicBanner" Grid.Row="5" Background="#064875" Padding="12,5,12,5" MinHeight="44">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.8*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="1.4*" />
-                <ColumnDefinition Width="1.4*" />
-                <ColumnDefinition Width="3.4*" />
+                <!-- 0. Avatar + Name & Allergies -->
+                <ColumnDefinition Width="Auto" />
+                <!-- 1. DOB, Dose Wt, HealtheLife -->
+                <ColumnDefinition Width="*" />
+                <!-- 2. Age, LTD, Clinic -->
+                <ColumnDefinition Width="*" />
+                <!-- 3. Sex, Code Status, Loc -->
+                <ColumnDefinition Width="*" />
+                <!-- 4. MRN, Nominee, Inpatient FIN -->
+                <ColumnDefinition Width="1.7*" />
+                <!-- 5. Divider & Hamburger Button -->
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!-- Column 1: Patient Name & Care Details -->
-            <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="0">
-                <TextBlock Text="JOHN DOE" Foreground="White" FontSize="14" FontWeight="Bold" />
-                <TextBlock Text="Allergies: shellfish" Foreground="#C6DFEE" FontSize="10" Margin="0,1,0,0" />
-                <TextBlock Text="Care Team: View Details" Foreground="#72C5FF" FontSize="10" TextDecorations="Underline" Margin="0,1,0,0" />
+            <!-- Column 0: Circular Avatar + Patient Name & Care Details -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,24,0">
+                <!-- White Circular User Avatar -->
+                <Border Width="34" Height="34" CornerRadius="17" Background="White" Margin="0,0,10,0" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE77B;" FontSize="20" Foreground="#064875" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <StackPanel VerticalAlignment="Center" Spacing="1">
+                    <TextBlock x:Name="BannerPatientNameText" Text="JOHN DOE" Foreground="White" FontSize="13" FontWeight="Bold" />
+                    <TextBlock x:Name="BannerAllergiesText" Text="Allergies: shellfish" Foreground="#D1E3F0" FontSize="9.5" />
+                    <TextBlock Text="Care Team: View Details" Foreground="#38BDF8" FontSize="9.5" TextDecorations="Underline" />
+                </StackPanel>
             </StackPanel>
 
-            <!-- Column 2: DOB & Dose -->
-            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
-                <TextBlock Text="DOB: 3/22/1984" Foreground="White" FontSize="10" />
-                <TextBlock Text="Dose Wt: 80.000 kg (04/25/2021)" Foreground="White" FontSize="10" />
-                <TextBlock Text="Height: 180 cm (04/25/2021)" Foreground="White" FontSize="10" />
+            <!-- Column 1: DOB, Dose Wt, HealtheLife -->
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,14,0">
+                <TextBlock x:Name="BannerDobText" Text="DOB: 3/22/1984" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerDoseWeightText" Text="Dose Wt: 80.000 kg (04/25/2021)" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerHealtheLifeText" Text="HealtheLife: No" Foreground="#D1E3F0" FontSize="9.5" />
             </StackPanel>
 
-            <!-- Column 3: Admit Info -->
-            <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="1">
-                <TextBlock Text="Admit: 04/25/2021" Foreground="White" FontSize="10" />
-                <TextBlock Text="Loc: 2E - 201 - A" Foreground="White" FontSize="10" />
-                <TextBlock Text="MRN: 1000245678" Foreground="White" FontSize="10" />
+            <!-- Column 2: Age, LTD, Clinic -->
+            <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,14,0">
+                <TextBlock x:Name="BannerAgeText" Text="Age: 39 years" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerLtdText" Text="LTD:" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerClinicText" Text="Clinic: 01XTQ" Foreground="#D1E3F0" FontSize="9.5" />
             </StackPanel>
 
-            <!-- Column 4: Attending Provider -->
-            <StackPanel Grid.Column="3" VerticalAlignment="Center" Spacing="1">
-                <TextBlock Text="Attending: AXIO, MD" Foreground="White" FontSize="10" />
-                <TextBlock Text="Code: Full Code" Foreground="White" FontSize="10" />
-                <TextBlock Text="Isolation: None" Foreground="White" FontSize="10" />
+            <!-- Column 3: Sex, Code Status, Loc -->
+            <StackPanel Grid.Column="3" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,14,0">
+                <TextBlock x:Name="BannerSexText" Text="Sex: Female" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerCodeStatusText" Text="Code Status: Active" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerLocText" Text="Loc: GLW-01" Foreground="#D1E3F0" FontSize="9.5" />
             </StackPanel>
 
-            <!-- Column 5: Patient Summary Metadata -->
-            <StackPanel Grid.Column="4" VerticalAlignment="Center" Spacing="1">
-                <TextBlock Text="MRN: AVX SL A1H4XE" Foreground="White" FontSize="10" />
-                <TextBlock Text="Nominee: Mr. Ajin singh" Foreground="White" FontSize="10" />
-                <TextBlock Text="Inpatient FIN: 00096526415 [Admit Dt: 10/6/2020 3.14.12 PM CDT]" Foreground="White" FontSize="10" />
+            <!-- Column 4: MRN, Nominee, Inpatient FIN -->
+            <StackPanel Grid.Column="4" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,10,0">
+                <TextBlock x:Name="BannerMrnText" Text="MRN: AVX-SL-A1H4XE" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerNomineeText" Text="Nominee: Mr. Ajan singh" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerFinText" Text="Inpatient FIN: 00095526415 [Admit Dt: 10/6/2020 3:14:12 PM CDT]" Foreground="#D1E3F0" FontSize="9.5" />
             </StackPanel>
 
-            <!-- Column 6: Hamburger Button -->
-            <Button Grid.Column="5" Background="Transparent" BorderThickness="0" Padding="4" VerticalAlignment="Center" Margin="6,0,0,0" x:Name="PatientActionsMenuButton" Click="OnPatientActionsMenuButtonClick">
-                <FontIcon Glyph="&#xE700;" FontSize="16" Foreground="White" />
-            </Button>
+            <!-- Column 5: Vertical Separator & Hamburger Button -->
+            <StackPanel Grid.Column="5" Orientation="Horizontal" VerticalAlignment="Center">
+                <Rectangle Width="1" Fill="#2A6B94" Height="28" Margin="6,0,6,0" VerticalAlignment="Center" />
+                <Button Background="Transparent" BorderThickness="0" Padding="4" VerticalAlignment="Center" x:Name="PatientActionsMenuButton">
+                    <FontIcon Glyph="&#xE700;" FontSize="15" Foreground="White" />
+                    <Button.Flyout>
+                        <Flyout Placement="BottomEdgeAlignedRight">
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="BorderBrush" Value="#CBD5E1" />
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Setter Property="CornerRadius" Value="1" />
+                                    <Setter Property="MinHeight" Value="0" />
+                                    <Setter Property="MinWidth" Value="240" />
+                                    <Setter Property="MaxWidth" Value="320" />
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
+                            <Border Background="White" Width="250" Padding="0,4,0,4">
+                                <StackPanel x:Name="PatientActionsDropdownList">
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="bed_transfer">
+                                        <TextBlock Text="Bed Transfer" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="cancel_discharge">
+                                        <TextBlock Text="Cancel Discharge" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="cancel_pending_discharge">
+                                        <TextBlock Text="Cancel Pending Discharge" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="cancel_pending_transfer">
+                                        <TextBlock Text="Cancel Pending Transfer" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="cancel_transfer">
+                                        <TextBlock Text="Cancel Transfer" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="clozapine_registry">
+                                        <TextBlock Text="Clozapine Registry" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="discharge_encounter">
+                                        <TextBlock Text="Discharge Encounter" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="facility_transfer">
+                                        <TextBlock Text="Facility Transfer" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="leave_of_absence">
+                                        <TextBlock Text="Leave of Absence" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="modify_discharge">
+                                        <TextBlock Text="Modify Discharge" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="pending_discharge">
+                                        <TextBlock Text="Pending Discharge" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="pending_facility_transfer">
+                                        <TextBlock Text="Pending Facility Transfer" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="pending_transfer">
+                                        <TextBlock Text="Pending Transfer" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="print_labels">
+                                        <TextBlock Text="Print Labels" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="process_alert">
+                                        <TextBlock Text="Process Alert" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="update_patient_info">
+                                        <TextBlock Text="Update Patient Information" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="view_encounter">
+                                        <TextBlock Text="View Encounter" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                    <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="view_person">
+                                        <TextBlock Text="View Person" FontSize="11.5" Foreground="#111827" />
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </StackPanel>
         </Grid>
 
         <!-- ==================== 6. MAIN CONTENT AREA (Modular UserControls) ==================== -->
         <Grid Grid.Row="6">
-            <views:PatientProfileView x:Name="PatientProfileViewControl" Visibility="Collapsed" />
-            <views:PatientListView x:Name="PatientListViewControl" Visibility="Visible" />
+            <views:PatientProfileView x:Name="PatientProfileViewControl" Visibility="Visible" />
+            <views:PatientListView x:Name="PatientListViewControl" Visibility="Collapsed" />
             <views:MessageCenterView x:Name="MessageCenterViewControl" Visibility="Collapsed" />
             <views:LabsView x:Name="LabsViewControl" Visibility="Collapsed" />
             <views:SchedulerView x:Name="SchedulerViewControl" Visibility="Collapsed" />
@@ -303,6 +767,8 @@
             <views:PhysicianHandoffView x:Name="PhysicianHandoffViewControl" Visibility="Collapsed" />
             <views:UpToDateView x:Name="UpToDateViewControl" Visibility="Collapsed" />
             <views:AnalyticsView x:Name="AnalyticsViewControl" Visibility="Collapsed" />
+            <views:GrowthChartView x:Name="GrowthChartViewControl" Visibility="Collapsed" />
+            <views:HistoriesChartView x:Name="HistoriesChartViewControl" Visibility="Collapsed" />
         </Grid>
 
 
@@ -317,7 +783,7 @@
             <!-- Left Status Info -->
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                 <TextBlock Text="Ready" Foreground="White" FontSize="10" />
-                <TextBlock Text="Patient: JOHN DOE ( MRN: 1000245678 )" Foreground="White" FontSize="10" FontWeight="Bold" />
+                <TextBlock x:Name="PermanentFooterPatientText" Text="Patient: JOHN DOE ( MRN: 1000245678 )" Foreground="White" FontSize="10" FontWeight="Bold" />
             </StackPanel>
 
             <!-- Right Status System & User Info -->
@@ -327,6 +793,689 @@
                 <TextBlock Text="PROD" Foreground="White" FontSize="10" FontWeight="Bold" />
                 <TextBlock x:Name="FooterDateTimeText" Text="12/08/2026 03:12 AM" Foreground="White" FontSize="10" />
             </StackPanel>
+        </Grid>
+
+        <!-- ==================== 8. QUICK PANEL: CONVERSATION LAUNCHER MODAL (CTRL+Q) ==================== -->
+        <Grid x:Name="QuickPanelOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#66000000" Visibility="Collapsed" PointerPressed="OnQuickPanelBackdropPointerPressed">
+            <!-- Modal Dialog Window Container -->
+            <Border Width="760" Height="530" Background="#FFFFFF" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center" PointerPressed="OnQuickPanelDialogPointerPressed">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!-- Title Bar -->
+                        <RowDefinition Height="30" />
+                        <!-- Action Icons Grid -->
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Title Bar -->
+                    <Border Grid.Row="0" Background="#F1F5F9" BorderBrush="#CBD5E1" BorderThickness="0,0,0,1" Padding="8,4">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <FontIcon Glyph="&#xE8BD;" FontSize="13" Foreground="#0A658E" />
+                                <TextBlock Text="Person Mgmt: Conversation Launcher" Foreground="#0F172A" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" />
+                            </StackPanel>
+
+                            <!-- Window Control Buttons -->
+                            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock Text="―" FontSize="9" Foreground="#64748B" VerticalAlignment="Center" PointerPressed="OnQuickPanelCancelClick" />
+                                <TextBlock Text="🗖" FontSize="10" Foreground="#64748B" VerticalAlignment="Center" />
+                                <Button Content="✕" Background="Transparent" BorderThickness="0" Padding="4,0" FontSize="11" Foreground="#64748B" Click="OnQuickPanelCancelClick" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Action Icons Area -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="14,10">
+                        <GridView x:Name="QuickPanelItemsGridView" SelectionMode="Single" IsItemClickEnabled="True" ItemClick="OnQuickPanelItemClick">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="7" ItemWidth="98" ItemHeight="92" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+
+                            <!-- 1. Add/Modify Person -->
+                            <GridViewItem Tag="add_person">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE77B;" FontSize="28" Foreground="#6B21A8" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Add/Modify Person" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 2. Bed Transfer -->
+                            <GridViewItem Tag="bed_transfer">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE8F1;" FontSize="28" Foreground="#1D4ED8" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Bed Transfer" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 3. Cancel Discharge -->
+                            <GridViewItem Tag="cancel_discharge">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE711;" FontSize="28" Foreground="#E11D48" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Cancel Discharge" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 4. Cancel Encounter -->
+                            <GridViewItem Tag="cancel_encounter">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE711;" FontSize="28" Foreground="#E11D48" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Cancel Encounter" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 5. Cancel Pending... -->
+                            <GridViewItem Tag="cancel_pending_discharge">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE711;" FontSize="28" Foreground="#E11D48" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Cancel Pending..." FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 6. Cancel Pendi... -->
+                            <GridViewItem Tag="cancel_pending_transfer">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE711;" FontSize="28" Foreground="#E11D48" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Cancel Pendi..." FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 7. Cancel Transfer -->
+                            <GridViewItem Tag="cancel_transfer">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE711;" FontSize="28" Foreground="#E11D48" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Cancel Transfer" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 8. Discharge Encounter -->
+                            <GridViewItem Tag="discharge_encounter">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE8D5;" FontSize="28" Foreground="#B45309" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Discharge Encounter" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 9. Facility Transfer -->
+                            <GridViewItem Tag="facility_transfer">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE8F2;" FontSize="28" Foreground="#9333EA" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Facility Transfer" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 10. Leave of Absence -->
+                            <GridViewItem Tag="leave_of_absence">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE780;" FontSize="28" Foreground="#EA580C" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Leave of Absence" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 11. Modify Discharge -->
+                            <GridViewItem Tag="modify_discharge">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE70F;" FontSize="28" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Modify Discharge" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 12. Newborn Modify -->
+                            <GridViewItem Tag="newborn_modify">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE76E;" FontSize="28" Foreground="#D97706" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Newborn Modify" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 13. Newborn Quick Reg -->
+                            <GridViewItem Tag="newborn_quick_reg">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE76E;" FontSize="28" Foreground="#D97706" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Newborn Quick Reg" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 14. Pending Discharge -->
+                            <GridViewItem Tag="pending_discharge">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE916;" FontSize="28" Foreground="#0284C7" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Pending Discharge" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 15. Pending Facil... -->
+                            <GridViewItem Tag="pending_facil">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE916;" FontSize="28" Foreground="#0284C7" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Pending Facil..." FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 16. Pending Transfer -->
+                            <GridViewItem Tag="pending_transfer">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE916;" FontSize="28" Foreground="#0284C7" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Pending Transfer" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 17. Pre-Register Outpatient -->
+                            <GridViewItem Tag="pre_register_outpatient">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE8F3;" FontSize="28" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Pre-Register Outpatient" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 18. Pre-Register Patient To... -->
+                            <GridViewItem Tag="pre_register_patient">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE8F3;" FontSize="28" Foreground="#64748B" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Pre-Register Patient To..." FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 19. Print Specimen Labels -->
+                            <GridViewItem Tag="print_specimen_labels">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE8EC;" FontSize="28" Foreground="#CA8A04" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Print Specimen Labels" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 20. Process Alert -->
+                            <GridViewItem Tag="process_alert">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE7BA;" FontSize="28" Foreground="#D97706" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Process Alert" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 21. Quick Reg -->
+                            <GridViewItem Tag="quick_reg">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE945;" FontSize="28" Foreground="#EA580C" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Quick Reg" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 22. Referral Management -->
+                            <GridViewItem Tag="referral_mgmt">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE8D7;" FontSize="28" Foreground="#0284C7" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Referral Management" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 23. Register Outpatient -->
+                            <GridViewItem Tag="register_outpatient">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE8F2;" FontSize="28" Foreground="#9333EA" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Register Outpatient" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 24. Register Patient To... -->
+                            <GridViewItem Tag="register_patient_to">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE8F2;" FontSize="28" Foreground="#9333EA" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Register Patient To..." FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 25. Stillborn -->
+                            <GridViewItem Tag="stillborn">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE76E;" FontSize="28" Foreground="#D97706" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Stillborn" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 26. Update Patient Information -->
+                            <GridViewItem Tag="update_patient_info">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE72C;" FontSize="28" Foreground="#0284C7" HorizontalAlignment="Center" />
+                                    <TextBlock Text="Update Patient Information" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 27. View Encounter -->
+                            <GridViewItem Tag="view_encounter">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE7B3;" FontSize="28" Foreground="#475569" HorizontalAlignment="Center" />
+                                    <TextBlock Text="View Encounter" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 28. View Person -->
+                            <GridViewItem Tag="view_person">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE77B;" FontSize="28" Foreground="#6B21A8" HorizontalAlignment="Center" />
+                                    <TextBlock Text="View Person" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+
+                            <!-- 29. WH Quick Reg -->
+                            <GridViewItem Tag="wh_quick_reg">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                    <FontIcon Glyph="&#xE945;" FontSize="28" Foreground="#EA580C" HorizontalAlignment="Center" />
+                                    <TextBlock Text="WH Quick Reg" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="88" Foreground="#0F172A" />
+                                </StackPanel>
+                            </GridViewItem>
+                        </GridView>
+                    </ScrollViewer>
+
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- ==================== 9. PERSON SEARCH: GLOBAL CLINICAL DATABASE SEARCH MODAL (F10) ==================== -->
+        <Grid x:Name="PersonSearchOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#66000000" Visibility="Collapsed" PointerPressed="OnPersonSearchBackdropPointerPressed">
+            <!-- Modal Dialog Container -->
+            <Border x:Name="PersonSearchDialogContainer" Width="980" Height="600" Background="#FFFFFF" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center" PointerPressed="OnPersonSearchDialogPointerPressed" RequestedTheme="Light">
+                <Border.Resources>
+                    <!-- Force pristine light mode brushes for all controls within dialog -->
+                    <SolidColorBrush x:Key="TextControlBackground" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="TextControlForeground" Color="#0F172A" />
+                    <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="#0F172A" />
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="#0F172A" />
+                    <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="#94A3B8" />
+                    <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="#94A3B8" />
+                    <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="#94A3B8" />
+                    <SolidColorBrush x:Key="TextControlBorderBrush" Color="#CBD5E1" />
+                    <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#94A3B8" />
+                    <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="#0A658E" />
+
+                    <SolidColorBrush x:Key="ComboBoxBackground" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="ComboBoxBackgroundFocused" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="ComboBoxForeground" Color="#0F172A" />
+                    <SolidColorBrush x:Key="ComboBoxForegroundPointerOver" Color="#0F172A" />
+                    <SolidColorBrush x:Key="ComboBoxForegroundFocused" Color="#0F172A" />
+                    <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#CBD5E1" />
+                    <SolidColorBrush x:Key="ComboBoxBorderBrushPointerOver" Color="#94A3B8" />
+                    <SolidColorBrush x:Key="ComboBoxBorderBrushFocused" Color="#0A658E" />
+
+                    <SolidColorBrush x:Key="ButtonBackground" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#F1F5F9" />
+                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#E2E8F0" />
+                    <SolidColorBrush x:Key="ButtonForeground" Color="#0F172A" />
+                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="#0F172A" />
+                    <SolidColorBrush x:Key="ButtonForegroundPressed" Color="#0F172A" />
+                    <SolidColorBrush x:Key="ButtonBorderBrush" Color="#94A3B8" />
+                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="#64748B" />
+                    <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="#475569" />
+                </Border.Resources>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!-- 0. Title Bar -->
+                        <RowDefinition Height="30" />
+                        <!-- 1. Tabs & Quick Action Toolbar -->
+                        <RowDefinition Height="32" />
+                        <!-- 2. Info Notice Banner -->
+                        <RowDefinition Height="Auto" />
+                        <!-- 3. Search Form & Split Results Tables -->
+                        <RowDefinition Height="*" />
+                        <!-- 4. Dialog Action Footer -->
+                        <RowDefinition Height="36" />
+                    </Grid.RowDefinitions>
+
+                    <!-- 0. Amber Title Bar -->
+                    <Border Grid.Row="0" Background="#F59E0B" BorderBrush="#D97706" BorderThickness="0,0,0,1" Padding="8,4">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <FontIcon Glyph="&#xE716;" FontSize="13" Foreground="#1E293B" />
+                                <TextBlock Text="Person Search" Foreground="#1E293B" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" />
+                            </StackPanel>
+
+                            <!-- Window Control Buttons (Minimize, Maximize/Restore, Close) -->
+                            <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Border Padding="6,2" CornerRadius="2" Background="Transparent" PointerEntered="OnTitleBarButtonPointerEntered" PointerExited="OnTitleBarButtonPointerExited" PointerPressed="OnPersonSearchMinimizeClick" ToolTipService.ToolTip="Minimize (Ctrl+M)">
+                                    <TextBlock Text="―" FontSize="10" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center" />
+                                </Border>
+                                <Border Padding="6,2" CornerRadius="2" Background="Transparent" PointerEntered="OnTitleBarButtonPointerEntered" PointerExited="OnTitleBarButtonPointerExited" PointerPressed="OnPersonSearchMaximizeToggleClick" ToolTipService.ToolTip="Maximize / Restore">
+                                    <TextBlock x:Name="PersonSearchMaximizeIcon" Text="🗖" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" />
+                                </Border>
+                                <Border Padding="6,2" CornerRadius="2" Background="Transparent" PointerEntered="OnCloseButtonPointerEntered" PointerExited="OnCloseButtonPointerExited" PointerPressed="OnPersonSearchCancelClick" ToolTipService.ToolTip="Close (Esc)">
+                                    <TextBlock Text="✕" FontSize="11" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center" />
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- 1. Tabs & Quick Action Toolbar -->
+                    <Border Grid.Row="1" Background="#EDF2F7" BorderBrush="#CBD5E1" BorderThickness="0,0,0,1" Padding="6,2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Tabs -->
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                <!-- Person Tab (Active) -->
+                                <Border Background="#FFFFFF" BorderBrush="#94A3B8" BorderThickness="1,1,1,0" CornerRadius="3,3,0,0" Padding="12,3" Margin="0,0,2,0">
+                                    <TextBlock Text="Person" FontSize="11" FontWeight="SemiBold" Foreground="#0F172A" />
+                                </Border>
+                                <!-- Guarantor Tab -->
+                                <Border Background="#E2E8F0" BorderBrush="#CBD5E1" BorderThickness="1,1,1,0" CornerRadius="3,3,0,0" Padding="12,3">
+                                    <TextBlock Text="Guarantor" FontSize="11" Foreground="#475569" />
+                                </Border>
+                            </StackPanel>
+
+                            <!-- Vertical Separator -->
+                            <Rectangle Grid.Column="1" Width="1" Fill="#CBD5E1" Margin="8,2" />
+
+                            <!-- Colorful Clinical Action Toolstrip -->
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                                <!-- A badge -->
+                                <Border Width="18" Height="18" Background="#DC2626" CornerRadius="2" ToolTipService.ToolTip="Allergies">
+                                    <TextBlock Text="A" Foreground="White" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <FontIcon Glyph="&#xE8A5;" FontSize="14" Foreground="#8B5CF6" ToolTipService.ToolTip="Clinical Documents" />
+                                <FontIcon Glyph="&#xEA86;" FontSize="14" Foreground="#EF4444" ToolTipService.ToolTip="Medications" />
+                                <FontIcon Glyph="&#xE95E;" FontSize="14" Foreground="#2563EB" ToolTipService.ToolTip="Clinical Diagnostics" />
+                                <FontIcon Glyph="&#xE8B7;" FontSize="14" Foreground="#F97316" ToolTipService.ToolTip="Order Sets" />
+                                <FontIcon Glyph="&#xE8B7;" FontSize="14" Foreground="#EAB308" ToolTipService.ToolTip="Clinical Folder" />
+                                <!-- S badge -->
+                                <Border Width="18" Height="18" Background="#16A34A" CornerRadius="2" ToolTipService.ToolTip="Specialty Consults">
+                                    <TextBlock Text="S" Foreground="White" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <FontIcon Glyph="&#xE8C6;" FontSize="14" Foreground="#EC4899" ToolTipService.ToolTip="Surgery &amp; Procedures" />
+                                <!-- R badge -->
+                                <Border Width="18" Height="18" Background="#059669" CornerRadius="2" ToolTipService.ToolTip="Radiology &amp; Imaging">
+                                    <TextBlock Text="R" Foreground="White" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <FontIcon Glyph="&#xE7B3;" FontSize="14" Foreground="#0D9488" ToolTipService.ToolTip="Ophthalmology / Vision" />
+                                <!-- Rx badge -->
+                                <Border Width="18" Height="18" Background="#10B981" CornerRadius="2" ToolTipService.ToolTip="Pharmacy Orders">
+                                    <TextBlock Text="Rx" Foreground="White" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <FontIcon Glyph="&#xE8F1;" FontSize="14" Foreground="#D946EF" ToolTipService.ToolTip="Inpatient Bed / Ward" />
+                                <!-- Dx badge -->
+                                <Border Width="18" Height="18" Background="#7C3AED" CornerRadius="2" ToolTipService.ToolTip="Diagnoses">
+                                    <TextBlock Text="Dx" Foreground="White" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <FontIcon Glyph="&#xE718;" FontSize="14" Foreground="#EF4444" ToolTipService.ToolTip="Pin to Top" />
+                                <FontIcon Glyph="&#xE787;" FontSize="14" Foreground="#3B82F6" ToolTipService.ToolTip="Appointments" />
+                                <FontIcon Glyph="&#xE945;" FontSize="14" Foreground="#06B6D4" ToolTipService.ToolTip="Immunizations" />
+                                <FontIcon Glyph="&#xE70F;" FontSize="14" Foreground="#22C55E" ToolTipService.ToolTip="Clinical Notes" />
+                                <FontIcon Glyph="&#xEA3B;" FontSize="14" Foreground="#6366F1" ToolTipService.ToolTip="Dental / Oral Health" />
+                                <FontIcon Glyph="&#xEA8F;" FontSize="14" Foreground="#F59E0B" ToolTipService.ToolTip="Clinical Alerts" />
+                                <FontIcon Glyph="&#xE700;" FontSize="14" Foreground="#F43F5E" ToolTipService.ToolTip="Pathology" />
+                                <FontIcon Glyph="&#xE890;" FontSize="14" Foreground="#0284C7" ToolTipService.ToolTip="Vital Trends" />
+                                <FontIcon Glyph="&#xE9D9;" FontSize="14" Foreground="#9333EA" ToolTipService.ToolTip="Lab Analytics" />
+                                <FontIcon Glyph="&#xE7C1;" FontSize="14" Foreground="#FBBF24" ToolTipService.ToolTip="Flagged Records" />
+                                <FontIcon Glyph="&#xE825;" FontSize="14" Foreground="#15803D" ToolTipService.ToolTip="Financial &amp; Billing" />
+                                <FontIcon Glyph="&#xE950;" FontSize="14" Foreground="#14B8A6" ToolTipService.ToolTip="Infection Control" />
+                                <FontIcon Glyph="&#xE774;" FontSize="14" Foreground="#64748B" ToolTipService.ToolTip="Global Axio Network" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- 2. Info Notice Banner (Expandable) -->
+                    <Border Grid.Row="2" Background="#EFF6FF" BorderBrush="#DBEAFE" BorderThickness="0,0,0,1" Padding="10,4">
+                        <StackPanel Spacing="3">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                    <FontIcon Glyph="&#xE946;" FontSize="12" Foreground="#2563EB" />
+                                    <TextBlock Text="Turning on the Assume Wildcards setting will reduce search strength." FontSize="10.5" Foreground="#1E40AF" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <Border HorizontalAlignment="Right" VerticalAlignment="Center" Padding="4,2" CornerRadius="2" Background="Transparent" PointerEntered="OnLinkBorderPointerEntered" PointerExited="OnLinkBorderPointerExited" PointerPressed="OnNoticeBannerExpandPointerPressed" ToolTipService.ToolTip="Expand Wildcard Search Rules">
+                                    <FontIcon x:Name="NoticeBannerExpandIcon" Glyph="&#xE740;" FontSize="10" Foreground="#2563EB" />
+                                </Border>
+                            </Grid>
+                            <!-- Expanded Info Panel -->
+                            <StackPanel x:Name="NoticeBannerExpandedDetails" Visibility="Collapsed" Margin="18,3,0,2" Spacing="2">
+                                <TextBlock Text="• Wildcards (*) automatically append prefix/suffix matching to Name, MRN, and Encounter IDs." FontSize="10" Foreground="#3B82F6" />
+                                <TextBlock Text="• Exact matching is disabled when wildcards are active, querying broader clinical records across facilities." FontSize="10" Foreground="#3B82F6" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 3. Search Form (Left) & Split Results Tables (Right) -->
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Left Search Form Panel -->
+                        <Border Grid.Column="0" Background="#F8FAFC" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" Padding="12,10">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <StackPanel Spacing="7">
+                                    <!-- Search Method -->
+                                    <StackPanel Spacing="2">
+                                        <TextBlock Text="Search Method" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
+                                        <ComboBox x:Name="PersonSearchMethodCombo" Height="28" SelectedIndex="0" HorizontalAlignment="Stretch" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1">
+                                            <ComboBoxItem Content="Name (First/Last)" />
+                                            <ComboBoxItem Content="MRN" />
+                                            <ComboBoxItem Content="Encounter ID" />
+                                            <ComboBoxItem Content="Birth Date" />
+                                            <ComboBoxItem Content="Any Phone Number" />
+                                        </ComboBox>
+                                    </StackPanel>
+
+                                    <!-- Last Name -->
+                                    <StackPanel Spacing="2">
+                                        <TextBlock Text="Last Name" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
+                                        <TextBox x:Name="PersonSearchLastNameBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
+                                    </StackPanel>
+
+                                    <!-- First Name -->
+                                    <StackPanel Spacing="2">
+                                        <TextBlock Text="First Name" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
+                                        <TextBox x:Name="PersonSearchFirstNameBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
+                                    </StackPanel>
+
+                                    <!-- Birth Date -->
+                                    <StackPanel Spacing="2">
+                                        <TextBlock Text="Birth Date" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="PersonSearchDobBox" Grid.Column="0" PlaceholderText="DD/MM/YYYY" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
+                                            <Button Grid.Column="1" Background="#F1F5F9" BorderBrush="#CBD5E1" BorderThickness="1" Height="26" Width="28" Padding="0" Margin="3,0,0,0" CornerRadius="2">
+                                                <FontIcon Glyph="&#xE787;" FontSize="11" Foreground="#0A658E" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Button>
+                                        </Grid>
+                                    </StackPanel>
+
+                                    <!-- Any Phone Number -->
+                                    <StackPanel Spacing="2">
+                                        <TextBlock Text="Any Phone Number" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
+                                        <TextBox x:Name="PersonSearchPhoneBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
+                                    </StackPanel>
+
+                                    <!-- Encounter Identifiers -->
+                                    <StackPanel Spacing="2">
+                                        <TextBlock Text="Encounter Identifiers" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
+                                        <TextBox x:Name="PersonSearchEncounterBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
+                                    </StackPanel>
+
+                                    <!-- Search & Clear Action Buttons -->
+                                    <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Center" Margin="0,10,0,0">
+                                        <Button Width="85" Height="26" Background="#FFFFFF" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="2" Click="OnPersonSearchButtonClick">
+                                            <TextBlock Text="Search..." Foreground="#0F172A" FontSize="11" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Button>
+                                        <Button Width="60" Height="26" Background="#FFFFFF" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="2" Click="OnPersonSearchClearClick">
+                                            <TextBlock Text="Clear" Foreground="#0F172A" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Border>
+
+                        <!-- Right Results Panel -->
+                        <Grid Grid.Column="1" Padding="10,8">
+                            <Grid.RowDefinitions>
+                                <!-- Person Table Row -->
+                                <RowDefinition Height="*" />
+                                <!-- Encounter Table Row -->
+                                <RowDefinition Height="165" />
+                            </Grid.RowDefinitions>
+
+                            <!-- 1. Person Table Area -->
+                            <Grid Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Person Header with persistent styling on hover -->
+                                <Grid Grid.Row="0" Margin="0,0,0,4">
+                                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                        <TextBlock Text="Person" FontSize="11" FontWeight="Bold" Foreground="#0A658E" VerticalAlignment="Center" />
+                                        <Border Padding="6,2" CornerRadius="2" Background="Transparent" PointerEntered="OnLinkBorderPointerEntered" PointerExited="OnLinkBorderPointerExited">
+                                            <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Center">
+                                                <TextBlock Text="+" FontSize="11" FontWeight="Bold" Foreground="#0A658E" />
+                                                <TextBlock Text="Add" FontSize="10.5" FontWeight="SemiBold" Foreground="#0A658E" />
+                                            </StackPanel>
+                                        </Border>
+                                        <Border Padding="6,2" CornerRadius="2" Background="Transparent" PointerEntered="OnLinkBorderPointerEntered" PointerExited="OnLinkBorderPointerExited">
+                                            <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Center">
+                                                <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
+                                                <TextBlock Text="Preview" FontSize="10.5" FontWeight="SemiBold" Foreground="#0A658E" />
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                    <Border HorizontalAlignment="Right" VerticalAlignment="Center" Padding="4,2" CornerRadius="2" Background="Transparent" PointerEntered="OnLinkBorderPointerEntered" PointerExited="OnLinkBorderPointerExited">
+                                        <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Center">
+                                            <FontIcon Glyph="&#xE713;" FontSize="11" Foreground="#0A658E" />
+                                            <TextBlock Text="Search Settings" FontSize="10.5" FontWeight="SemiBold" Foreground="#0A658E" />
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Person Table Grid -->
+                                <Border Grid.Row="1" Background="#FFFFFF" BorderBrush="#CBD5E1" BorderThickness="1">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="22" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Table Header -->
+                                        <Grid Grid.Row="0" Background="#F1F5F9">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150" />
+                                                <ColumnDefinition Width="80" />
+                                                <ColumnDefinition Width="80" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="35" />
+                                                <ColumnDefinition Width="90" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="Name" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="1" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="MRN" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="2" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="Date of Birth" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="3" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="Sex" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="4" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="Age" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="5" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="Account Number" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="6" BorderBrush="#CBD5E1" BorderThickness="0,0,0,1" Padding="4,2"><TextBlock Text="Address" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                        </Grid>
+
+                                        <!-- Table Rows List -->
+                                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                            <Grid>
+                                                <TextBlock x:Name="PersonSearchEmptyPromptText" Text="No search results. Enter parameters and click Search..." FontStyle="Italic" Foreground="#94A3B8" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,35,0,0" />
+                                                <StackPanel x:Name="PersonSearchResultsPanel" />
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+
+                            <!-- 2. Encounter Table Area -->
+                            <Grid Grid.Row="1" Margin="0,6,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Encounter Header -->
+                                <TextBlock Grid.Row="0" Text="Encounter" FontSize="11" FontWeight="Bold" Foreground="#0A658E" Margin="0,0,0,3" />
+
+                                <!-- Encounter Table Grid -->
+                                <Border Grid.Row="1" Background="#FFFFFF" BorderBrush="#CBD5E1" BorderThickness="1">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="22" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Encounter Column Headers -->
+                                        <Grid Grid.Row="0" Background="#F1F5F9">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80" />
+                                                <ColumnDefinition Width="120" />
+                                                <ColumnDefinition Width="95" />
+                                                <ColumnDefinition Width="85" />
+                                                <ColumnDefinition Width="105" />
+                                                <ColumnDefinition Width="80" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="Encounter" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="1" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="Facility" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="2" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="Encounter Type" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="3" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="Date of Service" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="4" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="Resource" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="5" BorderBrush="#CBD5E1" BorderThickness="0,0,1,1" Padding="4,2"><TextBlock Text="Guarantor" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                            <Border Grid.Column="6" BorderBrush="#CBD5E1" BorderThickness="0,0,0,1" Padding="4,2"><TextBlock Text="Discharge Date" Foreground="#334155" FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center" /></Border>
+                                        </Grid>
+
+                                        <!-- Encounter Rows List -->
+                                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                            <Grid>
+                                                <TextBlock x:Name="EncounterSearchEmptyPromptText" Text="Select a person to view encounters." FontStyle="Italic" Foreground="#94A3B8" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,0,0" />
+                                                <StackPanel x:Name="EncounterSearchResultsPanel" />
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <!-- 4. Dialog Bottom Action Footer -->
+                    <Border Grid.Row="4" Background="#F1F5F9" BorderBrush="#CBD5E1" BorderThickness="0,1,0,0" Padding="10,4">
+                        <Grid>
+                            <CheckBox Content="Assume Wildcards" IsChecked="True" FontSize="11" Foreground="#1E293B" VerticalAlignment="Center" />
+                            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Button x:Name="PersonSearchSelectButton" Content="Select" Width="70" Height="25" Background="#E2E8F0" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="2" FontSize="11" Click="OnPersonSearchSelectClick" />
+                                <Button Content="Cancel" Width="70" Height="25" Background="#E2E8F0" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="2" FontSize="11" Click="OnPersonSearchCancelClick" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Minimized Floating Person Search Bar (Shown when minimized) -->
+            <Border x:Name="PersonSearchMinimizedBar" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,28" Background="#F59E0B" BorderBrush="#D97706" BorderThickness="1" CornerRadius="4" Padding="10,6" Visibility="Collapsed" PointerPressed="OnPersonSearchRestoreFromMinClick" RequestedTheme="Light">
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE716;" FontSize="13" Foreground="#1E293B" />
+                    <TextBlock Text="Person Search (F10)" Foreground="#1E293B" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
+                    <Border Padding="4,1" Background="#FDE68A" CornerRadius="2" PointerPressed="OnPersonSearchRestoreFromMinClick">
+                        <TextBlock Text="🗖 Restore" FontSize="10" FontWeight="SemiBold" Foreground="#1E293B" />
+                    </Border>
+                    <Border Padding="4,1" Background="Transparent" PointerPressed="OnPersonSearchCancelClick">
+                        <TextBlock Text="✕" FontSize="10" FontWeight="Bold" Foreground="#1E293B" />
+                    </Border>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- ==================== 10. PATIENT DETAILS MODAL POPUP (F9) ==================== -->
+        <Grid x:Name="PatientDetailsPopupOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#66000000" Visibility="Collapsed" PointerPressed="OnPatientDetailsPopupBackdropPointerPressed">
+            <views:NewPatientView x:Name="PatientDetailsPopupControl" HorizontalAlignment="Center" VerticalAlignment="Center" PointerPressed="OnPatientDetailsDialogPointerPressed" />
         </Grid>
 
     </Grid>

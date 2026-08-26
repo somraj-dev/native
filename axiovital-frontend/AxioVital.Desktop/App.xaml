@@ -3,11 +3,20 @@
     x:Class="AxioVital.Desktop.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:local="using:AxioVital.Desktop">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <controls:XamlControlsResources />
+            </ResourceDictionary.MergedDictionaries>
+
             <Color x:Key="AxioPrimaryColor">#0284c7</Color>
             <SolidColorBrush x:Key="AxioPrimaryBrush" Color="{StaticResource AxioPrimaryColor}" />
+            <SolidColorBrush x:Key="TabViewScrollButtonBackground" Color="Transparent" />
+            <SolidColorBrush x:Key="TabViewScrollButtonBackgroundPointerOver" Color="#E2E8F0" />
+            <SolidColorBrush x:Key="TabViewScrollButtonBackgroundPressed" Color="#CBD5E1" />
+            <SolidColorBrush x:Key="TabViewScrollButtonForeground" Color="#334155" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
