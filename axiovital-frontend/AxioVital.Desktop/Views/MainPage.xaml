@@ -31,17 +31,38 @@
         </Grid.RowDefinitions>
 
         <!-- ==================== 0. TOP RIBBON OPTIONS BAR ==================== -->
-        <Grid x:Name="TopRibbonBarGrid" Grid.Row="0" Background="#F2F3F5" Padding="12,4,12,4" BorderBrush="#D5D9E0" BorderThickness="0,0,0,1">
+        <Grid x:Name="TopRibbonBarGrid" Grid.Row="0" Background="#F2F3F5" Padding="10,3,10,3" BorderBrush="#D5D9E0" BorderThickness="0,0,0,1" MinHeight="28">
+            <Grid.Resources>
+                <Style x:Key="TopRibbonMenuItemStyle" TargetType="Button">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="CornerRadius" Value="3" />
+                    <Setter Property="Padding" Value="8,2" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Height" Value="22" />
+                    <Setter Property="MinHeight" Value="0" />
+                    <Setter Property="MinWidth" Value="0" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </Grid.Resources>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
-                <TextBlock Text="Home" Foreground="#111111" FontSize="11" FontWeight="Bold" PointerPressed="OnHomeTabPointerPressed" />
-                <TextBlock Text="Ledger" Foreground="#333333" FontSize="11" FontWeight="Normal" />
-                <Button x:Name="TopRibbonAmbulatoryButton" Background="Transparent" BorderThickness="1" BorderBrush="Transparent" Padding="8,2" MinHeight="0" MinWidth="0" VerticalAlignment="Center" CornerRadius="2">
-                    <TextBlock x:Name="TopRibbonAmbulatoryText" Text="ambulatory" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                <Button x:Name="TopRibbonHomeButton" Style="{StaticResource TopRibbonMenuItemStyle}" Click="OnHomeButtonClick">
+                    <TextBlock Text="Home" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
+                </Button>
+                <Button x:Name="TopRibbonLedgerButton" Style="{StaticResource TopRibbonMenuItemStyle}" Click="OnLedgerButtonClick">
+                    <TextBlock Text="Ledger" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
+                </Button>
+                <Button x:Name="TopRibbonAmbulatoryButton" Style="{StaticResource TopRibbonMenuItemStyle}">
+                    <TextBlock x:Name="TopRibbonAmbulatoryText" Text="Ambulatory" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
                     <Button.Flyout>
                         <Flyout x:Name="TopRibbonAmbulatoryFlyout" Placement="BottomEdgeAlignedLeft" Opened="OnTopRibbonAmbulatoryFlyoutOpened" Closed="OnTopRibbonAmbulatoryFlyoutClosed">
                             <Flyout.FlyoutPresenterStyle>
@@ -81,8 +102,8 @@
                         </Flyout>
                     </Button.Flyout>
                 </Button>
-                <Button x:Name="TopRibbonClinicalButton" Background="Transparent" BorderThickness="1" BorderBrush="Transparent" Padding="8,2" MinHeight="0" MinWidth="0" VerticalAlignment="Center" CornerRadius="2">
-                    <TextBlock x:Name="TopRibbonClinicalText" Text="Clinical" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <Button x:Name="TopRibbonClinicalButton" Style="{StaticResource TopRibbonMenuItemStyle}">
+                    <TextBlock x:Name="TopRibbonClinicalText" Text="Clinical" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
                     <Button.Flyout>
                         <Flyout x:Name="TopRibbonClinicalFlyout" Placement="BottomEdgeAlignedLeft" Opened="OnTopRibbonClinicalFlyoutOpened" Closed="OnTopRibbonClinicalFlyoutClosed">
                             <Flyout.FlyoutPresenterStyle>
@@ -201,10 +222,14 @@
                         </Flyout>
                     </Button.Flyout>
                 </Button>
-                <TextBlock Text="Notifications" Foreground="#333333" FontSize="11" FontWeight="Normal" />
-                <TextBlock Text="Admin" Foreground="#333333" FontSize="11" FontWeight="Normal" />
-                <Button x:Name="TopRibbonHelpButton" Background="Transparent" BorderThickness="0" Padding="6,2" MinHeight="0" MinWidth="0" VerticalAlignment="Center" CornerRadius="2">
-                    <TextBlock Text="Help" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                <Button x:Name="TopRibbonNotificationsButton" Style="{StaticResource TopRibbonMenuItemStyle}" Click="OnNotificationsButtonClick">
+                    <TextBlock x:Name="TopRibbonNotificationsText" Text="Notifications" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
+                </Button>
+                <Button x:Name="TopRibbonAdminButton" Style="{StaticResource TopRibbonMenuItemStyle}" Click="OnAdminButtonClick">
+                    <TextBlock Text="Admin" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
+                </Button>
+                <Button x:Name="TopRibbonHelpButton" Style="{StaticResource TopRibbonMenuItemStyle}">
+                    <TextBlock Text="Help" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
                     <Button.Flyout>
                         <Flyout x:Name="TopRibbonHelpFlyout" Placement="BottomEdgeAlignedLeft" Opened="OnTopRibbonHelpFlyoutOpened">
                             <Flyout.FlyoutPresenterStyle>
@@ -498,56 +523,50 @@
 
             <!-- Quick Tools Right -->
             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
-                <Border Background="#011B2C" CornerRadius="3" Padding="6,1,8,1" Height="23" VerticalAlignment="Center" PointerPressed="OnSearchBarBorderPointerPressed">
-                    <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                        <!-- Custom Cyan Lens / Purple Handle Magnifying Glass Icon -->
-                        <Canvas Width="14" Height="14" VerticalAlignment="Center" Margin="0,0,2,0">
-                            <Line X1="7" Y1="7" X2="12" Y2="12" Stroke="#8C3A8C" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
-                            <Ellipse Canvas.Left="1" Canvas.Top="1" Width="8" Height="8" Fill="#4ECBF5" Stroke="#8C3A8C" StrokeThickness="1.4" />
-                        </Canvas>
-                        <TextBox x:Name="SearchBox"
-                                 PlaceholderText="Search by Patient or Order..." 
+                <Border Background="#012237" BorderBrush="#1A6B8A" BorderThickness="1" CornerRadius="10" Padding="8,0,8,0" Height="22" VerticalAlignment="Center" PointerPressed="OnSearchBarBorderPointerPressed" RequestedTheme="Dark">
+                    <Grid VerticalAlignment="Center" Height="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Search Icon - Segoe MDL2 magnifying glass, tinted teal -->
+                        <FontIcon Grid.Column="0" Glyph="&#xE721;" FontSize="12" Foreground="#4DC9F6" VerticalAlignment="Center" Margin="0,0,6,0" />
+
+                        <!-- Placeholder TextBlock (visible when SearchBox is empty) -->
+                        <TextBlock x:Name="SearchPlaceholderText" Grid.Column="1" 
+                                   Text="Search by Patient or Order..." 
+                                   FontSize="11" Foreground="#8BB8D0" 
+                                   VerticalAlignment="Center" 
+                                   IsHitTestVisible="False" />
+
+                        <TextBox x:Name="SearchBox" Grid.Column="1"
                                  Background="Transparent" 
-                                 Foreground="White" 
+                                 Foreground="#FFFFFF" 
                                  BorderThickness="0" 
                                  FontSize="11" 
-                                 Width="185" 
-                                 Padding="0" 
-                                 MinHeight="0" 
-                                 MinWidth="0" 
+                                 Width="195" 
+                                 Padding="0"
+                                 Margin="0"
+                                 MinHeight="0"
+                                 MinWidth="0"
                                  VerticalAlignment="Center" 
                                  VerticalContentAlignment="Center" 
-                                 KeyDown="OnHeaderSearchBoxKeyDown">
-                            <TextBox.Resources>
-                                <SolidColorBrush x:Key="TextControlBackground" Color="Transparent" />
-                                <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent" />
-                                <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent" />
-                                <SolidColorBrush x:Key="TextControlBackgroundDisabled" Color="Transparent" />
-                                <SolidColorBrush x:Key="TextControlBorderBrush" Color="Transparent" />
-                                <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="Transparent" />
-                                <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="Transparent" />
-                                <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="Transparent" />
-                                <SolidColorBrush x:Key="TextControlForeground" Color="White" />
-                                <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="White" />
-                                <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White" />
-                                <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="#7D9DB4" />
-                                <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="#94B5CC" />
-                                <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="#7D9DB4" />
-                            </TextBox.Resources>
-                        </TextBox>
-                    </StackPanel>
+                                 TextChanged="OnSearchBoxTextChanged"
+                                 KeyDown="OnHeaderSearchBoxKeyDown" />
+                    </Grid>
                 </Border>
-                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center" PointerPressed="OnFullScreenPointerPressed">
-                    <FontIcon Glyph="&#xE740;" FontSize="11" Foreground="White" />
-                    <TextBlock Text="Full screen" Foreground="White" FontSize="11" />
+                <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center" PointerPressed="OnFullScreenPointerPressed">
+                    <FontIcon Glyph="&#xE740;" FontSize="11.5" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                    <TextBlock Text="Full screen" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xE749;" FontSize="11" Foreground="White" />
-                    <TextBlock Text="Print" Foreground="White" FontSize="11" />
+                <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE749;" FontSize="11.5" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                    <TextBlock Text="Print" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xE72C;" FontSize="11" Foreground="White" />
-                    <TextBlock Text="0 minutes ago" Foreground="White" FontSize="11" />
+                <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE72C;" FontSize="11.5" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                    <TextBlock Text="0 minutes ago" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" />
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -769,6 +788,7 @@
             <views:AnalyticsView x:Name="AnalyticsViewControl" Visibility="Collapsed" />
             <views:GrowthChartView x:Name="GrowthChartViewControl" Visibility="Collapsed" />
             <views:HistoriesChartView x:Name="HistoriesChartViewControl" Visibility="Collapsed" />
+            <views:NotificationsView x:Name="NotificationsViewControl" Visibility="Collapsed" />
         </Grid>
 
 
@@ -1476,6 +1496,26 @@
         <!-- ==================== 10. PATIENT DETAILS MODAL POPUP (F9) ==================== -->
         <Grid x:Name="PatientDetailsPopupOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#66000000" Visibility="Collapsed" PointerPressed="OnPatientDetailsPopupBackdropPointerPressed">
             <views:NewPatientView x:Name="PatientDetailsPopupControl" HorizontalAlignment="Center" VerticalAlignment="Center" PointerPressed="OnPatientDetailsDialogPointerPressed" />
+        </Grid>
+
+        <!-- ==================== 11. BED TRANSFER MODAL POPUP ==================== -->
+        <Grid x:Name="BedTransferPopupOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#66000000" Visibility="Collapsed" PointerPressed="OnBedTransferPopupBackdropPointerPressed">
+            <views:BedTransferView x:Name="BedTransferPopupControl" HorizontalAlignment="Center" VerticalAlignment="Center" PointerPressed="OnBedTransferDialogPointerPressed" />
+        </Grid>
+
+        <!-- ==================== 12. PENDING TRANSFER / FACILITY TRANSFER WARNING MODAL ==================== -->
+        <Grid x:Name="PendingTransferWarningPopupOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#66000000" Visibility="Collapsed" PointerPressed="OnPendingTransferWarningBackdropPointerPressed">
+            <views:PendingTransferWarningDialog x:Name="PendingTransferWarningPopupControl" HorizontalAlignment="Center" VerticalAlignment="Center" PointerPressed="OnPendingTransferWarningDialogPointerPressed" />
+        </Grid>
+
+        <!-- ==================== 13. VIEW ENCOUNTER / MEDICAL RECORD REQUEST MODAL ==================== -->
+        <Grid x:Name="ViewEncounterPopupOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#66000000" Visibility="Collapsed" PointerPressed="OnViewEncounterBackdropPointerPressed">
+            <views:ViewEncounterDialog x:Name="ViewEncounterPopupControl" HorizontalAlignment="Center" VerticalAlignment="Center" PointerPressed="OnViewEncounterDialogPointerPressed" />
+        </Grid>
+
+        <!-- ==================== 14. DEVELOPER PANEL FULL SCREEN VIEW ==================== -->
+        <Grid x:Name="DeveloperPanelOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#FFFFFF" Visibility="Collapsed">
+            <views:DeveloperPanelView x:Name="DeveloperPanelControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         </Grid>
 
     </Grid>

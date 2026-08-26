@@ -4,18 +4,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:AxioVital.Desktop.Models"
+    xmlns:views="using:AxioVital.Desktop.Views"
     mc:Ignorable="d"
-    FontFamily="Segoe UI, Tahoma, sans-serif"
     RequestedTheme="Light"
     HorizontalAlignment="Center"
     VerticalAlignment="Center">
 
     <UserControl.Resources>
+        <Style x:Key="StandardFont" TargetType="Control">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+        </Style>
+
         <!-- Classic Windows Aero / Medical EHR Dialog Styles -->
         <Style x:Key="WinClassicLabelStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="11" />
             <Setter Property="Foreground" Value="#003399" />
-            <Setter Property="FontFamily" Value="Segoe UI, Tahoma" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
             <Setter Property="Margin" Value="0,0,0,1" />
             <Setter Property="VerticalAlignment" Value="Bottom" />
         </Style>

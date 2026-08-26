@@ -765,12 +765,6 @@ public sealed partial class PatientProfileView : UserControl
                 HighlightNav(NavFormBrowserBorder, NavFormBrowserBar, NavFormBrowserText);
                 FormBrowserPanel.Visibility = Visibility.Visible;
                 break;
-            case "growth_chart":
-            case "growthchart":
-            case "clin_growth_chart":
-                HighlightNav(NavGrowthChartBorder, NavGrowthChartBar, NavGrowthChartText);
-                if (GrowthChartPanel != null) GrowthChartPanel.Visibility = Visibility.Visible;
-                break;
             case "insurance":
             case "patient_info":
             case "patientinfo":
@@ -824,7 +818,6 @@ public sealed partial class PatientProfileView : UserControl
         NavClinicalMediaBorder.Background = transparent;
         NavDiagnosesBorder.Background = transparent;
         NavFormBrowserBorder.Background = transparent;
-        NavGrowthChartBorder.Background = transparent;
         NavInsuranceBorder.Background = transparent;
         NavHistoriesBorder.Background = transparent;
         NavInteractiveViewBorder.Background = transparent;
@@ -841,7 +834,6 @@ public sealed partial class PatientProfileView : UserControl
         NavClinicalMediaBar.Background = transparent;
         NavDiagnosesBar.Background = transparent;
         NavFormBrowserBar.Background = transparent;
-        NavGrowthChartBar.Background = transparent;
         NavInsuranceBar.Background = transparent;
         NavHistoriesBar.Background = transparent;
         NavInteractiveViewBar.Background = transparent;
@@ -858,7 +850,6 @@ public sealed partial class PatientProfileView : UserControl
         NavClinicalMediaText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
         NavDiagnosesText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
         NavFormBrowserText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavGrowthChartText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
         NavInsuranceText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
         NavHistoriesText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
         NavInteractiveViewText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
@@ -875,7 +866,6 @@ public sealed partial class PatientProfileView : UserControl
         if (ClinicalMediaPanel != null) ClinicalMediaPanel.Visibility = Visibility.Collapsed;
         if (DiagnosesPanel != null) DiagnosesPanel.Visibility = Visibility.Collapsed;
         if (FormBrowserPanel != null) FormBrowserPanel.Visibility = Visibility.Collapsed;
-        if (GrowthChartPanel != null) GrowthChartPanel.Visibility = Visibility.Collapsed;
         if (InsurancePanel != null) InsurancePanel.Visibility = Visibility.Collapsed;
         if (HistoriesChartPanel != null) HistoriesChartPanel.Visibility = Visibility.Collapsed;
         if (InteractiveViewPanel != null) InteractiveViewPanel.Visibility = Visibility.Collapsed;
@@ -944,12 +934,6 @@ public sealed partial class PatientProfileView : UserControl
     {
         HighlightNav(NavFormBrowserBorder, NavFormBrowserBar, NavFormBrowserText);
         FormBrowserPanel.Visibility = Visibility.Visible;
-    }
-
-    private void OnNavGrowthChartPressed(object sender, PointerRoutedEventArgs e)
-    {
-        HighlightNav(NavGrowthChartBorder, NavGrowthChartBar, NavGrowthChartText);
-        if (GrowthChartPanel != null) GrowthChartPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavInsurancePressed(object sender, PointerRoutedEventArgs e)

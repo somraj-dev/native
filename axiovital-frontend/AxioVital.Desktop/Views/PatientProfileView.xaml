@@ -141,17 +141,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- 10. Growth Chart -->
-                    <Border x:Name="NavGrowthChartBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavGrowthChartPressed">
-                        <Grid Height="25">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="4" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Border x:Name="NavGrowthChartBar" Grid.Column="0" Background="Transparent" />
-                            <TextBlock x:Name="NavGrowthChartText" Grid.Column="1" Text="Growth Chart" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" Margin="10,0,6,0" />
-                        </Grid>
-                    </Border>
+
 
                     <!-- 11. Insurance -->
                     <Border x:Name="NavInsuranceBorder" Background="Transparent" PointerEntered="OnNavPointerEntered" PointerExited="OnNavPointerExited" PointerPressed="OnNavInsurancePressed">
@@ -432,8 +422,7 @@
                     </StackPanel>
                 </ScrollViewer>
 
-                <!-- 10. GROWTH CHART VIEW (Portfolio Slicer & Yearly Movements) -->
-                <views:GrowthChartView x:Name="GrowthChartPanel" Visibility="Collapsed" />
+
 
                 <!-- 11. INSURANCE VIEW -->
                 <ScrollViewer x:Name="InsurancePanel" Visibility="Collapsed" Background="#FFFFFF" Padding="24">

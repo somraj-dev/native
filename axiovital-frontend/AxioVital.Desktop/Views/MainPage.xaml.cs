@@ -34,6 +34,34 @@ public partial class MainPage : Page
             PatientDetailsPopupControl.CloseRequested += (s, e) => ClosePatientDetailsPopup();
         }
 
+        // Hook up Bed Transfer Popup events
+        if (BedTransferPopupControl != null)
+        {
+            BedTransferPopupControl.CloseRequested += (s, e) => CloseBedTransferPopup();
+            BedTransferPopupControl.TransferSaved += (s, e) =>
+            {
+                // Bed transfer saved confirmation
+            };
+        }
+
+        // Hook up Pending Transfer / Facility Transfer Warning Popup events
+        if (PendingTransferWarningPopupControl != null)
+        {
+            PendingTransferWarningPopupControl.CloseRequested += (s, e) => ClosePendingTransferWarningPopup();
+        }
+
+        // Hook up View Encounter Popup events
+        if (ViewEncounterPopupControl != null)
+        {
+            ViewEncounterPopupControl.CloseRequested += (s, e) => CloseViewEncounterPopup();
+        }
+
+        // Hook up Developer Panel events
+        if (DeveloperPanelControl != null)
+        {
+            DeveloperPanelControl.ReturnToAxioVitalRequested += (s, e) => CloseDeveloperPanel();
+        }
+
         // Open Patient Profile view directly on launch
         ShowPatientProfileByName("JOHN DOE");
 
@@ -47,6 +75,27 @@ public partial class MainPage : Page
         this.Loaded += (s, e) =>
         {
             SearchBox?.Focus(FocusState.Programmatic);
+        };
+
+        this.KeyDown += (s, e) =>
+        {
+            if (e.Key == Windows.System.VirtualKey.F12)
+            {
+                if (IsDeveloperPanelOpen)
+                {
+                    CloseDeveloperPanel();
+                }
+                else
+                {
+                    OpenDeveloperPanel();
+                }
+                e.Handled = true;
+            }
+            else if (e.Key == Windows.System.VirtualKey.Escape && IsDeveloperPanelOpen)
+            {
+                CloseDeveloperPanel();
+                e.Handled = true;
+            }
         };
     }
 
@@ -102,6 +151,7 @@ public partial class MainPage : Page
         if (AnalyticsViewControl != null) AnalyticsViewControl.Visibility = (targetView == AnalyticsViewControl) ? Visibility.Visible : Visibility.Collapsed;
         if (GrowthChartViewControl != null) GrowthChartViewControl.Visibility = (targetView == GrowthChartViewControl) ? Visibility.Visible : Visibility.Collapsed;
         if (HistoriesChartViewControl != null) HistoriesChartViewControl.Visibility = (targetView == HistoriesChartViewControl) ? Visibility.Visible : Visibility.Collapsed;
+        if (NotificationsViewControl != null) NotificationsViewControl.Visibility = (targetView == NotificationsViewControl) ? Visibility.Visible : Visibility.Collapsed;
 
         if (targetView is FrameworkElement fe)
         {
@@ -507,6 +557,36 @@ public partial class MainPage : Page
         OpenOrActivateTab("histories_chart", "Calendar Chart", "Historic Trends: Calendar Chart", HistoriesChartViewControl);
     }
 
+    public void ShowNotificationsView()
+    {
+        OpenOrActivateTab("notifications", "Notifications", "Notifications", NotificationsViewControl);
+    }
+
+    private void OnHomeButtonClick(object sender, RoutedEventArgs e)
+    {
+        ShowPatientProfileByName("JOHN DOE");
+    }
+
+    private void OnLedgerButtonClick(object sender, RoutedEventArgs e)
+    {
+        // Placeholder for ledger
+    }
+
+    private void OnNotificationsButtonClick(object sender, RoutedEventArgs e)
+    {
+        ShowNotificationsView();
+    }
+
+    private void OnAdminButtonClick(object sender, RoutedEventArgs e)
+    {
+        // Placeholder for admin
+    }
+
+    private void OnNotificationsTabPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        ShowNotificationsView();
+    }
+
     public bool IsPatientDetailsPopupOpen => PatientDetailsPopupOverlay != null && PatientDetailsPopupOverlay.Visibility == Visibility.Visible;
 
     public void OpenPatientDetailsPopup()
@@ -551,6 +631,137 @@ public partial class MainPage : Page
         }
     }
 
+    public bool IsBedTransferPopupOpen => BedTransferPopupOverlay != null && BedTransferPopupOverlay.Visibility == Visibility.Visible;
+
+    public void OpenBedTransferPopup(string patientId = "TTPTEST", string patientName = "PATIENT02")
+    {
+        if (BedTransferPopupOverlay != null)
+        {
+            BedTransferPopupControl?.SetCurrentDateTime();
+            BedTransferPopupControl?.SetPatient(patientId, patientName);
+            BedTransferPopupOverlay.Visibility = Visibility.Visible;
+            AnimateViewEntrance(BedTransferPopupOverlay);
+        }
+    }
+
+    public void CloseBedTransferPopup()
+    {
+        if (BedTransferPopupOverlay != null)
+        {
+            BedTransferPopupOverlay.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    public void ToggleBedTransferPopup()
+    {
+        if (IsBedTransferPopupOpen)
+        {
+            CloseBedTransferPopup();
+        }
+        else
+        {
+            OpenBedTransferPopup();
+        }
+    }
+
+    private void OnBedTransferDialogPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        e.Handled = true;
+    }
+
+    private void OnBedTransferPopupBackdropPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        if (ReferenceEquals(e.OriginalSource, BedTransferPopupOverlay))
+        {
+            CloseBedTransferPopup();
+        }
+    }
+
+    public bool IsPendingTransferWarningPopupOpen => PendingTransferWarningPopupOverlay != null && PendingTransferWarningPopupOverlay.Visibility == Visibility.Visible;
+
+    public void OpenPendingTransferWarningPopup(string title = "Cancel Pending Transfer", string? message = null)
+    {
+        if (PendingTransferWarningPopupOverlay != null)
+        {
+            PendingTransferWarningPopupControl?.SetDialogMode(title, message);
+            PendingTransferWarningPopupOverlay.Visibility = Visibility.Visible;
+            AnimateViewEntrance(PendingTransferWarningPopupOverlay);
+        }
+    }
+
+    public void ClosePendingTransferWarningPopup()
+    {
+        if (PendingTransferWarningPopupOverlay != null)
+        {
+            PendingTransferWarningPopupOverlay.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private void OnPendingTransferWarningDialogPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        e.Handled = true;
+    }
+
+    private void OnPendingTransferWarningBackdropPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        if (ReferenceEquals(e.OriginalSource, PendingTransferWarningPopupOverlay))
+        {
+            ClosePendingTransferWarningPopup();
+        }
+    }
+
+    public bool IsViewEncounterPopupOpen => ViewEncounterPopupOverlay != null && ViewEncounterPopupOverlay.Visibility == Visibility.Visible;
+
+    public void OpenViewEncounterPopup(string patientName = "PATIENT ENCOUNTER DEMO")
+    {
+        if (ViewEncounterPopupOverlay != null)
+        {
+            ViewEncounterPopupControl?.SetDefaultValues(patientName);
+            ViewEncounterPopupOverlay.Visibility = Visibility.Visible;
+            AnimateViewEntrance(ViewEncounterPopupOverlay);
+        }
+    }
+
+    public void CloseViewEncounterPopup()
+    {
+        if (ViewEncounterPopupOverlay != null)
+        {
+            ViewEncounterPopupOverlay.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private void OnViewEncounterDialogPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        e.Handled = true;
+    }
+
+    private void OnViewEncounterBackdropPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        if (ReferenceEquals(e.OriginalSource, ViewEncounterPopupOverlay))
+        {
+            CloseViewEncounterPopup();
+        }
+    }
+
+    public bool IsDeveloperPanelOpen => DeveloperPanelOverlay != null && DeveloperPanelOverlay.Visibility == Visibility.Visible;
+
+    public void OpenDeveloperPanel()
+    {
+        if (DeveloperPanelOverlay != null)
+        {
+            DeveloperPanelOverlay.Visibility = Visibility.Visible;
+            AnimateViewEntrance(DeveloperPanelOverlay);
+        }
+    }
+
+    public void CloseDeveloperPanel()
+    {
+        if (DeveloperPanelOverlay != null)
+        {
+            DeveloperPanelOverlay.Visibility = Visibility.Collapsed;
+        }
+    }
+
     private bool _isPageFullScreen = false;
 
     private void OnFullScreenPointerPressed(object sender, PointerRoutedEventArgs e)
@@ -590,6 +801,16 @@ public partial class MainPage : Page
     private void OnSearchBarBorderPointerPressed(object sender, PointerRoutedEventArgs e)
     {
         SearchBox?.Focus(FocusState.Programmatic);
+    }
+
+    private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (SearchPlaceholderText != null && sender is TextBox tb)
+        {
+            SearchPlaceholderText.Visibility = string.IsNullOrEmpty(tb.Text)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
     }
 
     public bool IsQuickPanelOpen => QuickPanelOverlay != null && QuickPanelOverlay.Visibility == Visibility.Visible;
@@ -673,16 +894,24 @@ public partial class MainPage : Page
         switch (actionTag)
         {
             case "facility_transfer":
-                OpenOrActivateTab("facility_transfer", "Facility Transfer", "Facility Transfer", new FacilityTransferPage());
+                OpenPendingTransferWarningPopup("Facility Transfer");
+                break;
+            case "cancel_pending_transfer":
+            case "cancel_transfer":
+                OpenPendingTransferWarningPopup("Cancel Pending Transfer");
+                break;
+            case "view_encounter":
+                OpenViewEncounterPopup("PATIENT ENCOUNTER DEMO");
                 break;
             case "add_person":
             case "view_person":
-            case "view_encounter":
                 ShowPatientProfileView();
                 break;
             case "bed_transfer":
+                OpenBedTransferPopup();
+                break;
             case "pending_transfer":
-                ShowSchedulerView();
+                OpenPendingTransferWarningPopup("Pending Transfer");
                 break;
             default:
                 break;
@@ -878,6 +1107,9 @@ public partial class MainPage : Page
                 case "help_open_view":
                 case "help_explorer":
                     ShowPatientListView();
+                    break;
+                case "help_devtools":
+                    OpenDeveloperPanel();
                     break;
                 default:
                     if (PermanentFooterPatientText != null)
