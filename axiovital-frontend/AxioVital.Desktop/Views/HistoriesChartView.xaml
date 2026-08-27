@@ -42,9 +42,9 @@
 
                         <!-- Data Set Box -->
                         <StackPanel Spacing="2" HorizontalAlignment="Left" Width="145">
-                            <TextBlock Text="Data Set" FontSize="10" Foreground="#000000" HorizontalAlignment="Center" />
-                            <Border BorderBrush="#7F9DB9" BorderThickness="1" Background="#FFFFFF" Height="22" Padding="6,0">
-                                <TextBlock Text="Sample 2" FontSize="10" Foreground="#000000" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBlock Text="Data Set" FontSize="12" Foreground="#000000" HorizontalAlignment="Center" />
+                            <Border BorderBrush="#7F9DB9" BorderThickness="1" Background="#FFFFFF" Height="28" Padding="6,0">
+                                <TextBlock Text="Sample 2" FontSize="12" Foreground="#000000" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                         </StackPanel>
 
@@ -55,25 +55,25 @@
                                 <ColumnDefinition Width="135" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="22" />
-                                <RowDefinition Height="22" />
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="28" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="From" FontSize="10" Foreground="#000000" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="From" FontSize="12" Foreground="#000000" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
                             <Border Grid.Row="0" Grid.Column="1" BorderBrush="#7F9DB9" BorderThickness="1,1,1,0" Background="#FFFFFF">
-                                <TextBlock Text="1/1/2013" FontSize="10" FontWeight="Bold" Foreground="#000000" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock Text="1/1/2013" FontSize="12" FontWeight="Bold" Foreground="#000000" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
 
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="To" FontSize="10" Foreground="#000000" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="To" FontSize="12" Foreground="#000000" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
                             <Border Grid.Row="1" Grid.Column="1" BorderBrush="#7F9DB9" BorderThickness="1,1,1,1" Background="#FFFFFF">
-                                <TextBlock Text="1/4/2014" FontSize="10" FontWeight="Bold" Foreground="#000000" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock Text="1/4/2014" FontSize="12" FontWeight="Bold" Foreground="#000000" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                         </Grid>
                     </StackPanel>
 
                     <!-- Middle: Daily with 7-Day Moving Average -->
                     <StackPanel Grid.Column="1" Margin="0,0,16,0" HorizontalAlignment="Stretch">
-                        <TextBlock Text="Daily with 7-Day Moving Average" FontSize="9.5" FontWeight="SemiBold" Foreground="#000000" HorizontalAlignment="Center" Margin="0,0,0,3" />
+                        <TextBlock Text="Daily with 7-Day Moving Average" FontSize="11.5" FontWeight="SemiBold" Foreground="#000000" HorizontalAlignment="Center" Margin="0,0,0,3" />
                         
                         <Grid Height="80" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
@@ -132,7 +132,7 @@
 
                     <!-- Right: Weekly Average -->
                     <StackPanel Grid.Column="2" HorizontalAlignment="Stretch">
-                        <TextBlock Text="Weekly Average" FontSize="9.5" FontWeight="SemiBold" Foreground="#000000" HorizontalAlignment="Center" Margin="0,0,0,3" />
+                        <TextBlock Text="Weekly Average" FontSize="11.5" FontWeight="SemiBold" Foreground="#000000" HorizontalAlignment="Center" Margin="0,0,0,3" />
 
                         <Grid Height="80" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
@@ -219,7 +219,7 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Avg: label -->
-                    <TextBlock Grid.Column="1" Text="Avg:" FontSize="10.5" FontWeight="Bold" Foreground="#000000" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,8,2" />
+                    <TextBlock Grid.Column="1" Text="Avg:" FontSize="12.5" FontWeight="Bold" Foreground="#000000" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,8,2" />
 
                     <!-- Day of Week Average Vertical Bars -->
                     <Border Grid.Column="2" Height="17" Width="44" Background="#4F81BD" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
@@ -236,7 +236,7 @@
                     <StackPanel HorizontalAlignment="Stretch">
 
                         <!-- Main Table Header -->
-                        <Grid Height="22" Background="#365F91" HorizontalAlignment="Stretch">
+                        <Grid Height="28" Background="#365F91" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <!-- Month label & mini cal: 45px + 140px -->
                                 <ColumnDefinition Width="45" />
@@ -254,7 +254,7 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0" Text="" />
-                            <TextBlock Grid.Column="1" Text="Su  M  Tu  W  Th  F  Sa" FontSize="9" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Text="Su  M  Tu  W  Th  F  Sa" FontSize="13" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             <TextBlock Grid.Column="2" Text="Sun" Style="{StaticResource HeaderTextStyle}" />
                             <TextBlock Grid.Column="3" Text="Mon" Style="{StaticResource HeaderTextStyle}" />
                             <TextBlock Grid.Column="4" Text="Tue" Style="{StaticResource HeaderTextStyle}" />

@@ -9,7 +9,7 @@
     <Grid Background="#FFFFFF">
         <Grid.ColumnDefinitions>
             <!-- Left Sidebar: Inbox Summary -->
-            <ColumnDefinition Width="220" MinWidth="180" MaxWidth="320" />
+            <ColumnDefinition Width="250" MinWidth="180" MaxWidth="320" />
             <!-- Splitter Border -->
             <ColumnDefinition Width="2" />
             <!-- Right Data / Reminders Pane -->
@@ -21,9 +21,9 @@
             <Grid Grid.Column="0" Background="#F8FAFC" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0">
                 <Grid.RowDefinitions>
                     <!-- Sidebar Header -->
-                    <RowDefinition Height="26" />
+                    <RowDefinition Height="34" />
                     <!-- Tabs (Inbox, Proxies, Pools) -->
-                    <RowDefinition Height="26" />
+                    <RowDefinition Height="34" />
                     <!-- Display Filter Row -->
                     <RowDefinition Height="Auto" />
                     <!-- Red Header -->
@@ -41,7 +41,7 @@
                     <TextBlock Grid.Column="0" 
                                Text="Inbox Summa..." 
                                Foreground="#FFFFFF" 
-                               FontSize="11" 
+                               FontSize="12.5" 
                                FontWeight="Bold" 
                                VerticalAlignment="Center" />
                     <!-- Pin Icon -->
@@ -51,7 +51,7 @@
                             Padding="2" 
                             MinHeight="0" 
                             MinWidth="0">
-                        <FontIcon Glyph="&#xE718;" FontSize="10" Foreground="#CBD5E1" VerticalAlignment="Center" />
+                        <FontIcon Glyph="&#xE718;" FontSize="11.5" Foreground="#CBD5E1" VerticalAlignment="Center" />
                     </Button>
                 </Grid>
 
@@ -65,17 +65,17 @@
 
                     <!-- Inbox Tab (Active) -->
                     <Border x:Name="TabInboxBorder" Grid.Column="0" Background="#FFFFFF" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" PointerPressed="OnSidebarTabInboxPressed">
-                        <TextBlock x:Name="TabInboxText" Text="Inbox" FontSize="11" FontWeight="SemiBold" Foreground="#0F172A" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock x:Name="TabInboxText" Text="Inbox" FontSize="12.5" FontWeight="SemiBold" Foreground="#0F172A" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
 
                     <!-- Proxies Tab -->
                     <Border x:Name="TabProxiesBorder" Grid.Column="1" Background="#E2E8F0" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" PointerPressed="OnSidebarTabProxiesPressed">
-                        <TextBlock x:Name="TabProxiesText" Text="Proxies" FontSize="11" FontWeight="Normal" Foreground="#475569" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock x:Name="TabProxiesText" Text="Proxies" FontSize="12.5" FontWeight="Normal" Foreground="#475569" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
 
                     <!-- Pools Tab -->
                     <Border x:Name="TabPoolsBorder" Grid.Column="2" Background="#E2E8F0" PointerPressed="OnSidebarTabPoolsPressed">
-                        <TextBlock x:Name="TabPoolsText" Text="Pools" FontSize="11" FontWeight="Normal" Foreground="#475569" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock x:Name="TabPoolsText" Text="Pools" FontSize="12.5" FontWeight="Normal" Foreground="#475569" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                 </Grid>
 
@@ -87,32 +87,32 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="Display:" FontSize="10.5" Foreground="#333333" VerticalAlignment="Center" Margin="0,0,6,0" />
+                    <TextBlock Grid.Column="0" Text="Display:" FontSize="12.5" Foreground="#333333" VerticalAlignment="Center" Margin="0,0,6,0" />
                     
                     <ComboBox x:Name="DisplayRangeCombo" 
                               Grid.Column="1" 
                               SelectedIndex="2" 
-                              FontSize="10" 
-                              MinHeight="22" 
-                              Height="22" 
+                              FontSize="11.5" 
+                              MinHeight="28" 
+                              Height="28" 
                               Padding="4,1" 
                               HorizontalAlignment="Stretch"
                               SelectionChanged="OnDisplayRangeChanged">
-                        <ComboBoxItem Content="Last 30 Days" FontSize="10" />
-                        <ComboBoxItem Content="Last 60 Days" FontSize="10" />
-                        <ComboBoxItem Content="Last 90 Days" FontSize="10" />
-                        <ComboBoxItem Content="Last 180 Days" FontSize="10" />
-                        <ComboBoxItem Content="All Dates" FontSize="10" />
+                        <ComboBoxItem Content="Last 30 Days" FontSize="11.5" />
+                        <ComboBoxItem Content="Last 60 Days" FontSize="11.5" />
+                        <ComboBoxItem Content="Last 90 Days" FontSize="11.5" />
+                        <ComboBoxItem Content="Last 180 Days" FontSize="11.5" />
+                        <ComboBoxItem Content="All Dates" FontSize="11.5" />
                     </ComboBox>
 
                     <Button x:Name="FilterDetailsBtn" 
                             Grid.Column="2" 
                             Content="..." 
-                            FontSize="10" 
+                            FontSize="11.5" 
                             FontWeight="Bold" 
                             Padding="4,0" 
-                            MinHeight="22" 
-                            Height="22" 
+                            MinHeight="28" 
+                            Height="28" 
                             MinWidth="22" 
                             Margin="4,0,0,0" 
                             Background="#F1F5F9" 
@@ -126,7 +126,7 @@
                     <TextBlock x:Name="SidebarNoticeText" 
                                Text="General Notifications (0/1)" 
                                Foreground="#C00000" 
-                               FontSize="10" 
+                               FontSize="11.5" 
                                FontWeight="SemiBold" 
                                HorizontalAlignment="Right" />
                 </Grid>
@@ -138,8 +138,8 @@
                         <!-- SECTION 1: INBOX ITEMS (10) -->
                         <Border Background="#DCE7F0" BorderBrush="#BCCCDC" BorderThickness="0,1,0,1" Padding="4,3">
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <TextBlock Text="⊟" FontSize="10" FontWeight="Bold" Foreground="#334155" VerticalAlignment="Center" />
-                                <TextBlock Text="Inbox Items (10)" FontSize="10.5" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center" />
+                                <TextBlock Text="⊟" FontSize="11.5" FontWeight="Bold" Foreground="#334155" VerticalAlignment="Center" />
+                                <TextBlock Text="Inbox Items (10)" FontSize="12.5" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center" />
                             </StackPanel>
                         </Border>
 
@@ -147,13 +147,13 @@
                         <StackPanel Margin="10,1,0,1">
                             <Border x:Name="TreeResultsBorder" Padding="4,2" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="Results">
                                 <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <TextBlock Text="⊟" FontSize="9" Foreground="#64748B" VerticalAlignment="Center" />
-                                    <TextBlock Text="Results (0/1)" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" />
+                                    <TextBlock Text="⊟" FontSize="11" Foreground="#64748B" VerticalAlignment="Center" />
+                                    <TextBlock Text="Results (0/1)" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Border>
                             <!-- Sub item: Abnormal (0/1) -->
                             <Border x:Name="TreeAbnormalBorder" Margin="14,1,0,1" Padding="4,2" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="Abnormal">
-                                <TextBlock Text="Abnormal (0/1)" FontSize="10" Foreground="#1E293B" />
+                                <TextBlock Text="Abnormal (0/1)" FontSize="11.5" Foreground="#1E293B" />
                             </Border>
                         </StackPanel>
 
@@ -161,16 +161,16 @@
                         <StackPanel Margin="10,1,0,1">
                             <Border x:Name="TreeOrdersBorder" Padding="4,2" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="Orders">
                                 <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <TextBlock Text="⊟" FontSize="9" Foreground="#64748B" VerticalAlignment="Center" />
-                                    <TextBlock Text="Orders (3/3)" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" />
+                                    <TextBlock Text="⊟" FontSize="11" Foreground="#64748B" VerticalAlignment="Center" />
+                                    <TextBlock Text="Orders (3/3)" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Border>
                             <!-- Sub items -->
                             <Border x:Name="TreeCosignBorder" Margin="14,1,0,1" Padding="4,2" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="Cosign Orders">
-                                <TextBlock Text="Cosign Orders (3/3)" FontSize="10" Foreground="#1E293B" />
+                                <TextBlock Text="Cosign Orders (3/3)" FontSize="11.5" Foreground="#1E293B" />
                             </Border>
                             <Border x:Name="TreeResultsFyiBorder" Margin="14,1,0,1" Padding="4,2" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="Results FYI">
-                                <TextBlock Text="Results FYI" FontSize="10" Foreground="#1E293B" />
+                                <TextBlock Text="Results FYI" FontSize="11.5" Foreground="#1E293B" />
                             </Border>
                         </StackPanel>
 
@@ -178,16 +178,16 @@
                         <StackPanel Margin="10,1,0,1">
                             <Border x:Name="TreeDocsBorder" Padding="4,2" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="Documents">
                                 <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <TextBlock Text="⊟" FontSize="9" Foreground="#64748B" VerticalAlignment="Center" />
-                                    <TextBlock Text="Documents (5/6)" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" />
+                                    <TextBlock Text="⊟" FontSize="11" Foreground="#64748B" VerticalAlignment="Center" />
+                                    <TextBlock Text="Documents (5/6)" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Border>
                             <!-- Sub items -->
                             <Border x:Name="TreeSignBorder" Margin="14,1,0,1" Padding="4,2" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="Sign">
-                                <TextBlock Text="Sign (1/1)" FontSize="10" Foreground="#1E293B" />
+                                <TextBlock Text="Sign (1/1)" FontSize="11.5" Foreground="#1E293B" />
                             </Border>
                             <Border x:Name="TreeReviewBorder" Margin="14,1,0,1" Padding="4,2" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="Review">
-                                <TextBlock Text="Review (4/5)" FontSize="10" Foreground="#1E293B" />
+                                <TextBlock Text="Review (4/5)" FontSize="11.5" Foreground="#1E293B" />
                             </Border>
                         </StackPanel>
 
@@ -195,37 +195,37 @@
                         <StackPanel Margin="10,1,0,1">
                             <Border x:Name="TreeNotificationsBorder" Padding="4,2" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="Notifications">
                                 <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <TextBlock Text="⊟" FontSize="9" Foreground="#64748B" VerticalAlignment="Center" />
-                                    <TextBlock Text="Notifications (2/5)" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" />
+                                    <TextBlock Text="⊟" FontSize="11" Foreground="#64748B" VerticalAlignment="Center" />
+                                    <TextBlock Text="Notifications (2/5)" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Border>
                             <Border x:Name="TreeGeneralNotificationBorder" Margin="14,1,0,1" Padding="4,2" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="General Notifications">
-                                <TextBlock Text="General Notifications (2/5)" FontSize="10" Foreground="#1E293B" />
+                                <TextBlock Text="General Notifications (2/5)" FontSize="11.5" Foreground="#1E293B" />
                             </Border>
                         </StackPanel>
 
                         <!-- SECTION 2: WORK ITEMS (5) -->
                         <Border Background="#DCE7F0" BorderBrush="#BCCCDC" BorderThickness="0,1,0,1" Padding="4,3" Margin="0,4,0,0">
                             <StackPanel Orientation="Horizontal" Spacing="4">
-                                <TextBlock Text="⊟" FontSize="10" FontWeight="Bold" Foreground="#334155" VerticalAlignment="Center" />
-                                <TextBlock Text="Work Items (5)" FontSize="10.5" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center" />
+                                <TextBlock Text="⊟" FontSize="11.5" FontWeight="Bold" Foreground="#334155" VerticalAlignment="Center" />
+                                <TextBlock Text="Work Items (5)" FontSize="12.5" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center" />
                             </StackPanel>
                         </Border>
 
                         <StackPanel Margin="10,1,0,0" Spacing="1">
                             <!-- Saved Documents (4/4) -->
                             <Border x:Name="TreeSavedDocsBorder" Padding="4,2.5" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="Saved Documents">
-                                <TextBlock x:Name="TreeSavedDocsText" Text="Saved Documents (4/4)" FontSize="10" Foreground="#1E293B" />
+                                <TextBlock x:Name="TreeSavedDocsText" Text="Saved Documents (4/4)" FontSize="11.5" Foreground="#1E293B" />
                             </Border>
 
                             <!-- Deficient Documents -->
                             <Border x:Name="TreeDeficientDocsBorder" Padding="4,2.5" Background="Transparent" PointerPressed="OnTreeCategoryPressed" Tag="Deficient Documents">
-                                <TextBlock x:Name="TreeDeficientDocsText" Text="Deficient Documents" FontSize="10" Foreground="#1E293B" />
+                                <TextBlock x:Name="TreeDeficientDocsText" Text="Deficient Documents" FontSize="11.5" Foreground="#1E293B" />
                             </Border>
 
                             <!-- Reminders (1/4) - HIGHLIGHTED AS IN SCREENSHOT -->
                             <Border x:Name="TreeRemindersBorder" Padding="6,3" Background="#0078D7" CornerRadius="1" PointerPressed="OnTreeCategoryPressed" Tag="Reminders">
-                                <TextBlock x:Name="TreeRemindersText" Text="Reminders (1/4)" FontSize="10" FontWeight="SemiBold" Foreground="#FFFFFF" />
+                                <TextBlock x:Name="TreeRemindersText" Text="Reminders (1/4)" FontSize="11.5" FontWeight="SemiBold" Foreground="#FFFFFF" />
                             </Border>
                         </StackPanel>
 
@@ -240,9 +240,9 @@
             <Grid Grid.Column="2" Background="#FFFFFF">
                 <Grid.RowDefinitions>
                     <!-- 0. Tab Header Bar (Reminders X) -->
-                    <RowDefinition Height="26" />
+                    <RowDefinition Height="34" />
                     <!-- 1. Action Toolbar -->
-                    <RowDefinition Height="30" />
+                    <RowDefinition Height="34" />
                     <!-- 2. Data Grid (Reminders Table) -->
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
@@ -258,9 +258,9 @@
                                 Margin="4,2,0,0"
                                 VerticalAlignment="Bottom">
                             <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
-                                <TextBlock x:Name="ActiveTabTitleText" Text="Reminders" FontSize="11" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center" />
+                                <TextBlock x:Name="ActiveTabTitleText" Text="Reminders" FontSize="12.5" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center" />
                                 <Button Background="Transparent" BorderThickness="0" Padding="2" MinHeight="0" MinWidth="0" VerticalAlignment="Center">
-                                    <TextBlock Text="✕" FontSize="9" Foreground="#64748B" FontWeight="Bold" />
+                                    <TextBlock Text="✕" FontSize="11" Foreground="#64748B" FontWeight="Bold" />
                                 </Button>
                             </StackPanel>
                         </Border>
@@ -275,17 +275,17 @@
                             <!-- Communicate Dropdown -->
                             <Button x:Name="CommunicateBtn" Background="Transparent" BorderThickness="0" Padding="4,2" MinHeight="0" MinWidth="0" Click="OnCommunicateClicked">
                                 <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
-                                    <FontIcon Glyph="&#xE715;" FontSize="11" Foreground="#0284C7" VerticalAlignment="Center" />
-                                    <TextBlock Text="Communicate" FontSize="10.5" Foreground="#0F172A" VerticalAlignment="Center" />
+                                    <FontIcon Glyph="&#xE715;" FontSize="12.5" Foreground="#0284C7" VerticalAlignment="Center" />
+                                    <TextBlock Text="Communicate" FontSize="12.5" Foreground="#0F172A" VerticalAlignment="Center" />
                                     <FontIcon Glyph="&#xE70D;" FontSize="8" Foreground="#64748B" VerticalAlignment="Center" Margin="0,1,0,0" />
                                 </StackPanel>
                                 <Button.Flyout>
                                     <Flyout Placement="BottomEdgeAlignedLeft">
                                         <Border Background="White" Width="180" Padding="4">
                                             <StackPanel Spacing="2">
-                                                <Button Content="New Notification" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="11" Click="OnNewNotificationClicked" />
-                                                <Button Content="Send Notification" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="11" Click="OnSendNotificationClicked" />
-                                                <Button Content="Send Reminder" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="11" Click="OnSendReminderClicked" />
+                                                <Button Content="New Notification" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="12.5" Click="OnNewNotificationClicked" />
+                                                <Button Content="Send Notification" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="12.5" Click="OnSendNotificationClicked" />
+                                                <Button Content="Send Reminder" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="12.5" Click="OnSendReminderClicked" />
                                             </StackPanel>
                                         </Border>
                                     </Flyout>
@@ -295,56 +295,56 @@
                             <!-- Open (Disabled) -->
                             <Button x:Name="OpenBtn" Background="Transparent" BorderThickness="0" Padding="4,2" MinHeight="0" MinWidth="0" IsEnabled="False">
                                 <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
-                                    <FontIcon Glyph="&#xE838;" FontSize="11" Foreground="#94A3B8" VerticalAlignment="Center" />
-                                    <TextBlock Text="Open" FontSize="10.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <FontIcon Glyph="&#xE838;" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <TextBlock Text="Open" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
 
                             <!-- Reply (Disabled) -->
                             <Button x:Name="ReplyBtn" Background="Transparent" BorderThickness="0" Padding="4,2" MinHeight="0" MinWidth="0" IsEnabled="False">
                                 <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
-                                    <FontIcon Glyph="&#xE7A4;" FontSize="11" Foreground="#94A3B8" VerticalAlignment="Center" />
-                                    <TextBlock Text="Reply" FontSize="10.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <FontIcon Glyph="&#xE7A4;" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <TextBlock Text="Reply" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
 
                             <!-- Reply All (Disabled) -->
                             <Button x:Name="ReplyAllBtn" Background="Transparent" BorderThickness="0" Padding="4,2" MinHeight="0" MinWidth="0" IsEnabled="False">
                                 <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
-                                    <FontIcon Glyph="&#xE8F2;" FontSize="11" Foreground="#94A3B8" VerticalAlignment="Center" />
-                                    <TextBlock Text="Reply All" FontSize="10.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <FontIcon Glyph="&#xE8F2;" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <TextBlock Text="Reply All" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
 
                             <!-- Redirect (Disabled) -->
                             <Button x:Name="RedirectBtn" Background="Transparent" BorderThickness="0" Padding="4,2" MinHeight="0" MinWidth="0" IsEnabled="False">
                                 <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
-                                    <FontIcon Glyph="&#xE72A;" FontSize="11" Foreground="#94A3B8" VerticalAlignment="Center" />
-                                    <TextBlock Text="Redirect" FontSize="10.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <FontIcon Glyph="&#xE72A;" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <TextBlock Text="Redirect" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
 
                             <!-- Reschedule (Disabled) -->
                             <Button x:Name="RescheduleBtn" Background="Transparent" BorderThickness="0" Padding="4,2" MinHeight="0" MinWidth="0" IsEnabled="False">
                                 <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
-                                    <FontIcon Glyph="&#xE787;" FontSize="11" Foreground="#94A3B8" VerticalAlignment="Center" />
-                                    <TextBlock Text="Reschedule" FontSize="10.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <FontIcon Glyph="&#xE787;" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <TextBlock Text="Reschedule" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
 
                             <!-- Complete (Disabled) -->
                             <Button x:Name="CompleteBtn" Background="Transparent" BorderThickness="0" Padding="4,2" MinHeight="0" MinWidth="0" IsEnabled="False">
                                 <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
-                                    <FontIcon Glyph="&#xE73E;" FontSize="11" Foreground="#94A3B8" VerticalAlignment="Center" />
-                                    <TextBlock Text="Complete" FontSize="10.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <FontIcon Glyph="&#xE73E;" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <TextBlock Text="Complete" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
 
                             <!-- Notification Journal -->
                             <Button x:Name="NotificationJournalBtn" Background="Transparent" BorderThickness="0" Padding="4,2" MinHeight="0" MinWidth="0" Click="OnNotificationJournalClicked">
                                 <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
-                                    <FontIcon Glyph="&#xE8A5;" FontSize="11" Foreground="#0284C7" VerticalAlignment="Center" />
-                                    <TextBlock Text="Notification Journal" FontSize="10.5" Foreground="#0F172A" VerticalAlignment="Center" />
+                                    <FontIcon Glyph="&#xE8A5;" FontSize="12.5" Foreground="#0284C7" VerticalAlignment="Center" />
+                                    <TextBlock Text="Notification Journal" FontSize="12.5" Foreground="#0F172A" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
 
@@ -354,8 +354,8 @@
                             <!-- Select Patient (Disabled) -->
                             <Button x:Name="SelectPatientBtn" Background="Transparent" BorderThickness="0" Padding="4,2" MinHeight="0" MinWidth="0" IsEnabled="False">
                                 <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
-                                    <FontIcon Glyph="&#xE77B;" FontSize="11" Foreground="#94A3B8" VerticalAlignment="Center" />
-                                    <TextBlock Text="Select Patient" FontSize="10.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <FontIcon Glyph="&#xE77B;" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
+                                    <TextBlock Text="Select Patient" FontSize="12.5" Foreground="#94A3B8" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
 
@@ -365,8 +365,8 @@
                             <!-- Select All -->
                             <Button x:Name="SelectAllBtn" Background="Transparent" BorderThickness="0" Padding="4,2" MinHeight="0" MinWidth="0" Click="OnSelectAllClicked">
                                 <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
-                                    <FontIcon Glyph="&#xE8B3;" FontSize="11" Foreground="#0284C7" VerticalAlignment="Center" />
-                                    <TextBlock Text="Select All" FontSize="10.5" Foreground="#0F172A" VerticalAlignment="Center" />
+                                    <FontIcon Glyph="&#xE8B3;" FontSize="12.5" Foreground="#0284C7" VerticalAlignment="Center" />
+                                    <TextBlock Text="Select All" FontSize="12.5" Foreground="#0F172A" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
 
@@ -378,7 +378,7 @@
                 <Grid Grid.Row="2" Background="#FFFFFF">
                     <Grid.RowDefinitions>
                         <!-- Table Header -->
-                        <RowDefinition Height="24" />
+                        <RowDefinition Height="28" />
                         <!-- Table Body Items -->
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
@@ -400,55 +400,55 @@
 
                         <!-- 0. Assigned -->
                         <Border Grid.Column="0" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" Padding="6,2">
-                            <TextBlock Text="Assigned" FontSize="10" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
+                            <TextBlock Text="Assigned" FontSize="11.5" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
                         </Border>
 
                         <!-- 1. Create Date with sort indicator -->
                         <Border Grid.Column="1" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" Padding="6,2">
                             <Grid>
-                                <TextBlock Text="Create Da..." FontSize="10" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
+                                <TextBlock Text="Create Da..." FontSize="11.5" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
                                 <TextBlock Text="▽" FontSize="8" Foreground="#64748B" HorizontalAlignment="Right" VerticalAlignment="Center" />
                             </Grid>
                         </Border>
 
                         <!-- 2. Due Date -->
                         <Border Grid.Column="2" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" Padding="6,2">
-                            <TextBlock Text="Due Date" FontSize="10" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
+                            <TextBlock Text="Due Date" FontSize="11.5" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
                         </Border>
 
                         <!-- 3. From -->
                         <Border Grid.Column="3" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" Padding="6,2">
-                            <TextBlock Text="From" FontSize="10" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
+                            <TextBlock Text="From" FontSize="11.5" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
                         </Border>
 
                         <!-- 4. Patient Name -->
                         <Border Grid.Column="4" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" Padding="6,2">
-                            <TextBlock Text="Patient Name" FontSize="10" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
+                            <TextBlock Text="Patient Name" FontSize="11.5" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
                         </Border>
 
                         <!-- 5. Priority (P..) -->
                         <Border Grid.Column="5" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" Padding="4,2">
-                            <TextBlock Text="P.." FontSize="10" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
+                            <TextBlock Text="P.." FontSize="11.5" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
                         </Border>
 
                         <!-- 6. Provider -->
                         <Border Grid.Column="6" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" Padding="6,2">
-                            <TextBlock Text="Provider" FontSize="10" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
+                            <TextBlock Text="Provider" FontSize="11.5" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
                         </Border>
 
                         <!-- 7. Show Up Date -->
                         <Border Grid.Column="7" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" Padding="6,2">
-                            <TextBlock Text="Show Up Date" FontSize="10" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
+                            <TextBlock Text="Show Up Date" FontSize="11.5" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
                         </Border>
 
                         <!-- 8. Status -->
                         <Border Grid.Column="8" BorderBrush="#CBD5E1" BorderThickness="0,0,1,0" Padding="6,2">
-                            <TextBlock Text="Status" FontSize="10" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
+                            <TextBlock Text="Status" FontSize="11.5" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
                         </Border>
 
                         <!-- 9. Subject -->
                         <Border Grid.Column="9" Padding="6,2">
-                            <TextBlock Text="Subject" FontSize="10" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
+                            <TextBlock Text="Subject" FontSize="11.5" FontWeight="SemiBold" Foreground="#334155" VerticalAlignment="Center" />
                         </Border>
                     </Grid>
 
@@ -464,7 +464,7 @@
                                     Padding="0" 
                                     PointerPressed="OnRowPointerPressed" 
                                     Tag="1">
-                                <Grid Height="22">
+                                <Grid Height="28">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="65" />
                                         <ColumnDefinition Width="135" />
@@ -479,34 +479,34 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!-- 0. Assigned -->
-                                    <TextBlock Grid.Column="0" Text="" FontSize="10" VerticalAlignment="Center" Margin="6,0" />
+                                    <TextBlock Grid.Column="0" Text="" FontSize="11.5" VerticalAlignment="Center" Margin="6,0" />
 
                                     <!-- 1. Create Date -->
-                                    <TextBlock Grid.Column="1" Text="26-May-2020 10:45 AM" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="1" Text="26-May-2020 10:45 AM" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 2. Due Date -->
-                                    <TextBlock Grid.Column="2" Text="26-May-2020 11:00 AM" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="2" Text="26-May-2020 11:00 AM" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 3. From -->
-                                    <TextBlock Grid.Column="3" Text="TestUser, General (MD)" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="3" Text="TestUser, General (MD)" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 4. Patient Name -->
-                                    <TextBlock Grid.Column="4" Text="BUILDCOSTMED, TEST" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="4" Text="BUILDCOSTMED, TEST" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 5. Priority -->
-                                    <TextBlock Grid.Column="5" Text="" FontSize="10" VerticalAlignment="Center" Margin="4,0" />
+                                    <TextBlock Grid.Column="5" Text="" FontSize="11.5" VerticalAlignment="Center" Margin="4,0" />
 
                                     <!-- 6. Provider -->
-                                    <TextBlock Grid.Column="6" Text="TestUser, General (MD)" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="6" Text="TestUser, General (MD)" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 7. Show Up Date -->
-                                    <TextBlock Grid.Column="7" Text="26-May-2020 10:45 AM" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="7" Text="26-May-2020 10:45 AM" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 8. Status (RED) -->
-                                    <TextBlock Grid.Column="8" Text="Opened" FontSize="10" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" />
+                                    <TextBlock Grid.Column="8" Text="Opened" FontSize="11.5" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" />
 
                                     <!-- 9. Subject (RED) -->
-                                    <TextBlock Grid.Column="9" Text="Reminder Notification - Follow up labs" FontSize="10" Foreground="#C00000" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="9" Text="Reminder Notification - Follow up labs" FontSize="11.5" Foreground="#C00000" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Border>
 
@@ -518,7 +518,7 @@
                                     Padding="0" 
                                     PointerPressed="OnRowPointerPressed" 
                                     Tag="2">
-                                <Grid Height="22">
+                                <Grid Height="28">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="65" />
                                         <ColumnDefinition Width="135" />
@@ -533,34 +533,34 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!-- 0. Assigned -->
-                                    <TextBlock Grid.Column="0" Text="" FontSize="10" VerticalAlignment="Center" Margin="6,0" />
+                                    <TextBlock Grid.Column="0" Text="" FontSize="11.5" VerticalAlignment="Center" Margin="6,0" />
 
                                     <!-- 1. Create Date (RED) -->
-                                    <TextBlock Grid.Column="1" Text="26-May-2020 09:15 AM" FontSize="10" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="1" Text="26-May-2020 09:15 AM" FontSize="11.5" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 2. Due Date (RED) -->
-                                    <TextBlock Grid.Column="2" Text="27-May-2020 05:00 PM" FontSize="10" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="2" Text="27-May-2020 05:00 PM" FontSize="11.5" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 3. From (RED) -->
-                                    <TextBlock Grid.Column="3" Text="TestUser, General (MD)" FontSize="10" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="3" Text="TestUser, General (MD)" FontSize="11.5" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 4. Patient Name (RED) -->
-                                    <TextBlock Grid.Column="4" Text="BUILDCOSTMED, TEST" FontSize="10" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="4" Text="BUILDCOSTMED, TEST" FontSize="11.5" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 5. Priority -->
-                                    <TextBlock Grid.Column="5" Text="" FontSize="10" VerticalAlignment="Center" Margin="4,0" />
+                                    <TextBlock Grid.Column="5" Text="" FontSize="11.5" VerticalAlignment="Center" Margin="4,0" />
 
                                     <!-- 6. Provider (RED) -->
-                                    <TextBlock Grid.Column="6" Text="TestUser, General (MD)" FontSize="10" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="6" Text="TestUser, General (MD)" FontSize="11.5" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 7. Show Up Date (RED) -->
-                                    <TextBlock Grid.Column="7" Text="27-May-2020 09:00 AM" FontSize="10" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="7" Text="27-May-2020 09:00 AM" FontSize="11.5" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 8. Status (RED) -->
-                                    <TextBlock Grid.Column="8" Text="Pending" FontSize="10" Foreground="#C00000" FontWeight="Bold" VerticalAlignment="Center" Margin="6,0" />
+                                    <TextBlock Grid.Column="8" Text="Pending" FontSize="11.5" Foreground="#C00000" FontWeight="Bold" VerticalAlignment="Center" Margin="6,0" />
 
                                     <!-- 9. Subject (RED) -->
-                                    <TextBlock Grid.Column="9" Text="Reminder Notification - Prescription Refill" FontSize="10" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="9" Text="Reminder Notification - Prescription Refill" FontSize="11.5" Foreground="#C00000" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Border>
 
@@ -572,7 +572,7 @@
                                     Padding="0" 
                                     PointerPressed="OnRowPointerPressed" 
                                     Tag="3">
-                                <Grid Height="22">
+                                <Grid Height="28">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="65" />
                                         <ColumnDefinition Width="135" />
@@ -587,34 +587,34 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!-- 0. Assigned -->
-                                    <TextBlock Grid.Column="0" Text="" FontSize="10" VerticalAlignment="Center" Margin="6,0" />
+                                    <TextBlock Grid.Column="0" Text="" FontSize="11.5" VerticalAlignment="Center" Margin="6,0" />
 
                                     <!-- 1. Create Date -->
-                                    <TextBlock Grid.Column="1" Text="19-May-2020 02:30 PM" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="1" Text="19-May-2020 02:30 PM" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 2. Due Date -->
-                                    <TextBlock Grid.Column="2" Text="" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="2" Text="" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 3. From -->
-                                    <TextBlock Grid.Column="3" Text="TestUser, General (MD)" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="3" Text="TestUser, General (MD)" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 4. Patient Name -->
-                                    <TextBlock Grid.Column="4" Text="COMMIV, ONE" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="4" Text="COMMIV, ONE" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 5. Priority -->
-                                    <TextBlock Grid.Column="5" Text="" FontSize="10" VerticalAlignment="Center" Margin="4,0" />
+                                    <TextBlock Grid.Column="5" Text="" FontSize="11.5" VerticalAlignment="Center" Margin="4,0" />
 
                                     <!-- 6. Provider -->
-                                    <TextBlock Grid.Column="6" Text="TestUser, General (MD)" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="6" Text="TestUser, General (MD)" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 7. Show Up Date -->
-                                    <TextBlock Grid.Column="7" Text="19-May-2020 02:30 PM" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="7" Text="19-May-2020 02:30 PM" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 8. Status -->
-                                    <TextBlock Grid.Column="8" Text="Opened" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" />
+                                    <TextBlock Grid.Column="8" Text="Opened" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" />
 
                                     <!-- 9. Subject -->
-                                    <TextBlock Grid.Column="9" Text="Reminder Notification - Vital Signs Alert" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="9" Text="Reminder Notification - Vital Signs Alert" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Border>
 
@@ -626,7 +626,7 @@
                                     Padding="0" 
                                     PointerPressed="OnRowPointerPressed" 
                                     Tag="4">
-                                <Grid Height="22">
+                                <Grid Height="28">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="65" />
                                         <ColumnDefinition Width="135" />
@@ -641,34 +641,34 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!-- 0. Assigned -->
-                                    <TextBlock Grid.Column="0" Text="" FontSize="10" VerticalAlignment="Center" Margin="6,0" />
+                                    <TextBlock Grid.Column="0" Text="" FontSize="11.5" VerticalAlignment="Center" Margin="6,0" />
 
                                     <!-- 1. Create Date -->
-                                    <TextBlock Grid.Column="1" Text="19-May-2020 01:15 PM" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="1" Text="19-May-2020 01:15 PM" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 2. Due Date -->
-                                    <TextBlock Grid.Column="2" Text="19-May-2020 05:00 PM" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="2" Text="19-May-2020 05:00 PM" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 3. From -->
-                                    <TextBlock Grid.Column="3" Text="TestUser, General (MD)" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="3" Text="TestUser, General (MD)" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 4. Patient Name -->
-                                    <TextBlock Grid.Column="4" Text="COMMIV, ONE" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="4" Text="COMMIV, ONE" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 5. Priority -->
-                                    <TextBlock Grid.Column="5" Text="" FontSize="10" VerticalAlignment="Center" Margin="4,0" />
+                                    <TextBlock Grid.Column="5" Text="" FontSize="11.5" VerticalAlignment="Center" Margin="4,0" />
 
                                     <!-- 6. Provider -->
-                                    <TextBlock Grid.Column="6" Text="TestUser, General (MD)" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="6" Text="TestUser, General (MD)" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 7. Show Up Date -->
-                                    <TextBlock Grid.Column="7" Text="19-May-2020 01:15 PM" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="7" Text="19-May-2020 01:15 PM" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
 
                                     <!-- 8. Status -->
-                                    <TextBlock Grid.Column="8" Text="Opened" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" />
+                                    <TextBlock Grid.Column="8" Text="Opened" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" />
 
                                     <!-- 9. Subject -->
-                                    <TextBlock Grid.Column="9" Text="Reminder Notification - Discharge Summary Review" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="9" Text="Reminder Notification - Discharge Summary Review" FontSize="11.5" Foreground="#1E293B" VerticalAlignment="Center" Margin="6,0" TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Border>
 

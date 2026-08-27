@@ -56,13 +56,13 @@
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
                 <Button x:Name="TopRibbonHomeButton" Style="{StaticResource TopRibbonMenuItemStyle}" Click="OnHomeButtonClick">
-                    <TextBlock Text="Home" Foreground="#111111" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
+                    <TextBlock Text="Home" Foreground="#111111" FontSize="12.5" FontWeight="Bold" VerticalAlignment="Center" />
                 </Button>
                 <Button x:Name="TopRibbonLedgerButton" Style="{StaticResource TopRibbonMenuItemStyle}" Click="OnLedgerButtonClick">
-                    <TextBlock Text="Ledger" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
+                    <TextBlock Text="Ledger" Foreground="#333333" FontSize="12.5" FontWeight="Normal" VerticalAlignment="Center" />
                 </Button>
                 <Button x:Name="TopRibbonAmbulatoryButton" Style="{StaticResource TopRibbonMenuItemStyle}">
-                    <TextBlock x:Name="TopRibbonAmbulatoryText" Text="Ambulatory" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
+                    <TextBlock x:Name="TopRibbonAmbulatoryText" Text="Ambulatory" Foreground="#333333" FontSize="12.5" FontWeight="Normal" VerticalAlignment="Center" />
                     <Button.Flyout>
                         <Flyout x:Name="TopRibbonAmbulatoryFlyout" Placement="BottomEdgeAlignedLeft" Opened="OnTopRibbonAmbulatoryFlyoutOpened" Closed="OnTopRibbonAmbulatoryFlyoutClosed">
                             <Flyout.FlyoutPresenterStyle>
@@ -82,7 +82,7 @@
                                 <StackPanel x:Name="AmbulatoryDropdownList">
                                     <!-- Item 1: Appointment Request -->
                                     <Border Padding="16,6" Background="Transparent" PointerEntered="OnAmbulatoryItemPointerEntered" PointerExited="OnAmbulatoryItemPointerExited" PointerPressed="OnAmbulatoryCustomItemPressed" Tag="amb_appointment_request">
-                                        <TextBlock Text="Appointment Request" FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="Appointment Request" FontSize="13" Foreground="#1E293B" />
                                     </Border>
 
                                     <!-- Separator -->
@@ -90,12 +90,12 @@
 
                                     <!-- Item 3: Referrals & Transfer -->
                                     <Border Padding="16,6" Background="Transparent" PointerEntered="OnAmbulatoryItemPointerEntered" PointerExited="OnAmbulatoryItemPointerExited" PointerPressed="OnAmbulatoryCustomItemPressed" Tag="amb_referrals_transfer">
-                                        <TextBlock Text="Referrals &amp; Transfer" FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="Referrals &amp; Transfer" FontSize="13" Foreground="#1E293B" />
                                     </Border>
 
                                     <!-- Item 4: Discharge List -->
                                     <Border Padding="16,6" Background="Transparent" PointerEntered="OnAmbulatoryItemPointerEntered" PointerExited="OnAmbulatoryItemPointerExited" PointerPressed="OnAmbulatoryCustomItemPressed" Tag="amb_discharge_list">
-                                        <TextBlock Text="Discharge List" FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="Discharge List" FontSize="13" Foreground="#1E293B" />
                                     </Border>
                                 </StackPanel>
                             </Border>
@@ -103,7 +103,7 @@
                     </Button.Flyout>
                 </Button>
                 <Button x:Name="TopRibbonClinicalButton" Style="{StaticResource TopRibbonMenuItemStyle}">
-                    <TextBlock x:Name="TopRibbonClinicalText" Text="Clinical" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
+                    <TextBlock x:Name="TopRibbonClinicalText" Text="Clinical" Foreground="#333333" FontSize="12.5" FontWeight="Normal" VerticalAlignment="Center" />
                     <Button.Flyout>
                         <Flyout x:Name="TopRibbonClinicalFlyout" Placement="BottomEdgeAlignedLeft" Opened="OnTopRibbonClinicalFlyoutOpened" Closed="OnTopRibbonClinicalFlyoutClosed">
                             <Flyout.FlyoutPresenterStyle>
@@ -124,19 +124,19 @@
                                     <StackPanel x:Name="ClinicalDropdownList">
                                         <!-- Group 1: Core Clinical Views -->
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_provider_view">
-                                            <TextBlock Text="Provider View" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Provider View" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_results_review">
-                                            <TextBlock Text="Results Review" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Results Review" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_orders">
-                                            <TextBlock Text="Orders" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Orders" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_documentation">
-                                            <TextBlock Text="Documentation" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Documentation" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_outside_records">
-                                            <TextBlock Text="Outside Records" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Outside Records" FontSize="13" Foreground="#1E293B" />
                                         </Border>
 
                                         <!-- Separator -->
@@ -144,40 +144,40 @@
 
                                         <!-- Group 2: Specific Clinical Data & Panels -->
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_allergies">
-                                            <TextBlock Text="Allergies" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Allergies" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_clinical_media">
-                                            <TextBlock Text="Clinical Media" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Clinical Media" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_diagnoses">
-                                            <TextBlock Text="Diagnoses and Problems" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Diagnoses and Problems" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_form_browser">
-                                            <TextBlock Text="Form Browser" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Form Browser" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_growth_chart">
-                                            <TextBlock Text="Growth Chart" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Growth Chart" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_histories">
-                                            <TextBlock Text="Histories" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Histories" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_interactive_view">
-                                            <TextBlock Text="Interactive View and I/O" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Interactive View and I/O" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_mar_summary">
-                                            <TextBlock Text="MAR Summary" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="MAR Summary" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_medication_list">
-                                            <TextBlock Text="Medication List" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Medication List" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_patient_info">
-                                            <TextBlock Text="Patient Information" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Patient Information" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_recommendations">
-                                            <TextBlock Text="Recommendations" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Recommendations" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_smart_app_validator">
-                                            <TextBlock Text="Smart App Validator" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Smart App Validator" FontSize="13" Foreground="#1E293B" />
                                         </Border>
 
                                         <!-- Separator -->
@@ -185,22 +185,22 @@
 
                                         <!-- Group 3: AxioNote & Edge Tools -->
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_axionote_note">
-                                            <TextBlock Text="AxioNote - Clinical Note" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="AxioNote - Clinical Note" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border x:Name="ClinicalItemAxioNoteEdge" Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_axionote_edge">
-                                            <TextBlock Text="AxioNote - Edge Platform" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="AxioNote - Edge Platform" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_axionote_enterprise">
-                                            <TextBlock Text="AxioNote - Enterprise" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="AxioNote - Enterprise" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_workflowview_edge">
-                                            <TextBlock Text="WorkflowView Edge" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="WorkflowView Edge" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_axionote_dev">
-                                            <TextBlock Text="AxioNote Dev - Edge" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="AxioNote Dev - Edge" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_axionote_debug">
-                                            <TextBlock Text="AxioNote Debug EDGE" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="AxioNote Debug EDGE" FontSize="13" Foreground="#1E293B" />
                                         </Border>
 
                                         <!-- Separator -->
@@ -208,13 +208,13 @@
 
                                         <!-- Group 4: Clinical Utilities & Billing -->
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_calculator">
-                                            <TextBlock Text="Clinical Calculator" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Clinical Calculator" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_adhoc_charting">
-                                            <TextBlock Text="Ad Hoc Charting" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="Ad Hoc Charting" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                         <Border Padding="16,4.5" Background="Transparent" PointerEntered="OnClinicalItemPointerEntered" PointerExited="OnClinicalItemPointerExited" PointerPressed="OnClinicalCustomItemPressed" Tag="clin_view_charges">
-                                            <TextBlock Text="View Charges" FontSize="11.5" Foreground="#1E293B" />
+                                            <TextBlock Text="View Charges" FontSize="13" Foreground="#1E293B" />
                                         </Border>
                                     </StackPanel>
                                 </ScrollViewer>
@@ -223,13 +223,13 @@
                     </Button.Flyout>
                 </Button>
                 <Button x:Name="TopRibbonNotificationsButton" Style="{StaticResource TopRibbonMenuItemStyle}" Click="OnNotificationsButtonClick">
-                    <TextBlock x:Name="TopRibbonNotificationsText" Text="Notifications" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
+                    <TextBlock x:Name="TopRibbonNotificationsText" Text="Notifications" Foreground="#333333" FontSize="12.5" FontWeight="Normal" VerticalAlignment="Center" />
                 </Button>
                 <Button x:Name="TopRibbonAdminButton" Style="{StaticResource TopRibbonMenuItemStyle}" Click="OnAdminButtonClick">
-                    <TextBlock Text="Admin" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
+                    <TextBlock Text="Admin" Foreground="#333333" FontSize="12.5" FontWeight="Normal" VerticalAlignment="Center" />
                 </Button>
                 <Button x:Name="TopRibbonHelpButton" Style="{StaticResource TopRibbonMenuItemStyle}">
-                    <TextBlock Text="Help" Foreground="#333333" FontSize="11" FontWeight="Normal" VerticalAlignment="Center" />
+                    <TextBlock Text="Help" Foreground="#333333" FontSize="12.5" FontWeight="Normal" VerticalAlignment="Center" />
                     <Button.Flyout>
                         <Flyout x:Name="TopRibbonHelpFlyout" Placement="BottomEdgeAlignedLeft" Opened="OnTopRibbonHelpFlyoutOpened">
                             <Flyout.FlyoutPresenterStyle>
@@ -248,12 +248,12 @@
                             <Border Background="White" Width="220" Padding="0,4,0,4">
                                 <StackPanel>
                                     <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_welcome">
-                                        <TextBlock Text="Welcome" FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="Welcome" FontSize="13" Foreground="#1E293B" />
                                     </Border>
                                     <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_commands">
                                         <Grid>
-                                            <TextBlock Text="Show All Commands" FontSize="11.5" Foreground="#1E293B" />
-                                            <TextBlock Text="Ctrl+Shift+P" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                            <TextBlock Text="Show All Commands" FontSize="13" Foreground="#1E293B" />
+                                            <TextBlock Text="Ctrl+Shift+P" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                         </Grid>
                                     </Border>
 
@@ -261,7 +261,7 @@
                                     <Button x:Name="EditorPlaygroundMenuButton" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="Transparent" BorderThickness="0" Padding="0" MinHeight="0" MinWidth="0" PointerEntered="OnEditorPlaygroundPointerEntered" PointerExited="OnEditorPlaygroundPointerExited" Click="OnEditorPlaygroundMenuButtonClick">
                                         <Border x:Name="HelpEditorPlaygroundRow" Padding="14,5" Background="Transparent">
                                             <Grid>
-                                                <TextBlock x:Name="HelpEditorPlaygroundText" Text="Editor Playground" FontSize="11.5" Foreground="#1E293B" />
+                                                <TextBlock x:Name="HelpEditorPlaygroundText" Text="Editor Playground" FontSize="13" Foreground="#1E293B" />
                                                 <FontIcon x:Name="HelpEditorPlaygroundIcon" Glyph="&#xE76C;" FontSize="10" Foreground="#64748B" HorizontalAlignment="Right" VerticalAlignment="Center" />
                                             </Grid>
                                         </Border>
@@ -284,90 +284,90 @@
                                                     <StackPanel>
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_cmd_palette">
                                                             <Grid>
-                                                                <TextBlock Text="Command Palette..." FontSize="11.5" Foreground="#1E293B" />
-                                                                <TextBlock Text="Ctrl+Shift+P" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                                <TextBlock Text="Command Palette..." FontSize="13" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+P" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                                             </Grid>
                                                         </Border>
                                                         <Border Padding="14,4.5" Background="#0A658E" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_open_view">
-                                                            <TextBlock Text="Open View..." FontSize="11.5" FontWeight="SemiBold" Foreground="White" />
+                                                            <TextBlock Text="Open View..." FontSize="13" FontWeight="SemiBold" Foreground="White" />
                                                         </Border>
                                                         <Rectangle Height="1" Fill="#E2E8F0" Margin="10,2.5,10,2.5" />
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_appearance">
                                                             <Grid>
-                                                                <TextBlock Text="Appearance" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Appearance" FontSize="13" Foreground="#1E293B" />
                                                                 <FontIcon Glyph="&#xE76C;" FontSize="10" Foreground="#64748B" HorizontalAlignment="Right" VerticalAlignment="Center" />
                                                             </Grid>
                                                         </Border>
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_editor_layout">
                                                             <Grid>
-                                                                <TextBlock Text="Editor Layout" FontSize="11.5" Foreground="#1E293B" />
+                                                                <TextBlock Text="Editor Layout" FontSize="13" Foreground="#1E293B" />
                                                                 <FontIcon Glyph="&#xE76C;" FontSize="10" Foreground="#64748B" HorizontalAlignment="Right" VerticalAlignment="Center" />
                                                             </Grid>
                                                         </Border>
                                                         <Rectangle Height="1" Fill="#E2E8F0" Margin="10,2.5,10,2.5" />
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_explorer">
                                                             <Grid>
-                                                                <TextBlock Text="Explorer" FontSize="11.5" Foreground="#1E293B" />
-                                                                <TextBlock Text="Ctrl+Shift+E" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                                <TextBlock Text="Explorer" FontSize="13" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+E" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                                             </Grid>
                                                         </Border>
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_search">
                                                             <Grid>
-                                                                <TextBlock Text="Search" FontSize="11.5" Foreground="#1E293B" />
-                                                                <TextBlock Text="Ctrl+Shift+F" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                                <TextBlock Text="Search" FontSize="13" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+F" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                                             </Grid>
                                                         </Border>
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_scm">
                                                             <Grid>
-                                                                <TextBlock Text="Source Control" FontSize="11.5" Foreground="#1E293B" />
-                                                                <TextBlock Text="Ctrl+Shift+G G" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                                <TextBlock Text="Source Control" FontSize="13" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+G G" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                                             </Grid>
                                                         </Border>
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_run">
                                                             <Grid>
-                                                                <TextBlock Text="Run" FontSize="11.5" Foreground="#1E293B" />
-                                                                <TextBlock Text="Ctrl+Shift+D" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                                <TextBlock Text="Run" FontSize="13" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+D" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                                             </Grid>
                                                         </Border>
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_extensions">
                                                             <Grid>
-                                                                <TextBlock Text="Extensions" FontSize="11.5" Foreground="#1E293B" />
-                                                                <TextBlock Text="Ctrl+Shift+X" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                                <TextBlock Text="Extensions" FontSize="13" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+X" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                                             </Grid>
                                                         </Border>
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_testing">
-                                                            <TextBlock Text="Testing" FontSize="11.5" Foreground="#1E293B" />
+                                                            <TextBlock Text="Testing" FontSize="13" Foreground="#1E293B" />
                                                         </Border>
                                                         <Rectangle Height="1" Fill="#E2E8F0" Margin="10,2.5,10,2.5" />
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_problems">
                                                             <Grid>
-                                                                <TextBlock Text="Problems" FontSize="11.5" Foreground="#1E293B" />
-                                                                <TextBlock Text="Ctrl+Shift+M" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                                <TextBlock Text="Problems" FontSize="13" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+M" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                                             </Grid>
                                                         </Border>
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_output">
                                                             <Grid>
-                                                                <TextBlock Text="Output" FontSize="11.5" Foreground="#1E293B" />
-                                                                <TextBlock Text="Ctrl+Shift+U" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                                <TextBlock Text="Output" FontSize="13" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+U" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                                             </Grid>
                                                         </Border>
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_debug_console">
                                                             <Grid>
-                                                                <TextBlock Text="Debug Console" FontSize="11.5" Foreground="#1E293B" />
-                                                                <TextBlock Text="Ctrl+Shift+Y" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                                <TextBlock Text="Debug Console" FontSize="13" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+Shift+Y" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                                             </Grid>
                                                         </Border>
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_terminal">
                                                             <Grid>
-                                                                <TextBlock Text="Terminal" FontSize="11.5" Foreground="#1E293B" />
-                                                                <TextBlock Text="Ctrl+`" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                                <TextBlock Text="Terminal" FontSize="13" Foreground="#1E293B" />
+                                                                <TextBlock Text="Ctrl+`" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                                             </Grid>
                                                         </Border>
                                                         <Rectangle Height="1" Fill="#E2E8F0" Margin="10,2.5,10,2.5" />
                                                         <Border Padding="14,4.5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_word_wrap">
                                                             <Grid>
-                                                                <TextBlock Text="Word Wrap" FontSize="11.5" Foreground="#1E293B" />
-                                                                <TextBlock Text="Alt+Z" FontSize="10.5" Foreground="#64748B" HorizontalAlignment="Right" />
+                                                                <TextBlock Text="Word Wrap" FontSize="13" Foreground="#1E293B" />
+                                                                <TextBlock Text="Alt+Z" FontSize="12" Foreground="#64748B" HorizontalAlignment="Right" />
                                                             </Grid>
                                                         </Border>
                                                     </StackPanel>
@@ -377,32 +377,32 @@
                                     </Button>
 
                                     <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_walkthrough">
-                                        <TextBlock Text="Open Walkthrough..." FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="Open Walkthrough..." FontSize="13" Foreground="#1E293B" />
                                     </Border>
                                     <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_feedback">
-                                        <TextBlock Text="Provide Feedback" FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="Provide Feedback" FontSize="13" Foreground="#1E293B" />
                                     </Border>
                                     <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_diagnostics">
-                                        <TextBlock Text="Download Diagnostics" FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="Download Diagnostics" FontSize="13" Foreground="#1E293B" />
                                     </Border>
                                     <Rectangle Height="1" Fill="#E2E8F0" Margin="10,3,10,3" />
                                     <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_license">
-                                        <TextBlock Text="View License" FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="View License" FontSize="13" Foreground="#1E293B" />
                                     </Border>
                                     <Rectangle Height="1" Fill="#E2E8F0" Margin="10,3,10,3" />
                                     <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_devtools">
-                                        <TextBlock Text="Toggle Developer Tools" FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="Toggle Developer Tools" FontSize="13" Foreground="#1E293B" />
                                     </Border>
                                     <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_process_explorer">
-                                        <TextBlock Text="Open Process Explorer" FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="Open Process Explorer" FontSize="13" Foreground="#1E293B" />
                                     </Border>
                                     <Rectangle Height="1" Fill="#E2E8F0" Margin="10,3,10,3" />
                                     <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_updates">
-                                        <TextBlock Text="Check for Updates..." FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="Check for Updates..." FontSize="13" Foreground="#1E293B" />
                                     </Border>
                                     <Rectangle Height="1" Fill="#E2E8F0" Margin="10,3,10,3" />
                                     <Border Padding="14,5" Background="Transparent" PointerEntered="OnHelpItemPointerEntered" PointerExited="OnHelpItemPointerExited" PointerPressed="OnHelpCustomItemPressed" Tag="help_about">
-                                        <TextBlock Text="About" FontSize="11.5" Foreground="#1E293B" />
+                                        <TextBlock Text="About" FontSize="13" Foreground="#1E293B" />
                                     </Border>
                                 </StackPanel>
                             </Border>
@@ -428,47 +428,47 @@
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                 <!-- Message Center Tab Button -->
                 <Border x:Name="MessageCenterTabBorder" Padding="0,0,0,3" PointerPressed="OnMessageCenterTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="MessageCenterTabText" Text="Message Center" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                    <TextBlock x:Name="MessageCenterTabText" Text="Message Center" Foreground="#333333" FontSize="12.5" FontWeight="Normal" />
                 </Border>
 
                 <!-- Patient List Tab Button -->
                 <Border x:Name="PatientListTabBorder" BorderBrush="#0A658E" BorderThickness="0,0,0,2.5" Padding="0,0,0,3" PointerPressed="OnPatientListTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="PatientListTabText" Text="Patient List" Foreground="#0A658E" FontSize="11" FontWeight="Bold" />
+                    <TextBlock x:Name="PatientListTabText" Text="Patient List" Foreground="#0A658E" FontSize="12.5" FontWeight="Bold" />
                 </Border>
 
                 <!-- Physician Handoff Tab Button -->
                 <Border x:Name="PhysicianHandoffTabBorder" Padding="0,0,0,3" PointerPressed="OnPhysicianHandoffTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="PhysicianHandoffTabText" Text="Physician Handoff" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                    <TextBlock x:Name="PhysicianHandoffTabText" Text="Physician Handoff" Foreground="#333333" FontSize="12.5" FontWeight="Normal" />
                 </Border>
 
                 <!-- Care Workflow Tab Button -->
                 <Border x:Name="CareWorkflowTabBorder" Padding="0,0,0,3" PointerPressed="OnCareWorkflowTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="CareWorkflowTabText" Text="Care Workflow" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                    <TextBlock x:Name="CareWorkflowTabText" Text="Care Workflow" Foreground="#333333" FontSize="12.5" FontWeight="Normal" />
                 </Border>
 
                 <!-- Quality Measures Tab Button -->
                 <Border x:Name="QualityMeasuresTabBorder" Padding="0,0,0,3" PointerPressed="OnQualityMeasuresTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="QualityMeasuresTabText" Text="Quality Measures" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                    <TextBlock x:Name="QualityMeasuresTabText" Text="Quality Measures" Foreground="#333333" FontSize="12.5" FontWeight="Normal" />
                 </Border>
 
                 <!-- Customised Tab Button -->
                 <Border x:Name="CustomisedTabBorder" Padding="0,0,0,3" PointerPressed="OnCustomisedTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="CustomisedTabText" Text="Customised" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                    <TextBlock x:Name="CustomisedTabText" Text="Customised" Foreground="#333333" FontSize="12.5" FontWeight="Normal" />
                 </Border>
 
                 <!-- Reports Tab Button -->
                 <Border x:Name="ReportsTabBorder" Padding="0,0,0,3" PointerPressed="OnReportsTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="ReportsTabText" Text="Reports" Foreground="#111111" FontSize="11" FontWeight="Bold" />
+                    <TextBlock x:Name="ReportsTabText" Text="Reports" Foreground="#111111" FontSize="12.5" FontWeight="Bold" />
                 </Border>
 
                 <!-- UpToDate Tab Button -->
                 <Border x:Name="UpToDateTabBorder" Padding="0,0,0,3" PointerPressed="OnUpToDateTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="UpToDateTabText" Text="UpToDate" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                    <TextBlock x:Name="UpToDateTabText" Text="UpToDate" Foreground="#333333" FontSize="12.5" FontWeight="Normal" />
                 </Border>
 
                 <!-- Ongoing Activities Tab Button -->
                 <Border x:Name="OngoingActivitiesTabBorder" Padding="0,0,0,3" PointerPressed="OnOngoingActivitiesTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="OngoingActivitiesTabText" Text="Ongoing Activities" Foreground="#333333" FontSize="11" FontWeight="Normal" />
+                    <TextBlock x:Name="OngoingActivitiesTabText" Text="Ongoing Activities" Foreground="#333333" FontSize="12.5" FontWeight="Normal" />
                 </Border>
             </StackPanel>
 
@@ -484,27 +484,27 @@
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
                 <Border x:Name="DashboardCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnDashboardTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="DashboardCategoryTabText" Text="Dashboard" Foreground="#444444" FontSize="11" />
+                    <TextBlock x:Name="DashboardCategoryTabText" Text="Dashboard" Foreground="#444444" FontSize="12.5" />
                 </Border>
 
                 <Border x:Name="SchedulerCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnSchedulerTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="SchedulerCategoryTabText" Text="Scheduler" Foreground="#0A658E" FontSize="11" FontWeight="Bold" />
+                    <TextBlock x:Name="SchedulerCategoryTabText" Text="Scheduler" Foreground="#0A658E" FontSize="12.5" FontWeight="Bold" />
                 </Border>
 
                 <Border x:Name="OrderSetsCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnOrderSetsTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="OrderSetsCategoryTabText" Text="Order Sets" Foreground="#111111" FontSize="11" FontWeight="Bold" />
+                    <TextBlock x:Name="OrderSetsCategoryTabText" Text="Order Sets" Foreground="#111111" FontSize="12.5" FontWeight="Bold" />
                 </Border>
 
                 <Border x:Name="CarePathwaysCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnCarePathwaysTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="CarePathwaysCategoryTabText" Text="Care Pathways" Foreground="#444444" FontSize="11" />
+                    <TextBlock x:Name="CarePathwaysCategoryTabText" Text="Care Pathways" Foreground="#444444" FontSize="12.5" />
                 </Border>
 
                 <Border x:Name="LabsCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnLabsTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="LabsCategoryTabText" Text="Labs" Foreground="#444444" FontSize="11" />
+                    <TextBlock x:Name="LabsCategoryTabText" Text="Labs" Foreground="#444444" FontSize="12.5" />
                 </Border>
 
                 <Border x:Name="AnalyticsCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnAnalyticsTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="AnalyticsCategoryTabText" Text="Analytics" Foreground="#444444" FontSize="11" />
+                    <TextBlock x:Name="AnalyticsCategoryTabText" Text="Analytics" Foreground="#444444" FontSize="12.5" />
                 </Border>
             </StackPanel>
 
@@ -523,7 +523,7 @@
 
             <!-- Quick Tools Right -->
             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
-                <Border Background="#012237" BorderBrush="#1A6B8A" BorderThickness="1" CornerRadius="10" Padding="8,0,8,0" Height="22" VerticalAlignment="Center" PointerPressed="OnSearchBarBorderPointerPressed" RequestedTheme="Dark">
+                <Border Background="#012237" BorderBrush="#1A6B8A" BorderThickness="1" CornerRadius="10" Padding="8,0,8,0" Height="26" VerticalAlignment="Center" PointerPressed="OnSearchBarBorderPointerPressed" RequestedTheme="Dark">
                     <Grid VerticalAlignment="Center" Height="20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -536,7 +536,7 @@
                         <!-- Placeholder TextBlock (visible when SearchBox is empty) -->
                         <TextBlock x:Name="SearchPlaceholderText" Grid.Column="1" 
                                    Text="Search by Patient or Order..." 
-                                   FontSize="11" Foreground="#8BB8D0" 
+                                   FontSize="12.5" Foreground="#8BB8D0" 
                                    VerticalAlignment="Center" 
                                    IsHitTestVisible="False" />
 
@@ -544,7 +544,7 @@
                                  Background="Transparent" 
                                  Foreground="#FFFFFF" 
                                  BorderThickness="0" 
-                                 FontSize="11" 
+                                 FontSize="12.5" 
                                  Width="195" 
                                  Padding="0"
                                  Margin="0"
@@ -557,16 +557,16 @@
                     </Grid>
                 </Border>
                 <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center" PointerPressed="OnFullScreenPointerPressed">
-                    <FontIcon Glyph="&#xE740;" FontSize="11.5" Foreground="#FFFFFF" VerticalAlignment="Center" />
-                    <TextBlock Text="Full screen" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" />
+                    <FontIcon Glyph="&#xE740;" FontSize="13" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                    <TextBlock Text="Full screen" Foreground="#FFFFFF" FontSize="12.5" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xE749;" FontSize="11.5" Foreground="#FFFFFF" VerticalAlignment="Center" />
-                    <TextBlock Text="Print" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" />
+                    <FontIcon Glyph="&#xE749;" FontSize="13" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                    <TextBlock Text="Print" Foreground="#FFFFFF" FontSize="12.5" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xE72C;" FontSize="11.5" Foreground="#FFFFFF" VerticalAlignment="Center" />
-                    <TextBlock Text="0 minutes ago" Foreground="#FFFFFF" FontSize="11" VerticalAlignment="Center" />
+                    <FontIcon Glyph="&#xE72C;" FontSize="13" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                    <TextBlock Text="0 minutes ago" Foreground="#FFFFFF" FontSize="12.5" VerticalAlignment="Center" />
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -609,7 +609,7 @@
                             <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                                 <TextBlock Text="{Binding Title}"
                                            Foreground="{Binding TextColor}"
-                                           FontSize="11"
+                                           FontSize="12.5"
                                            FontWeight="{Binding TextWeight}"
                                            FontFamily="Segoe UI"
                                            VerticalAlignment="Center" />
@@ -632,7 +632,7 @@
         </Grid>
 
         <!-- ==================== 5. DEEP BLUE PATIENT DEMOGRAPHIC BANNER ==================== -->
-        <Grid x:Name="PatientDemographicBanner" Grid.Row="5" Background="#064875" Padding="12,5,12,5" MinHeight="44">
+        <Grid x:Name="PatientDemographicBanner" Grid.Row="5" Background="#064875" Padding="12,5,12,5" MinHeight="54">
             <Grid.ColumnDefinitions>
                 <!-- 0. Avatar + Name & Allergies -->
                 <ColumnDefinition Width="Auto" />
@@ -656,37 +656,37 @@
                 </Border>
                 <StackPanel VerticalAlignment="Center" Spacing="1">
                     <TextBlock x:Name="BannerPatientNameText" Text="JOHN DOE" Foreground="White" FontSize="13" FontWeight="Bold" />
-                    <TextBlock x:Name="BannerAllergiesText" Text="Allergies: shellfish" Foreground="#D1E3F0" FontSize="9.5" />
-                    <TextBlock Text="Care Team: View Details" Foreground="#38BDF8" FontSize="9.5" TextDecorations="Underline" />
+                    <TextBlock x:Name="BannerAllergiesText" Text="Allergies: shellfish" Foreground="#D1E3F0" FontSize="13" />
+                    <TextBlock Text="Care Team: View Details" Foreground="#38BDF8" FontSize="13" TextDecorations="Underline" />
                 </StackPanel>
             </StackPanel>
 
             <!-- Column 1: DOB, Dose Wt, HealtheLife -->
             <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,14,0">
-                <TextBlock x:Name="BannerDobText" Text="DOB: 3/22/1984" Foreground="#D1E3F0" FontSize="9.5" />
-                <TextBlock x:Name="BannerDoseWeightText" Text="Dose Wt: 80.000 kg (04/25/2021)" Foreground="#D1E3F0" FontSize="9.5" />
-                <TextBlock x:Name="BannerHealtheLifeText" Text="HealtheLife: No" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerDobText" Text="DOB: 3/22/1984" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerDoseWeightText" Text="Dose Wt: 80.000 kg (04/25/2021)" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerHealtheLifeText" Text="HealtheLife: No" Foreground="#D1E3F0" FontSize="13" />
             </StackPanel>
 
             <!-- Column 2: Age, LTD, Clinic -->
             <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,14,0">
-                <TextBlock x:Name="BannerAgeText" Text="Age: 39 years" Foreground="#D1E3F0" FontSize="9.5" />
-                <TextBlock x:Name="BannerLtdText" Text="LTD:" Foreground="#D1E3F0" FontSize="9.5" />
-                <TextBlock x:Name="BannerClinicText" Text="Clinic: 01XTQ" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerAgeText" Text="Age: 39 years" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerLtdText" Text="LTD:" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerClinicText" Text="Clinic: 01XTQ" Foreground="#D1E3F0" FontSize="13" />
             </StackPanel>
 
             <!-- Column 3: Sex, Code Status, Loc -->
             <StackPanel Grid.Column="3" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,14,0">
-                <TextBlock x:Name="BannerSexText" Text="Sex: Female" Foreground="#D1E3F0" FontSize="9.5" />
-                <TextBlock x:Name="BannerCodeStatusText" Text="Code Status: Active" Foreground="#D1E3F0" FontSize="9.5" />
-                <TextBlock x:Name="BannerLocText" Text="Loc: GLW-01" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerSexText" Text="Sex: Female" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerCodeStatusText" Text="Code Status: Active" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerLocText" Text="Loc: GLW-01" Foreground="#D1E3F0" FontSize="13" />
             </StackPanel>
 
             <!-- Column 4: MRN, Nominee, Inpatient FIN -->
             <StackPanel Grid.Column="4" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,10,0">
-                <TextBlock x:Name="BannerMrnText" Text="MRN: AVX-SL-A1H4XE" Foreground="#D1E3F0" FontSize="9.5" />
-                <TextBlock x:Name="BannerNomineeText" Text="Nominee: Mr. Ajan singh" Foreground="#D1E3F0" FontSize="9.5" />
-                <TextBlock x:Name="BannerFinText" Text="Inpatient FIN: 00095526415 [Admit Dt: 10/6/2020 3:14:12 PM CDT]" Foreground="#D1E3F0" FontSize="9.5" />
+                <TextBlock x:Name="BannerMrnText" Text="MRN: AVX-SL-A1H4XE" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerNomineeText" Text="Nominee: Mr. Ajan singh" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerFinText" Text="Inpatient FIN: 00095526415 [Admit Dt: 10/6/2020 3:14:12 PM CDT]" Foreground="#D1E3F0" FontSize="13" />
             </StackPanel>
 
             <!-- Column 5: Vertical Separator & Hamburger Button -->
@@ -712,58 +712,58 @@
                             <Border Background="White" Width="250" Padding="0,4,0,4">
                                 <StackPanel x:Name="PatientActionsDropdownList">
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="bed_transfer">
-                                        <TextBlock Text="Bed Transfer" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Bed Transfer" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="cancel_discharge">
-                                        <TextBlock Text="Cancel Discharge" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Cancel Discharge" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="cancel_pending_discharge">
-                                        <TextBlock Text="Cancel Pending Discharge" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Cancel Pending Discharge" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="cancel_pending_transfer">
-                                        <TextBlock Text="Cancel Pending Transfer" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Cancel Pending Transfer" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="cancel_transfer">
-                                        <TextBlock Text="Cancel Transfer" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Cancel Transfer" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="clozapine_registry">
-                                        <TextBlock Text="Clozapine Registry" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Clozapine Registry" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="discharge_encounter">
-                                        <TextBlock Text="Discharge Encounter" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Discharge Encounter" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="facility_transfer">
-                                        <TextBlock Text="Facility Transfer" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Facility Transfer" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="leave_of_absence">
-                                        <TextBlock Text="Leave of Absence" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Leave of Absence" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="modify_discharge">
-                                        <TextBlock Text="Modify Discharge" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Modify Discharge" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="pending_discharge">
-                                        <TextBlock Text="Pending Discharge" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Pending Discharge" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="pending_facility_transfer">
-                                        <TextBlock Text="Pending Facility Transfer" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Pending Facility Transfer" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="pending_transfer">
-                                        <TextBlock Text="Pending Transfer" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Pending Transfer" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="print_labels">
-                                        <TextBlock Text="Print Labels" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Print Labels" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="process_alert">
-                                        <TextBlock Text="Process Alert" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Process Alert" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="update_patient_info">
-                                        <TextBlock Text="Update Patient Information" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="Update Patient Information" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="view_encounter">
-                                        <TextBlock Text="View Encounter" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="View Encounter" FontSize="13" Foreground="#111827" />
                                     </Border>
                                     <Border Padding="16,5" Background="Transparent" PointerEntered="OnDropdownItemPointerEntered" PointerExited="OnDropdownItemPointerExited" PointerPressed="OnPatientActionDropdownItemPressed" Tag="view_person">
-                                        <TextBlock Text="View Person" FontSize="11.5" Foreground="#111827" />
+                                        <TextBlock Text="View Person" FontSize="13" Foreground="#111827" />
                                     </Border>
                                 </StackPanel>
                             </Border>
@@ -789,6 +789,8 @@
             <views:GrowthChartView x:Name="GrowthChartViewControl" Visibility="Collapsed" />
             <views:HistoriesChartView x:Name="HistoriesChartViewControl" Visibility="Collapsed" />
             <views:NotificationsView x:Name="NotificationsViewControl" Visibility="Collapsed" />
+            <views:DischargeListView x:Name="DischargeListViewControl" Visibility="Collapsed" />
+            <views:ReferralsTransferListView x:Name="ReferralsTransferListViewControl" Visibility="Collapsed" />
         </Grid>
 
 
@@ -832,14 +834,14 @@
                         <Grid>
                             <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
                                 <FontIcon Glyph="&#xE8BD;" FontSize="13" Foreground="#0A658E" />
-                                <TextBlock Text="Person Mgmt: Conversation Launcher" Foreground="#0F172A" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                <TextBlock Text="Person Mgmt: Conversation Launcher" Foreground="#0F172A" FontSize="12.5" FontWeight="SemiBold" VerticalAlignment="Center" />
                             </StackPanel>
 
                             <!-- Window Control Buttons -->
                             <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right" VerticalAlignment="Center">
                                 <TextBlock Text="―" FontSize="9" Foreground="#64748B" VerticalAlignment="Center" PointerPressed="OnQuickPanelCancelClick" />
                                 <TextBlock Text="🗖" FontSize="10" Foreground="#64748B" VerticalAlignment="Center" />
-                                <Button Content="✕" Background="Transparent" BorderThickness="0" Padding="4,0" FontSize="11" Foreground="#64748B" Click="OnQuickPanelCancelClick" />
+                                <Button Content="✕" Background="Transparent" BorderThickness="0" Padding="4,0" FontSize="12.5" Foreground="#64748B" Click="OnQuickPanelCancelClick" />
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -1150,7 +1152,7 @@
                         <Grid>
                             <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
                                 <FontIcon Glyph="&#xE716;" FontSize="13" Foreground="#1E293B" />
-                                <TextBlock Text="Person Search" Foreground="#1E293B" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                <TextBlock Text="Person Search" Foreground="#1E293B" FontSize="12.5" FontWeight="SemiBold" VerticalAlignment="Center" />
                             </StackPanel>
 
                             <!-- Window Control Buttons (Minimize, Maximize/Restore, Close) -->
@@ -1162,7 +1164,7 @@
                                     <TextBlock x:Name="PersonSearchMaximizeIcon" Text="🗖" FontSize="10" Foreground="#1E293B" VerticalAlignment="Center" />
                                 </Border>
                                 <Border Padding="6,2" CornerRadius="2" Background="Transparent" PointerEntered="OnCloseButtonPointerEntered" PointerExited="OnCloseButtonPointerExited" PointerPressed="OnPersonSearchCancelClick" ToolTipService.ToolTip="Close (Esc)">
-                                    <TextBlock Text="✕" FontSize="11" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center" />
+                                    <TextBlock Text="✕" FontSize="12.5" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center" />
                                 </Border>
                             </StackPanel>
                         </Grid>
@@ -1181,11 +1183,11 @@
                             <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom">
                                 <!-- Person Tab (Active) -->
                                 <Border Background="#FFFFFF" BorderBrush="#94A3B8" BorderThickness="1,1,1,0" CornerRadius="3,3,0,0" Padding="12,3" Margin="0,0,2,0">
-                                    <TextBlock Text="Person" FontSize="11" FontWeight="SemiBold" Foreground="#0F172A" />
+                                    <TextBlock Text="Person" FontSize="12.5" FontWeight="SemiBold" Foreground="#0F172A" />
                                 </Border>
                                 <!-- Guarantor Tab -->
                                 <Border Background="#E2E8F0" BorderBrush="#CBD5E1" BorderThickness="1,1,1,0" CornerRadius="3,3,0,0" Padding="12,3">
-                                    <TextBlock Text="Guarantor" FontSize="11" Foreground="#475569" />
+                                    <TextBlock Text="Guarantor" FontSize="12.5" Foreground="#475569" />
                                 </Border>
                             </StackPanel>
 
@@ -1245,7 +1247,7 @@
                             <Grid>
                                 <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
                                     <FontIcon Glyph="&#xE946;" FontSize="12" Foreground="#2563EB" />
-                                    <TextBlock Text="Turning on the Assume Wildcards setting will reduce search strength." FontSize="10.5" Foreground="#1E40AF" VerticalAlignment="Center" />
+                                    <TextBlock Text="Turning on the Assume Wildcards setting will reduce search strength." FontSize="12" Foreground="#1E40AF" VerticalAlignment="Center" />
                                 </StackPanel>
                                 <Border HorizontalAlignment="Right" VerticalAlignment="Center" Padding="4,2" CornerRadius="2" Background="Transparent" PointerEntered="OnLinkBorderPointerEntered" PointerExited="OnLinkBorderPointerExited" PointerPressed="OnNoticeBannerExpandPointerPressed" ToolTipService.ToolTip="Expand Wildcard Search Rules">
                                     <FontIcon x:Name="NoticeBannerExpandIcon" Glyph="&#xE740;" FontSize="10" Foreground="#2563EB" />
@@ -1272,8 +1274,8 @@
                                 <StackPanel Spacing="7">
                                     <!-- Search Method -->
                                     <StackPanel Spacing="2">
-                                        <TextBlock Text="Search Method" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
-                                        <ComboBox x:Name="PersonSearchMethodCombo" Height="28" SelectedIndex="0" HorizontalAlignment="Stretch" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1">
+                                        <TextBlock Text="Search Method" FontSize="12" FontWeight="SemiBold" Foreground="#334155" />
+                                        <ComboBox x:Name="PersonSearchMethodCombo" Height="28" SelectedIndex="0" HorizontalAlignment="Stretch" FontSize="12.5" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1">
                                             <ComboBoxItem Content="Name (First/Last)" />
                                             <ComboBoxItem Content="MRN" />
                                             <ComboBoxItem Content="Encounter ID" />
@@ -1284,50 +1286,50 @@
 
                                     <!-- Last Name -->
                                     <StackPanel Spacing="2">
-                                        <TextBlock Text="Last Name" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
-                                        <TextBox x:Name="PersonSearchLastNameBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
+                                        <TextBlock Text="Last Name" FontSize="12" FontWeight="SemiBold" Foreground="#334155" />
+                                        <TextBox x:Name="PersonSearchLastNameBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="12.5" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
                                     </StackPanel>
 
                                     <!-- First Name -->
                                     <StackPanel Spacing="2">
-                                        <TextBlock Text="First Name" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
-                                        <TextBox x:Name="PersonSearchFirstNameBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
+                                        <TextBlock Text="First Name" FontSize="12" FontWeight="SemiBold" Foreground="#334155" />
+                                        <TextBox x:Name="PersonSearchFirstNameBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="12.5" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
                                     </StackPanel>
 
                                     <!-- Birth Date -->
                                     <StackPanel Spacing="2">
-                                        <TextBlock Text="Birth Date" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
+                                        <TextBlock Text="Birth Date" FontSize="12" FontWeight="SemiBold" Foreground="#334155" />
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBox x:Name="PersonSearchDobBox" Grid.Column="0" PlaceholderText="DD/MM/YYYY" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
+                                            <TextBox x:Name="PersonSearchDobBox" Grid.Column="0" PlaceholderText="DD/MM/YYYY" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="12.5" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
                                             <Button Grid.Column="1" Background="#F1F5F9" BorderBrush="#CBD5E1" BorderThickness="1" Height="26" Width="28" Padding="0" Margin="3,0,0,0" CornerRadius="2">
-                                                <FontIcon Glyph="&#xE787;" FontSize="11" Foreground="#0A658E" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                <FontIcon Glyph="&#xE787;" FontSize="12.5" Foreground="#0A658E" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                             </Button>
                                         </Grid>
                                     </StackPanel>
 
                                     <!-- Any Phone Number -->
                                     <StackPanel Spacing="2">
-                                        <TextBlock Text="Any Phone Number" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
-                                        <TextBox x:Name="PersonSearchPhoneBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
+                                        <TextBlock Text="Any Phone Number" FontSize="12" FontWeight="SemiBold" Foreground="#334155" />
+                                        <TextBox x:Name="PersonSearchPhoneBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="12.5" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
                                     </StackPanel>
 
                                     <!-- Encounter Identifiers -->
                                     <StackPanel Spacing="2">
-                                        <TextBlock Text="Encounter Identifiers" FontSize="10.5" FontWeight="SemiBold" Foreground="#334155" />
-                                        <TextBox x:Name="PersonSearchEncounterBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="11" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
+                                        <TextBlock Text="Encounter Identifiers" FontSize="12" FontWeight="SemiBold" Foreground="#334155" />
+                                        <TextBox x:Name="PersonSearchEncounterBox" Height="26" MinHeight="26" Padding="6,2" VerticalContentAlignment="Center" FontSize="12.5" Background="White" Foreground="#0F172A" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="2" KeyDown="OnPersonSearchBoxKeyDown" />
                                     </StackPanel>
 
                                     <!-- Search & Clear Action Buttons -->
                                     <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Center" Margin="0,10,0,0">
                                         <Button Width="85" Height="26" Background="#FFFFFF" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="2" Click="OnPersonSearchButtonClick">
-                                            <TextBlock Text="Search..." Foreground="#0F172A" FontSize="11" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            <TextBlock Text="Search..." Foreground="#0F172A" FontSize="12.5" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Button>
                                         <Button Width="60" Height="26" Background="#FFFFFF" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="2" Click="OnPersonSearchClearClick">
-                                            <TextBlock Text="Clear" Foreground="#0F172A" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            <TextBlock Text="Clear" Foreground="#0F172A" FontSize="12.5" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Button>
                                     </StackPanel>
                                 </StackPanel>
@@ -1353,24 +1355,24 @@
                                 <!-- Person Header with persistent styling on hover -->
                                 <Grid Grid.Row="0" Margin="0,0,0,4">
                                     <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-                                        <TextBlock Text="Person" FontSize="11" FontWeight="Bold" Foreground="#0A658E" VerticalAlignment="Center" />
+                                        <TextBlock Text="Person" FontSize="12.5" FontWeight="Bold" Foreground="#0A658E" VerticalAlignment="Center" />
                                         <Border Padding="6,2" CornerRadius="2" Background="Transparent" PointerEntered="OnLinkBorderPointerEntered" PointerExited="OnLinkBorderPointerExited">
                                             <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Center">
-                                                <TextBlock Text="+" FontSize="11" FontWeight="Bold" Foreground="#0A658E" />
-                                                <TextBlock Text="Add" FontSize="10.5" FontWeight="SemiBold" Foreground="#0A658E" />
+                                                <TextBlock Text="+" FontSize="12.5" FontWeight="Bold" Foreground="#0A658E" />
+                                                <TextBlock Text="Add" FontSize="12" FontWeight="SemiBold" Foreground="#0A658E" />
                                             </StackPanel>
                                         </Border>
                                         <Border Padding="6,2" CornerRadius="2" Background="Transparent" PointerEntered="OnLinkBorderPointerEntered" PointerExited="OnLinkBorderPointerExited">
                                             <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Center">
-                                                <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#0A658E" />
-                                                <TextBlock Text="Preview" FontSize="10.5" FontWeight="SemiBold" Foreground="#0A658E" />
+                                                <FontIcon Glyph="&#xE721;" FontSize="12.5" Foreground="#0A658E" />
+                                                <TextBlock Text="Preview" FontSize="12" FontWeight="SemiBold" Foreground="#0A658E" />
                                             </StackPanel>
                                         </Border>
                                     </StackPanel>
                                     <Border HorizontalAlignment="Right" VerticalAlignment="Center" Padding="4,2" CornerRadius="2" Background="Transparent" PointerEntered="OnLinkBorderPointerEntered" PointerExited="OnLinkBorderPointerExited">
                                         <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Center">
-                                            <FontIcon Glyph="&#xE713;" FontSize="11" Foreground="#0A658E" />
-                                            <TextBlock Text="Search Settings" FontSize="10.5" FontWeight="SemiBold" Foreground="#0A658E" />
+                                            <FontIcon Glyph="&#xE713;" FontSize="12.5" Foreground="#0A658E" />
+                                            <TextBlock Text="Search Settings" FontSize="12" FontWeight="SemiBold" Foreground="#0A658E" />
                                         </StackPanel>
                                     </Border>
                                 </Grid>
@@ -1379,7 +1381,7 @@
                                 <Border Grid.Row="1" Background="#FFFFFF" BorderBrush="#CBD5E1" BorderThickness="1">
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="22" />
+                                            <RowDefinition Height="26" />
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
 
@@ -1406,7 +1408,7 @@
                                         <!-- Table Rows List -->
                                         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                                             <Grid>
-                                                <TextBlock x:Name="PersonSearchEmptyPromptText" Text="No search results. Enter parameters and click Search..." FontStyle="Italic" Foreground="#94A3B8" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,35,0,0" />
+                                                <TextBlock x:Name="PersonSearchEmptyPromptText" Text="No search results. Enter parameters and click Search..." FontStyle="Italic" Foreground="#94A3B8" FontSize="12.5" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,35,0,0" />
                                                 <StackPanel x:Name="PersonSearchResultsPanel" />
                                             </Grid>
                                         </ScrollViewer>
@@ -1422,13 +1424,13 @@
                                 </Grid.RowDefinitions>
 
                                 <!-- Encounter Header -->
-                                <TextBlock Grid.Row="0" Text="Encounter" FontSize="11" FontWeight="Bold" Foreground="#0A658E" Margin="0,0,0,3" />
+                                <TextBlock Grid.Row="0" Text="Encounter" FontSize="12.5" FontWeight="Bold" Foreground="#0A658E" Margin="0,0,0,3" />
 
                                 <!-- Encounter Table Grid -->
                                 <Border Grid.Row="1" Background="#FFFFFF" BorderBrush="#CBD5E1" BorderThickness="1">
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="22" />
+                                            <RowDefinition Height="26" />
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
 
@@ -1455,7 +1457,7 @@
                                         <!-- Encounter Rows List -->
                                         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                                             <Grid>
-                                                <TextBlock x:Name="EncounterSearchEmptyPromptText" Text="Select a person to view encounters." FontStyle="Italic" Foreground="#94A3B8" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,0,0" />
+                                                <TextBlock x:Name="EncounterSearchEmptyPromptText" Text="Select a person to view encounters." FontStyle="Italic" Foreground="#94A3B8" FontSize="12.5" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,0,0" />
                                                 <StackPanel x:Name="EncounterSearchResultsPanel" />
                                             </Grid>
                                         </ScrollViewer>
@@ -1468,10 +1470,10 @@
                     <!-- 4. Dialog Bottom Action Footer -->
                     <Border Grid.Row="4" Background="#F1F5F9" BorderBrush="#CBD5E1" BorderThickness="0,1,0,0" Padding="10,4">
                         <Grid>
-                            <CheckBox Content="Assume Wildcards" IsChecked="True" FontSize="11" Foreground="#1E293B" VerticalAlignment="Center" />
+                            <CheckBox Content="Assume Wildcards" IsChecked="True" FontSize="12.5" Foreground="#1E293B" VerticalAlignment="Center" />
                             <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                <Button x:Name="PersonSearchSelectButton" Content="Select" Width="70" Height="25" Background="#E2E8F0" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="2" FontSize="11" Click="OnPersonSearchSelectClick" />
-                                <Button Content="Cancel" Width="70" Height="25" Background="#E2E8F0" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="2" FontSize="11" Click="OnPersonSearchCancelClick" />
+                                <Button x:Name="PersonSearchSelectButton" Content="Select" Width="70" Height="25" Background="#E2E8F0" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="2" FontSize="12.5" Click="OnPersonSearchSelectClick" />
+                                <Button Content="Cancel" Width="70" Height="25" Background="#E2E8F0" BorderBrush="#94A3B8" BorderThickness="1" CornerRadius="2" FontSize="12.5" Click="OnPersonSearchCancelClick" />
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -1482,7 +1484,7 @@
             <Border x:Name="PersonSearchMinimizedBar" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,28" Background="#F59E0B" BorderBrush="#D97706" BorderThickness="1" CornerRadius="4" Padding="10,6" Visibility="Collapsed" PointerPressed="OnPersonSearchRestoreFromMinClick" RequestedTheme="Light">
                 <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                     <FontIcon Glyph="&#xE716;" FontSize="13" Foreground="#1E293B" />
-                    <TextBlock Text="Person Search (F10)" Foreground="#1E293B" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
+                    <TextBlock Text="Person Search (F10)" Foreground="#1E293B" FontSize="12.5" FontWeight="Bold" VerticalAlignment="Center" />
                     <Border Padding="4,1" Background="#FDE68A" CornerRadius="2" PointerPressed="OnPersonSearchRestoreFromMinClick">
                         <TextBlock Text="🗖 Restore" FontSize="10" FontWeight="SemiBold" Foreground="#1E293B" />
                     </Border>
@@ -1516,6 +1518,11 @@
         <!-- ==================== 14. DEVELOPER PANEL FULL SCREEN VIEW ==================== -->
         <Grid x:Name="DeveloperPanelOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#FFFFFF" Visibility="Collapsed">
             <views:DeveloperPanelView x:Name="DeveloperPanelControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </Grid>
+
+        <!-- ==================== 15. CARE PATHWAYS / CERNER IMAGING FULL SCREEN VIEW ==================== -->
+        <Grid x:Name="CarePathwaysOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#D6E3EF" Visibility="Collapsed">
+            <views:CarePathwaysView x:Name="CarePathwaysViewControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         </Grid>
 
     </Grid>

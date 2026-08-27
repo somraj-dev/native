@@ -1,0 +1,556 @@
+<UserControl
+    x:Class="AxioVital.Desktop.Views.CarePathwaysView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch">
+
+    <Grid Background="#D6E3EF">
+        <Grid.RowDefinitions>
+            <!-- 0. Menu Bar (Height: 22) -->
+            <RowDefinition Height="22" />
+            <!-- 1. Action Toolbar Icon Strip (Height: 28) -->
+            <RowDefinition Height="28" />
+            <!-- 2. Filters Group Box (Height: Auto) -->
+            <RowDefinition Height="Auto" />
+            <!-- 3. Tab Bar (Height: 26) -->
+            <RowDefinition Height="26" />
+            <!-- 4. Sub-filter Controls (Height: 32) -->
+            <RowDefinition Height="32" />
+            <!-- 5. Main Data Grid Work List Area (Height: *) -->
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- ==================== 0. CLASSIC MENU BAR ==================== -->
+        <Border Grid.Row="0" Background="#EBF2F8" BorderBrush="#D1DFEC" BorderThickness="0,0,0,1" Padding="6,0,0,0">
+            <StackPanel Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+                <Border Padding="6,2" Background="Transparent" CornerRadius="2">
+                    <TextBlock Text="Task" FontSize="11" Foreground="#111827" />
+                </Border>
+                <Border Padding="6,2" Background="Transparent" CornerRadius="2">
+                    <TextBlock Text="View" FontSize="11" Foreground="#111827" />
+                </Border>
+                <Border Padding="6,2" Background="Transparent" CornerRadius="2">
+                    <TextBlock Text="Launch" FontSize="11" Foreground="#111827" />
+                </Border>
+                <Border Padding="6,2" Background="Transparent" CornerRadius="2">
+                    <TextBlock Text="Help" FontSize="11" Foreground="#111827" />
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- ==================== 1. ACTION TOOLBAR ICON STRIP ==================== -->
+        <Border Grid.Row="1" Background="#DFEAF3" BorderBrush="#C0D4E4" BorderThickness="0,0,0,1" Padding="6,1,6,1">
+            <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Center">
+                <!-- Open Folder -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Open Folder (Ctrl+O)">
+                    <FontIcon Glyph="&#xED25;" FontSize="13" Foreground="#D99B00" />
+                </Button>
+                <!-- Save -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Save (Ctrl+S)">
+                    <FontIcon Glyph="&#xE74E;" FontSize="13" Foreground="#1976D2" />
+                </Button>
+                <!-- Print -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Print (Ctrl+P)">
+                    <FontIcon Glyph="&#xE749;" FontSize="13" Foreground="#424242" />
+                </Button>
+                <!-- Print Preview / Search -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Print Preview / Search">
+                    <FontIcon Glyph="&#xE721;" FontSize="13" Foreground="#0288D1" />
+                </Button>
+
+                <!-- Separator -->
+                <Rectangle Width="1" Height="16" Fill="#B5C9DB" Margin="3,0,3,0" />
+
+                <!-- Cut -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Cut (Ctrl+X)">
+                    <FontIcon Glyph="&#xE8C6;" FontSize="13" Foreground="#455A64" />
+                </Button>
+                <!-- Copy -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Copy (Ctrl+C)">
+                    <FontIcon Glyph="&#xE8C8;" FontSize="13" Foreground="#455A64" />
+                </Button>
+                <!-- Paste -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Paste (Ctrl+V)">
+                    <FontIcon Glyph="&#xE77F;" FontSize="13" Foreground="#455A64" />
+                </Button>
+
+                <!-- Separator -->
+                <Rectangle Width="1" Height="16" Fill="#B5C9DB" Margin="3,0,3,0" />
+
+                <!-- Undo -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Undo">
+                    <FontIcon Glyph="&#xE7A7;" FontSize="13" Foreground="#1E88E5" />
+                </Button>
+                <!-- Redo -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Redo">
+                    <FontIcon Glyph="&#xE7A6;" FontSize="13" Foreground="#1E88E5" />
+                </Button>
+
+                <!-- Separator -->
+                <Rectangle Width="1" Height="16" Fill="#B5C9DB" Margin="3,0,3,0" />
+
+                <!-- Refresh -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Refresh Work List (F5)" Click="OnRefreshClicked">
+                    <FontIcon Glyph="&#xE72C;" FontSize="13" Foreground="#2E7D32" />
+                </Button>
+                <!-- Filter / Funnel -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Toggle Filters">
+                    <FontIcon Glyph="&#xE71C;" FontSize="13" Foreground="#E65100" />
+                </Button>
+                <!-- Warning / Alert -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Active Alerts">
+                    <FontIcon Glyph="&#xE7BA;" FontSize="13" Foreground="#F57F17" />
+                </Button>
+                <!-- Help -->
+                <Button Width="24" Height="24" Padding="0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Online Work List Help (F1)">
+                    <FontIcon Glyph="&#xE897;" FontSize="13" Foreground="#0277BD" />
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <!-- ==================== 2. FILTERS GROUP BOX PANEL ==================== -->
+        <Border Grid.Row="2" Margin="8,6,8,4" Background="#E0EBF5" BorderBrush="#B2C8DC" BorderThickness="1" CornerRadius="3" Padding="10,6,10,8">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Filters Header Row with "As of: 1:07 PM" -->
+                <Grid Grid.Row="0" Margin="0,0,0,3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Filters" FontSize="11" FontWeight="Bold" Foreground="#334155" />
+
+                    <!-- Timestamp Badge -->
+                    <Border Grid.Column="2" Background="#EAF0F6" BorderBrush="#C4D7E8" BorderThickness="1" CornerRadius="2" Padding="6,1">
+                        <TextBlock x:Name="AsOfTimestampText" Text="As of: 1:07 PM" FontSize="10.5" Foreground="#333333" />
+                    </Border>
+                </Grid>
+
+                <!-- Filter Sub-header: Date Range -->
+                <TextBlock Grid.Row="1" Text="06/01/23 + 3 days to - 3 days" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" Margin="0,0,0,4" />
+
+                <!-- 4 Columns of Filter criteria -->
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2.2*" />
+                        <ColumnDefinition Width="2.2*" />
+                        <ColumnDefinition Width="2.2*" />
+                        <ColumnDefinition Width="2.2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Department -->
+                    <StackPanel Grid.Column="0" Spacing="1">
+                        <TextBlock Text="Department:" FontSize="10.5" Foreground="#475569" />
+                        <TextBlock Text="Filtered" FontSize="11" FontWeight="SemiBold" Foreground="#0F172A" />
+                    </StackPanel>
+
+                    <!-- Section -->
+                    <StackPanel Grid.Column="1" Spacing="1">
+                        <TextBlock Text="Section:" FontSize="10.5" Foreground="#475569" />
+                        <TextBlock Text="All sections" FontSize="11" FontWeight="SemiBold" Foreground="#0F172A" />
+                    </StackPanel>
+
+                    <!-- Subsection -->
+                    <StackPanel Grid.Column="2" Spacing="1">
+                        <TextBlock Text="Subsection:" FontSize="10.5" Foreground="#475569" />
+                        <TextBlock Text="All subsections" FontSize="11" FontWeight="SemiBold" Foreground="#0F172A" />
+                    </StackPanel>
+
+                    <!-- Exam Room -->
+                    <StackPanel Grid.Column="3" Spacing="1">
+                        <TextBlock Text="Exam Room:" FontSize="10.5" Foreground="#475569" />
+                        <TextBlock Text="All exam rooms" FontSize="11" FontWeight="SemiBold" Foreground="#0F172A" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- ==================== 3. CLASSIC TAB BAR (Exam | Transcription) ==================== -->
+        <Grid Grid.Row="3" Margin="8,2,8,0" VerticalAlignment="Bottom">
+            <StackPanel Orientation="Horizontal" Spacing="2" VerticalAlignment="Bottom">
+                <!-- Exam Tab (Selected Active) -->
+                <Border x:Name="ExamTabBorder"
+                        Background="#FFFFFF"
+                        BorderBrush="#8DAAC5"
+                        BorderThickness="1,1,1,0"
+                        CornerRadius="3,3,0,0"
+                        Padding="14,4,14,4"
+                        PointerPressed="OnExamTabClicked">
+                    <TextBlock x:Name="ExamTabText" Text="Exam" FontSize="11" FontWeight="Bold" Foreground="#0A3C6B" />
+                </Border>
+
+                <!-- Transcription Tab (Inactive) -->
+                <Border x:Name="TranscriptionTabBorder"
+                        Background="#D5E3F0"
+                        BorderBrush="#A4BDD4"
+                        BorderThickness="1,1,1,0"
+                        CornerRadius="3,3,0,0"
+                        Padding="14,4,14,4"
+                        PointerPressed="OnTranscriptionTabClicked">
+                    <TextBlock x:Name="TranscriptionTabText" Text="Transcription" FontSize="11" FontWeight="Normal" Foreground="#334155" />
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- ==================== 4. SUB-FILTER CONTROLS BAR ==================== -->
+        <Border Grid.Row="4" Background="#FFFFFF" BorderBrush="#8DAAC5" BorderThickness="1,1,1,0" Margin="8,0,8,0" Padding="10,3,10,3">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="18" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Exam Status Dropdown -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                    <TextBlock Text="Exam Status:" FontSize="11" Foreground="#1E293B" VerticalAlignment="Center" />
+                    <ComboBox x:Name="ExamStatusComboBox"
+                              Width="140"
+                              Height="24"
+                              FontSize="11"
+                              Padding="6,1"
+                              SelectedIndex="0"
+                              SelectionChanged="OnExamStatusSelectionChanged">
+                        <ComboBoxItem Content="All" />
+                        <ComboBoxItem Content="Ordered" />
+                        <ComboBoxItem Content="Replaced" />
+                        <ComboBoxItem Content="Canceled" />
+                        <ComboBoxItem Content="Final" />
+                        <ComboBoxItem Content="In Progress" />
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Schedule Indicator Dropdown -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                    <TextBlock Text="Schedule Indicator:" FontSize="11" Foreground="#1E293B" VerticalAlignment="Center" />
+                    <ComboBox x:Name="ScheduleIndicatorComboBox"
+                              Width="130"
+                              Height="24"
+                              FontSize="11"
+                              Padding="6,1"
+                              SelectedIndex="0"
+                              SelectionChanged="OnScheduleIndicatorSelectionChanged">
+                        <ComboBoxItem Content="All" />
+                        <ComboBoxItem Content="Scheduled" />
+                        <ComboBoxItem Content="Unscheduled" />
+                        <ComboBoxItem Content="Walk-in" />
+                        <ComboBoxItem Content="Add-on" />
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Quick Filter / Search Box -->
+                <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#64748B" VerticalAlignment="Center" />
+                    <TextBox x:Name="FilterSearchBox"
+                             PlaceholderText="Filter patient, MRN, procedure..."
+                             Width="190"
+                             Height="24"
+                             FontSize="10.5"
+                             Padding="6,2"
+                             TextChanged="OnFilterSearchTextChanged" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ==================== 5. DATA GRID WORK LIST TABLE ==================== -->
+        <Border Grid.Row="5" Background="#FFFFFF" BorderBrush="#8DAAC5" BorderThickness="1" Margin="8,0,8,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <!-- Header Row -->
+                    <RowDefinition Height="24" />
+                    <!-- List View Content -->
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Fixed Header Row with Classic Dividers and Sort Indicator -->
+                <Border Grid.Row="0" Background="#D5E4F3" BorderBrush="#9BBAD6" BorderThickness="0,0,0,1">
+                    <ScrollViewer x:Name="HeaderScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                        <Grid MinWidth="1330">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="165" />
+                                <ColumnDefinition Width="55" />
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="115" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="125" />
+                                <ColumnDefinition Width="125" />
+                                <ColumnDefinition Width="85" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="95" />
+                                <ColumnDefinition Width="95" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- 1. Patient Name (Sorted) -->
+                            <Border Grid.Column="0" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="6,2" PointerPressed="OnSortByPatientNameClicked">
+                                <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                                    <TextBlock Text="Patient Name" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" />
+                                    <TextBlock Text="▲" FontSize="8" Foreground="#0F5B9E" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Border>
+
+                            <!-- 2. Allergies -->
+                            <Border Grid.Column="1" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="4,2">
+                                <TextBlock Text="Allergies" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- 3. Patient Type -->
+                            <Border Grid.Column="2" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="6,2">
+                                <TextBlock Text="Patient Type" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- 4. Procedure Name -->
+                            <Border Grid.Column="3" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="6,2">
+                                <TextBlock Text="Procedure Name" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- 5. Accession Number -->
+                            <Border Grid.Column="4" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="6,2">
+                                <TextBlock Text="Accession Number" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- 6. Priority -->
+                            <Border Grid.Column="5" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="6,2">
+                                <TextBlock Text="Priority" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- 7. Requested DT/TM -->
+                            <Border Grid.Column="6" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="6,2">
+                                <TextBlock Text="Requested DT/TM" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- 8. Status DT/TM -->
+                            <Border Grid.Column="7" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="6,2">
+                                <TextBlock Text="Status DT/TM" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- 9. Status -->
+                            <Border Grid.Column="8" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="6,2">
+                                <TextBlock Text="Status" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- 10. Nurse Unit -->
+                            <Border Grid.Column="9" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="6,2">
+                                <TextBlock Text="Nurse Unit" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- 11. MRN -->
+                            <Border Grid.Column="10" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="6,2">
+                                <TextBlock Text="MRN" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- 12. FIN -->
+                            <Border Grid.Column="11" BorderBrush="#AFC9E2" BorderThickness="0,0,1,0" Padding="6,2">
+                                <TextBlock Text="FIN" FontSize="11" FontWeight="SemiBold" Foreground="#1E293B" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- Filler -->
+                            <Border Grid.Column="12" Background="Transparent" />
+                        </Grid>
+                    </ScrollViewer>
+                </Border>
+
+                <!-- Scrollable Rows Container -->
+                <ScrollViewer Grid.Row="1"
+                              x:Name="TableScrollViewer"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              ViewChanged="OnTableScrollViewerViewChanged">
+                    <ListView x:Name="WorkListListView"
+                              SelectionMode="Single"
+                              SelectionChanged="OnWorkListSelectionChanged"
+                              DoubleTapped="OnWorkListDoubleTapped"
+                              MinWidth="1330"
+                              Padding="0">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="MinHeight" Value="20" />
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#E5EDF4" BorderThickness="0,0,0,1" Background="{Binding BackgroundBrush}" Height="21">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="165" />
+                                            <ColumnDefinition Width="55" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="180" />
+                                            <ColumnDefinition Width="115" />
+                                            <ColumnDefinition Width="70" />
+                                            <ColumnDefinition Width="125" />
+                                            <ColumnDefinition Width="125" />
+                                            <ColumnDefinition Width="85" />
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="95" />
+                                            <ColumnDefinition Width="95" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- 1. Patient Name -->
+                                        <TextBlock Grid.Column="0" Text="{Binding PatientName}" FontSize="10.5" Foreground="#0F172A" Padding="6,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+
+                                        <!-- 2. Allergies Warning Icon -->
+                                        <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="⚠️" FontSize="11" Foreground="#D97706" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Grid>
+
+                                        <!-- 3. Patient Type -->
+                                        <TextBlock Grid.Column="2" Text="{Binding PatientType}" FontSize="10.5" Foreground="#334155" Padding="6,0" VerticalAlignment="Center" />
+
+                                        <!-- 4. Procedure Name -->
+                                        <TextBlock Grid.Column="3" Text="{Binding ProcedureName}" FontSize="10.5" Foreground="#0F172A" Padding="6,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+
+                                        <!-- 5. Accession Number -->
+                                        <TextBlock Grid.Column="4" Text="{Binding AccessionNumber}" FontSize="10.5" Foreground="#334155" Padding="6,0" VerticalAlignment="Center" />
+
+                                        <!-- 6. Priority -->
+                                        <TextBlock Grid.Column="5" Text="{Binding Priority}" FontSize="10.5" Foreground="#334155" Padding="6,0" VerticalAlignment="Center" />
+
+                                        <!-- 7. Requested DT/TM -->
+                                        <TextBlock Grid.Column="6" Text="{Binding RequestedDateTime}" FontSize="10.5" Foreground="#334155" Padding="6,0" VerticalAlignment="Center" />
+
+                                        <!-- 8. Status DT/TM -->
+                                        <TextBlock Grid.Column="7" Text="{Binding StatusDateTime}" FontSize="10.5" Foreground="#334155" Padding="6,0" VerticalAlignment="Center" />
+
+                                        <!-- 9. Status -->
+                                        <TextBlock Grid.Column="8" Text="{Binding Status}" FontSize="10.5" Foreground="#0F172A" FontWeight="SemiBold" Padding="6,0" VerticalAlignment="Center" />
+
+                                        <!-- 10. Nurse Unit -->
+                                        <TextBlock Grid.Column="9" Text="{Binding NurseUnit}" FontSize="10.5" Foreground="#334155" Padding="6,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+
+                                        <!-- 11. MRN -->
+                                        <TextBlock Grid.Column="10" Text="{Binding MRN}" FontSize="10.5" Foreground="#334155" Padding="6,0" VerticalAlignment="Center" />
+
+                                        <!-- 12. FIN -->
+                                        <TextBlock Grid.Column="11" Text="{Binding FIN}" FontSize="10.5" Foreground="#334155" Padding="6,0" VerticalAlignment="Center" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <!-- ==================== 6. CASE DETAILS MODAL DIALOG ==================== -->
+        <Grid x:Name="CaseDetailsModalOverlay" Grid.Row="0" Grid.RowSpan="6" Background="#66000000" Visibility="Collapsed" PointerPressed="OnCaseDetailsBackdropPressed">
+            <Border Width="560" Background="#FFFFFF" BorderBrush="#0A4C84" BorderThickness="1" CornerRadius="3" HorizontalAlignment="Center" VerticalAlignment="Center" PointerPressed="OnCaseDetailsDialogPressed">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Title Bar -->
+                    <Border Grid.Row="0" Background="#0A4C84" CornerRadius="2,2,0,0" Padding="10,0,6,0">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Online Work List - Case Details" FontSize="11.5" FontWeight="Bold" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                            <Button Grid.Column="1" Width="20" Height="20" Padding="0" Background="Transparent" BorderThickness="0" Click="OnCloseCaseDetailsClicked">
+                                <TextBlock Text="✕" FontSize="10" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Button>
+                        </Grid>
+                    </Border>
+
+                    <!-- Modal Body -->
+                    <StackPanel Grid.Row="1" Padding="16,12" Spacing="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Spacing="2">
+                                <TextBlock Text="Patient Name" FontSize="10.5" Foreground="#64748B" />
+                                <TextBlock x:Name="ModalPatientNameText" Text="SNIRNSURG15, Ella" FontSize="12.5" FontWeight="Bold" Foreground="#0F172A" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="2">
+                                <TextBlock Text="MRN / FIN" FontSize="10.5" Foreground="#64748B" />
+                                <TextBlock x:Name="ModalMrnFinText" Text="003600015 / 003600015" FontSize="12.5" FontWeight="SemiBold" Foreground="#0F172A" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Rectangle Height="1" Fill="#E2E8F0" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Spacing="2">
+                                <TextBlock Text="Procedure" FontSize="10.5" Foreground="#64748B" />
+                                <TextBlock x:Name="ModalProcedureText" Text="XR Knee Complete 4+ Views" FontSize="12" FontWeight="SemiBold" Foreground="#0369A1" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="2">
+                                <TextBlock Text="Accession Number" FontSize="10.5" Foreground="#64748B" />
+                                <TextBlock x:Name="ModalAccessionText" Text="XR-21-0000064" FontSize="12" FontWeight="SemiBold" Foreground="#0F172A" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Spacing="2">
+                                <TextBlock Text="Patient Type" FontSize="10.5" Foreground="#64748B" />
+                                <TextBlock x:Name="ModalPatientTypeText" Text="Inpatient" FontSize="11.5" Foreground="#1E293B" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="2">
+                                <TextBlock Text="Priority" FontSize="10.5" Foreground="#64748B" />
+                                <TextBlock x:Name="ModalPriorityText" Text="Routine" FontSize="11.5" Foreground="#1E293B" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Spacing="2">
+                                <TextBlock Text="Status" FontSize="10.5" Foreground="#64748B" />
+                                <TextBlock x:Name="ModalStatusText" Text="Ordered" FontSize="11.5" FontWeight="Bold" Foreground="#059669" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Spacing="2">
+                                <TextBlock Text="Nurse Unit" FontSize="10.5" Foreground="#64748B" />
+                                <TextBlock x:Name="ModalNurseUnitText" Text="RSDS" FontSize="11.5" Foreground="#1E293B" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="2">
+                                <TextBlock Text="Requested / Status Date" FontSize="10.5" Foreground="#64748B" />
+                                <TextBlock x:Name="ModalDateText" Text="6/1/2023 1:00 AM" FontSize="11.5" Foreground="#1E293B" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- Footer -->
+                    <Border Grid.Row="2" Background="#F1F5F9" BorderBrush="#E2E8F0" BorderThickness="0,1,0,0" Padding="12,0">
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Content="Close" Width="70" Height="26" FontSize="11" Click="OnCloseCaseDetailsClicked" />
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+
+    </Grid>
+</UserControl>

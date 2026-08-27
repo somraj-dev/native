@@ -62,6 +62,30 @@ public partial class MainPage : Page
             DeveloperPanelControl.ReturnToAxioVitalRequested += (s, e) => CloseDeveloperPanel();
         }
 
+        // Hook up Care Pathways / Cerner Imaging full-screen events
+        if (CarePathwaysViewControl != null)
+        {
+            CarePathwaysViewControl.ExitRequested += (s, e) => CloseCarePathwaysView();
+        }
+
+        // Hook up Discharge List events
+        if (DischargeListViewControl != null)
+        {
+            DischargeListViewControl.PatientSelected += (s, e) =>
+            {
+                ShowPatientProfileByName(e.PatientName);
+            };
+        }
+
+        // Hook up Referrals & Transfer List events
+        if (ReferralsTransferListViewControl != null)
+        {
+            ReferralsTransferListViewControl.PatientSelected += (s, e) =>
+            {
+                ShowPatientProfileByName(e.PatientName);
+            };
+        }
+
         // Open Patient Profile view directly on launch
         ShowPatientProfileByName("JOHN DOE");
 
@@ -94,6 +118,11 @@ public partial class MainPage : Page
             else if (e.Key == Windows.System.VirtualKey.Escape && IsDeveloperPanelOpen)
             {
                 CloseDeveloperPanel();
+                e.Handled = true;
+            }
+            else if (e.Key == Windows.System.VirtualKey.Escape && IsCarePathwaysOpen)
+            {
+                CloseCarePathwaysView();
                 e.Handled = true;
             }
         };
@@ -152,6 +181,8 @@ public partial class MainPage : Page
         if (GrowthChartViewControl != null) GrowthChartViewControl.Visibility = (targetView == GrowthChartViewControl) ? Visibility.Visible : Visibility.Collapsed;
         if (HistoriesChartViewControl != null) HistoriesChartViewControl.Visibility = (targetView == HistoriesChartViewControl) ? Visibility.Visible : Visibility.Collapsed;
         if (NotificationsViewControl != null) NotificationsViewControl.Visibility = (targetView == NotificationsViewControl) ? Visibility.Visible : Visibility.Collapsed;
+        if (DischargeListViewControl != null) DischargeListViewControl.Visibility = (targetView == DischargeListViewControl) ? Visibility.Visible : Visibility.Collapsed;
+        if (ReferralsTransferListViewControl != null) ReferralsTransferListViewControl.Visibility = (targetView == ReferralsTransferListViewControl) ? Visibility.Visible : Visibility.Collapsed;
 
         if (targetView is FrameworkElement fe)
         {
@@ -256,6 +287,21 @@ public partial class MainPage : Page
                 break;
             case "home":
                 ShowHomeView();
+                break;
+            case "discharge_list":
+                ShowDischargeListView();
+                break;
+            case "referrals_transfer":
+                ShowReferralsTransferListView();
+                break;
+            case "notifications":
+                ShowNotificationsView();
+                break;
+            case "growth_chart":
+                ShowGrowthChartView();
+                break;
+            case "histories_chart":
+                ShowHistoriesChartView();
                 break;
         }
     }
@@ -544,7 +590,7 @@ public partial class MainPage : Page
     public void ShowCarePathwaysView()
     {
         HighlightRibbonTabWithAnimation(CarePathwaysCategoryTabBorder, CarePathwaysCategoryTabText);
-        OpenOrActivateTab("care_pathways", "Care Pathways", "Care Pathways", QualityMeasuresViewControl);
+        OpenCarePathwaysView();
     }
 
     public void ShowGrowthChartView()
@@ -560,6 +606,16 @@ public partial class MainPage : Page
     public void ShowNotificationsView()
     {
         OpenOrActivateTab("notifications", "Notifications", "Notifications", NotificationsViewControl);
+    }
+
+    public void ShowDischargeListView()
+    {
+        OpenOrActivateTab("discharge_list", "Discharge List", "Ambulatory: Discharge Patient List", DischargeListViewControl);
+    }
+
+    public void ShowReferralsTransferListView()
+    {
+        OpenOrActivateTab("referrals_transfer", "Referrals & Transfer", "Ambulatory: Referrals & Transfer Roster", ReferralsTransferListViewControl);
     }
 
     private void OnHomeButtonClick(object sender, RoutedEventArgs e)
@@ -759,6 +815,25 @@ public partial class MainPage : Page
         if (DeveloperPanelOverlay != null)
         {
             DeveloperPanelOverlay.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    public bool IsCarePathwaysOpen => CarePathwaysOverlay != null && CarePathwaysOverlay.Visibility == Visibility.Visible;
+
+    public void OpenCarePathwaysView()
+    {
+        if (CarePathwaysOverlay != null)
+        {
+            CarePathwaysOverlay.Visibility = Visibility.Visible;
+            AnimateViewEntrance(CarePathwaysOverlay);
+        }
+    }
+
+    public void CloseCarePathwaysView()
+    {
+        if (CarePathwaysOverlay != null)
+        {
+            CarePathwaysOverlay.Visibility = Visibility.Collapsed;
         }
     }
 
@@ -1194,10 +1269,10 @@ public partial class MainPage : Page
                 ShowSchedulerView();
                 break;
             case "amb_referrals_transfer":
-                OpenOrActivateTab("facility_transfer", "Facility Transfer", "Facility Transfer", new FacilityTransferPage());
+                ShowReferralsTransferListView();
                 break;
             case "amb_discharge_list":
-                ShowPatientListView();
+                ShowDischargeListView();
                 break;
             default:
                 break;

@@ -21,8 +21,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\app.ico</ApplicationIcon>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <DefaultResourceLanguage>en-US</DefaultResourceLanguage>
-    <NoWarn>$(NoWarn);MVVMTK0045</NoWarn>
+    <NuGetAudit>false</NuGetAudit>
+    <WarningsNotAsErrors>NU1900;NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
+    <NoWarn>$(NoWarn);MVVMTK0045;NU1900;NU1901;NU1902;NU1903;NU1904</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

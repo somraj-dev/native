@@ -12,11 +12,17 @@
   </Target>
 
   <Target Name="GetMrtPackagingOutputs" Returns="@(PackagingOutputs)" />
-  <Target Name="_GetDefaultResourceLanguage" />
+  <Target Name="_GetDefaultResourceLanguage">
+    <PropertyGroup>
+      <DefaultResourceLanguage Condition="'$(DefaultResourceLanguage)' == ''">en-US</DefaultResourceLanguage>
+    </PropertyGroup>
+  </Target>
   <Target Name="_GetPackageArchitecture" />
   <Target Name="_GetSdkToolPaths" />
   <Target Name="_GenerateProjectPriFile" />
   <Target Name="_GenerateProjectPriFileCore" />
   <Target Name="_CreatePriConfigXml" />
+  <Target Name="_CreatePriConfigFile" />
+  <Target Name="WinAppSdkCreatePriConfigXmlForFullIndex" />
 
 </Project>
