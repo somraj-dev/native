@@ -10,6 +10,7 @@ Production-grade healthcare desktop solution built with **WinUI 3**, **ASP.NET C
 - **Security**: Argon2id, JWT, WebAuthn, RBAC, Multi-tenancy
 - **Infrastructure**: Redis 7, Redpanda (Kafka), MinIO (S3-compatible)
 - **Healthcare Interoperability**: FHIR R4, HL7 v2.x, DICOM
+<img width="493" height="962" alt="image" src="https://github.com/user-attachments/assets/8690b8ab-a66d-4aea-bdca-1b6cc7d504b5" />
 
 ## Quick Start
 
