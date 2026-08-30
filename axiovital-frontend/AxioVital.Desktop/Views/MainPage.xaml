@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:AxioVital.Desktop.Models"
     xmlns:views="using:AxioVital.Desktop.Views"
+    xmlns:widgets="using:AxioVital.Desktop.Widgets"
     mc:Ignorable="d"
     Background="#F4F5F7">
 
@@ -506,6 +507,10 @@
                 <Border x:Name="AnalyticsCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnAnalyticsTabPointerPressed" Background="Transparent">
                     <TextBlock x:Name="AnalyticsCategoryTabText" Text="Analytics" Foreground="#444444" FontSize="12.5" />
                 </Border>
+
+                <Border x:Name="DocumentsCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnDocumentsTabPointerPressed" Background="Transparent">
+                    <TextBlock x:Name="DocumentsCategoryTabText" Text="Documents" Foreground="#444444" FontSize="12.5" />
+                </Border>
             </StackPanel>
 
             <FontIcon Grid.Column="1" Glyph="&#xE712;" FontSize="12" Foreground="#666666" VerticalAlignment="Center" />
@@ -523,20 +528,31 @@
 
             <!-- Quick Tools Right -->
             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
-                <Border Background="#012237" BorderBrush="#1A6B8A" BorderThickness="1" CornerRadius="10" Padding="8,0,8,0" Height="26" VerticalAlignment="Center" PointerPressed="OnSearchBarBorderPointerPressed" RequestedTheme="Dark">
+                <Border x:Name="SearchBarContainerBorder" Background="#062740" BorderBrush="#0D3B5C" BorderThickness="1" CornerRadius="3" Padding="8,0,8,0" Height="24" VerticalAlignment="Center" PointerPressed="OnSearchBarBorderPointerPressed" RequestedTheme="Dark">
                     <Grid VerticalAlignment="Center" Height="20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <!-- Search Icon - Segoe MDL2 magnifying glass, tinted teal -->
-                        <FontIcon Grid.Column="0" Glyph="&#xE721;" FontSize="12" Foreground="#4DC9F6" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <!-- Custom 2-Color Search Magnifying Glass (Cyan Lens + Purple Handle from Image 1) -->
+                        <Grid Grid.Column="0" Width="13" Height="13" VerticalAlignment="Center" Margin="0,0,6,0">
+                            <!-- Purple Handle -->
+                            <Rectangle Width="5.5" Height="2.2" Fill="#B55EE4" RadiusX="0.5" RadiusY="0.5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0.5,0.5">
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform Angle="45" CenterX="2.5" CenterY="1" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                            <!-- Cyan Lens -->
+                            <Ellipse Width="8.5" Height="8.5" Fill="#42C5F4" Stroke="#0C6E9E" StrokeThickness="0.8" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            <!-- Specular Dot -->
+                            <Ellipse Width="2.5" Height="2.5" Fill="#FFFFFF" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,1.5,0,0" />
+                        </Grid>
 
                         <!-- Placeholder TextBlock (visible when SearchBox is empty) -->
                         <TextBlock x:Name="SearchPlaceholderText" Grid.Column="1" 
                                    Text="Search by Patient or Order..." 
-                                   FontSize="12.5" Foreground="#8BB8D0" 
+                                   FontSize="11.5" Foreground="#7DA3BE" 
                                    VerticalAlignment="Center" 
                                    IsHitTestVisible="False" />
 
@@ -544,16 +560,33 @@
                                  Background="Transparent" 
                                  Foreground="#FFFFFF" 
                                  BorderThickness="0" 
-                                 FontSize="12.5" 
-                                 Width="195" 
+                                 FontSize="11.5" 
+                                 Width="185" 
                                  Padding="0"
                                  Margin="0"
                                  MinHeight="0"
                                  MinWidth="0"
                                  VerticalAlignment="Center" 
                                  VerticalContentAlignment="Center" 
+                                 IsSpellCheckEnabled="False"
                                  TextChanged="OnSearchBoxTextChanged"
-                                 KeyDown="OnHeaderSearchBoxKeyDown" />
+                                 KeyDown="OnHeaderSearchBoxKeyDown">
+                            <TextBox.Template>
+                                <ControlTemplate TargetType="TextBox">
+                                    <Grid Background="Transparent">
+                                        <ScrollViewer x:Name="ContentElement"
+                                                      HorizontalScrollMode="Disabled"
+                                                      VerticalScrollMode="Disabled"
+                                                      HorizontalScrollBarVisibility="Hidden"
+                                                      VerticalScrollBarVisibility="Hidden"
+                                                      IsHorizontalRailEnabled="False"
+                                                      IsVerticalRailEnabled="False"
+                                                      Padding="{TemplateBinding Padding}"
+                                                      Margin="0" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </TextBox.Template>
+                        </TextBox>
                     </Grid>
                 </Border>
                 <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center" PointerPressed="OnFullScreenPointerPressed">
@@ -566,7 +599,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
                     <FontIcon Glyph="&#xE72C;" FontSize="13" Foreground="#FFFFFF" VerticalAlignment="Center" />
-                    <TextBlock Text="0 minutes ago" Foreground="#FFFFFF" FontSize="12.5" VerticalAlignment="Center" />
+                    <TextBlock Text="2183 minutes ago" Foreground="#FFFFFF" FontSize="12.5" VerticalAlignment="Center" />
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -649,44 +682,44 @@
             </Grid.ColumnDefinitions>
 
             <!-- Column 0: Circular Avatar + Patient Name & Care Details -->
-            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,24,0">
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
                 <!-- White Circular User Avatar -->
                 <Border Width="34" Height="34" CornerRadius="17" Background="White" Margin="0,0,10,0" VerticalAlignment="Center">
                     <FontIcon Glyph="&#xE77B;" FontSize="20" Foreground="#064875" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Border>
                 <StackPanel VerticalAlignment="Center" Spacing="1">
                     <TextBlock x:Name="BannerPatientNameText" Text="JOHN DOE" Foreground="White" FontSize="13" FontWeight="Bold" />
-                    <TextBlock x:Name="BannerAllergiesText" Text="Allergies: shellfish" Foreground="#D1E3F0" FontSize="13" />
-                    <TextBlock Text="Care Team: View Details" Foreground="#38BDF8" FontSize="13" TextDecorations="Underline" />
+                    <TextBlock x:Name="BannerAllergiesText" Text="Allergies: shellfish" Foreground="#D1E3F0" FontSize="11.5" />
+                    <TextBlock Text="Care Team: View Details" Foreground="#38BDF8" FontSize="11.5" TextDecorations="Underline" />
                 </StackPanel>
             </StackPanel>
 
-            <!-- Column 1: DOB, Dose Wt, HealtheLife -->
+            <!-- Column 1: DOB, Dose Wt, HealthLife -->
             <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,14,0">
-                <TextBlock x:Name="BannerDobText" Text="DOB: 3/22/1984" Foreground="#D1E3F0" FontSize="13" />
-                <TextBlock x:Name="BannerDoseWeightText" Text="Dose Wt: 80.000 kg (04/25/2021)" Foreground="#D1E3F0" FontSize="13" />
-                <TextBlock x:Name="BannerHealtheLifeText" Text="HealtheLife: No" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerDobText" Text="DOB: 3/22/1984" Foreground="#D1E3F0" FontSize="11.5" />
+                <TextBlock x:Name="BannerDoseWeightText" Text="Dose Wt: 80.000 kg (04/25/2021)" Foreground="#D1E3F0" FontSize="11.5" />
+                <TextBlock x:Name="BannerHealtheLifeText" Text="HealthLife: No" Foreground="#D1E3F0" FontSize="11.5" />
             </StackPanel>
 
             <!-- Column 2: Age, LTD, Clinic -->
             <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,14,0">
-                <TextBlock x:Name="BannerAgeText" Text="Age: 39 years" Foreground="#D1E3F0" FontSize="13" />
-                <TextBlock x:Name="BannerLtdText" Text="LTD:" Foreground="#D1E3F0" FontSize="13" />
-                <TextBlock x:Name="BannerClinicText" Text="Clinic: 01XTQ" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerAgeText" Text="Age: 39 years" Foreground="#D1E3F0" FontSize="11.5" />
+                <TextBlock x:Name="BannerLtdText" Text="LTD:" Foreground="#D1E3F0" FontSize="11.5" />
+                <TextBlock x:Name="BannerClinicText" Text="Clinic: 01XTQ" Foreground="#D1E3F0" FontSize="11.5" />
             </StackPanel>
 
             <!-- Column 3: Sex, Code Status, Loc -->
             <StackPanel Grid.Column="3" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,14,0">
-                <TextBlock x:Name="BannerSexText" Text="Sex: Female" Foreground="#D1E3F0" FontSize="13" />
-                <TextBlock x:Name="BannerCodeStatusText" Text="Code Status: Active" Foreground="#D1E3F0" FontSize="13" />
-                <TextBlock x:Name="BannerLocText" Text="Loc: GLW-01" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerSexText" Text="Sex: Female" Foreground="#D1E3F0" FontSize="11.5" />
+                <TextBlock x:Name="BannerCodeStatusText" Text="Code Status: Active" Foreground="#D1E3F0" FontSize="11.5" />
+                <TextBlock x:Name="BannerLocText" Text="Loc: GLW 01" Foreground="#D1E3F0" FontSize="11.5" />
             </StackPanel>
 
             <!-- Column 4: MRN, Nominee, Inpatient FIN -->
             <StackPanel Grid.Column="4" VerticalAlignment="Center" Spacing="1.5" Margin="0,0,10,0">
-                <TextBlock x:Name="BannerMrnText" Text="MRN: AVX-SL-A1H4XE" Foreground="#D1E3F0" FontSize="13" />
-                <TextBlock x:Name="BannerNomineeText" Text="Nominee: Mr. Ajan singh" Foreground="#D1E3F0" FontSize="13" />
-                <TextBlock x:Name="BannerFinText" Text="Inpatient FIN: 00095526415 [Admit Dt: 10/6/2020 3:14:12 PM CDT]" Foreground="#D1E3F0" FontSize="13" />
+                <TextBlock x:Name="BannerMrnText" Text="MRN: AVX-SL-A1H4XE" Foreground="#D1E3F0" FontSize="11.5" />
+                <TextBlock x:Name="BannerNomineeText" Text="Nominee: Mr. Ajan singh" Foreground="#D1E3F0" FontSize="11.5" />
+                <TextBlock x:Name="BannerFinText" Text="Inpatient FIN: 00096526415 [Admit Dt: 10/6/2020 3:14:12 PM CDT]" Foreground="#D1E3F0" FontSize="11.5" />
             </StackPanel>
 
             <!-- Column 5: Vertical Separator & Hamburger Button -->
@@ -1523,6 +1556,22 @@
         <!-- ==================== 15. CARE PATHWAYS / CERNER IMAGING FULL SCREEN VIEW ==================== -->
         <Grid x:Name="CarePathwaysOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#D6E3EF" Visibility="Collapsed">
             <views:CarePathwaysView x:Name="CarePathwaysViewControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </Grid>
+
+        <!-- ==================== 16. ORDER RECONCILIATION / MEDICATION LIST MODAL POPUP ==================== -->
+        <Grid x:Name="MedicationListPopupOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#55000000" Visibility="Collapsed" PointerPressed="OnMedicationPopupBackdropPointerPressed">
+            <widgets:MedicationListPopup x:Name="MedicationListPopupControl"
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Stretch"
+                                         Margin="0"
+                                         CloseRequested="OnMedicationPopupCloseRequested"
+                                         ReconcileAndSignCompleted="OnMedicationPopupReconcileCompleted"
+                                         PointerPressed="OnMedicationPopupDialogPointerPressed" />
+        </Grid>
+
+        <!-- ==================== 17. FILE MANAGER / DOCUMENT BROWSER FULL SCREEN VIEW ==================== -->
+        <Grid x:Name="FileManagerOverlay" Grid.Row="0" Grid.RowSpan="8" Background="#F8FAFB" Visibility="Collapsed">
+            <views:FileManagerView x:Name="FileManagerViewControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         </Grid>
 
     </Grid>

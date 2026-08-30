@@ -4,6 +4,7 @@
   "buckets": {
     "medical-records": "axiovital-medical-records",
     "dicom-images": "axiovital-dicom-images",
-    "audit-logs": "axiovital-audit-logs"
+    "audit-logs": "axiovital-audit-logs",
+    "documents": "axiovital-documents"
   }
 }

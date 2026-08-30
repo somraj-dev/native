@@ -150,9 +150,19 @@ public sealed partial class MainWindow : Window
                     {
                         if (RootFrame.Content is MainPage mainPage)
                         {
+                            if (mainPage.IsPatientMedicationPopupOpen)
+                            {
+                                mainPage.ClosePatientMedicationPopup();
+                                return;
+                            }
                             if (mainPage.IsCarePathwaysOpen)
                             {
                                 mainPage.CloseCarePathwaysView();
+                                return;
+                            }
+                            if (mainPage.IsFileManagerOpen)
+                            {
+                                mainPage.CloseFileManagerView();
                                 return;
                             }
                             if (mainPage.IsDeveloperPanelOpen)
@@ -210,9 +220,21 @@ public sealed partial class MainWindow : Window
         {
             if (RootFrame.Content is MainPage mainPage)
             {
+                if (mainPage.IsPatientMedicationPopupOpen)
+                {
+                    mainPage.ClosePatientMedicationPopup();
+                    e.Handled = true;
+                    return;
+                }
                 if (mainPage.IsCarePathwaysOpen)
                 {
                     mainPage.CloseCarePathwaysView();
+                    e.Handled = true;
+                    return;
+                }
+                if (mainPage.IsFileManagerOpen)
+                {
+                    mainPage.CloseFileManagerView();
                     e.Handled = true;
                     return;
                 }

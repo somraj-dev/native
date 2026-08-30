@@ -68,6 +68,12 @@ public partial class MainPage : Page
             CarePathwaysViewControl.ExitRequested += (s, e) => CloseCarePathwaysView();
         }
 
+        // Hook up File Manager / Document Profiler events
+        if (FileManagerViewControl != null)
+        {
+            FileManagerViewControl.CloseRequested += (s, e) => CloseFileManagerView();
+        }
+
         // Hook up Discharge List events
         if (DischargeListViewControl != null)
         {
@@ -99,6 +105,10 @@ public partial class MainPage : Page
         this.Loaded += (s, e) =>
         {
             SearchBox?.Focus(FocusState.Programmatic);
+            if (PatientProfileViewControl != null)
+            {
+                PatientProfileViewControl.MedicationListRequested += (sender, args) => OpenMedicationListPopup();
+            }
         };
 
         this.KeyDown += (s, e) =>
@@ -420,6 +430,17 @@ public partial class MainPage : Page
         ShowAnalyticsView();
     }
 
+    private void OnDocumentsTabPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        ShowFileManagerView();
+    }
+
+    public void ShowFileManagerView()
+    {
+        HighlightRibbonTabWithAnimation(DocumentsCategoryTabBorder, DocumentsCategoryTabText);
+        OpenFileManagerView();
+    }
+
     private void ResetAllRibbonTabHighlights()
     {
         var neutralColor = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 51, 51, 51));
@@ -443,6 +464,7 @@ public partial class MainPage : Page
         ResetTabItem(CarePathwaysCategoryTabBorder, CarePathwaysCategoryTabText, catNeutralColor);
         ResetTabItem(LabsCategoryTabBorder, LabsCategoryTabText, catNeutralColor);
         ResetTabItem(AnalyticsCategoryTabBorder, AnalyticsCategoryTabText, catNeutralColor);
+        ResetTabItem(DocumentsCategoryTabBorder, DocumentsCategoryTabText, catNeutralColor);
     }
 
     private void ResetTabItem(Border? tabBorder, TextBlock? tabText, SolidColorBrush defaultColor)
@@ -837,6 +859,25 @@ public partial class MainPage : Page
         }
     }
 
+    public bool IsFileManagerOpen => FileManagerOverlay != null && FileManagerOverlay.Visibility == Visibility.Visible;
+
+    public void OpenFileManagerView()
+    {
+        if (FileManagerOverlay != null)
+        {
+            FileManagerOverlay.Visibility = Visibility.Visible;
+            AnimateViewEntrance(FileManagerOverlay);
+        }
+    }
+
+    public void CloseFileManagerView()
+    {
+        if (FileManagerOverlay != null)
+        {
+            FileManagerOverlay.Visibility = Visibility.Collapsed;
+        }
+    }
+
     private bool _isPageFullScreen = false;
 
     private void OnFullScreenPointerPressed(object sender, PointerRoutedEventArgs e)
@@ -886,6 +927,54 @@ public partial class MainPage : Page
                 ? Visibility.Visible
                 : Visibility.Collapsed;
         }
+    }
+
+    public bool IsPatientMedicationPopupOpen => 
+        MedicationListPopupOverlay != null && MedicationListPopupOverlay.Visibility == Visibility.Visible;
+
+    public void OpenMedicationListPopup()
+    {
+        if (MedicationListPopupOverlay != null)
+        {
+            MedicationListPopupOverlay.Visibility = Visibility.Visible;
+            AnimateViewEntrance(MedicationListPopupOverlay);
+        }
+    }
+
+    public void ClosePatientMedicationPopup()
+    {
+        CloseMedicationListPopup();
+    }
+
+    public void CloseMedicationListPopup()
+    {
+        if (MedicationListPopupOverlay != null)
+        {
+            MedicationListPopupOverlay.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private void OnMedicationPopupBackdropPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        if (ReferenceEquals(e.OriginalSource, MedicationListPopupOverlay))
+        {
+            CloseMedicationListPopup();
+        }
+    }
+
+    private void OnMedicationPopupDialogPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        e.Handled = true;
+    }
+
+    private void OnMedicationPopupCloseRequested(object? sender, EventArgs e)
+    {
+        CloseMedicationListPopup();
+    }
+
+    private void OnMedicationPopupReconcileCompleted(object? sender, EventArgs e)
+    {
+        CloseMedicationListPopup();
     }
 
     public bool IsQuickPanelOpen => QuickPanelOverlay != null && QuickPanelOverlay.Visibility == Visibility.Visible;

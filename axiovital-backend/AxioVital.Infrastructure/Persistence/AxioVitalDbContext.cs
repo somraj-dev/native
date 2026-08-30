@@ -28,6 +28,9 @@ public class AxioVitalDbContext : DbContext, IUnitOfWork
     public DbSet<UserRole> UserRoles => Set<UserRole>();
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
 
+    // Document management
+    public DbSet<MedicalDocument> MedicalDocuments => Set<MedicalDocument>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -45,6 +48,10 @@ public class AxioVitalDbContext : DbContext, IUnitOfWork
         // Global query filter for tenant-scoped roles
         modelBuilder.Entity<Role>().HasQueryFilter(r => !r.IsDeleted &&
             (_tenantProvider == null || !_tenantProvider.HasTenant || r.TenantId == null || r.TenantId == _tenantProvider.TenantId));
+
+        // Global query filter for tenant-scoped medical documents
+        modelBuilder.Entity<MedicalDocument>().HasQueryFilter(d => !d.IsDeleted &&
+            (_tenantProvider == null || !_tenantProvider.HasTenant || d.TenantId == _tenantProvider.TenantId));
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

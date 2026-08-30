@@ -54,7 +54,8 @@ public sealed partial class PatientProfileView : UserControl
     {
         this.InitializeComponent();
         SetDefaultPatient();
-        HighlightNav(NavDocBorder, NavDocBar, NavDocText);
+        HighlightNav(NavOpNoteProdEdgeBorder, NavOpNoteProdEdgeBar, NavOpNoteProdEdgeText);
+        if (OpNoteProdEdgePanel != null) OpNoteProdEdgePanel.Visibility = Visibility.Visible;
     }
 
     public void SetDefaultPatient()
@@ -713,64 +714,77 @@ public sealed partial class PatientProfileView : UserControl
     {
         switch (sectionName.ToLowerInvariant())
         {
+            case "op_note_prod_edge":
+            case "opnote":
+            case "op note":
+            case "op note - prod - edge":
+            case "clin_op_note_prod_edge":
+                HighlightNav(NavOpNoteProdEdgeBorder, NavOpNoteProdEdgeBar, NavOpNoteProdEdgeText);
+                if (OpNoteProdEdgePanel != null) OpNoteProdEdgePanel.Visibility = Visibility.Visible;
+                break;
             case "provider_view":
             case "providerview":
             case "clin_provider_view":
                 HighlightNav(NavProviderViewBorder, NavProviderViewBar, NavProviderViewText);
-                ProviderViewPanel.Visibility = Visibility.Visible;
+                if (ProviderViewPanel != null) ProviderViewPanel.Visibility = Visibility.Visible;
                 break;
             case "results_review":
             case "resultsreview":
             case "clin_results_review":
                 HighlightNav(NavResultsReviewBorder, NavResultsReviewBar, NavResultsReviewText);
-                ResultsReviewPanel.Visibility = Visibility.Visible;
+                if (ResultsReviewPanel != null) ResultsReviewPanel.Visibility = Visibility.Visible;
                 break;
             case "orders":
             case "clin_orders":
                 HighlightNav(NavOrdersBorder, NavOrdersBar, NavOrdersText);
-                OrdersPanel.Visibility = Visibility.Visible;
+                if (OrdersPanel != null) OrdersPanel.Visibility = Visibility.Visible;
                 break;
             case "documentation":
             case "doc":
             case "clin_documentation":
                 HighlightNav(NavDocBorder, NavDocBar, NavDocText);
-                DocumentationPanel.Visibility = Visibility.Visible;
+                if (DocumentationPanel != null) DocumentationPanel.Visibility = Visibility.Visible;
                 break;
             case "outside_records":
             case "outsiderecords":
             case "clin_outside_records":
                 HighlightNav(NavOutsideRecordsBorder, NavOutsideRecordsBar, NavOutsideRecordsText);
-                OutsideRecordsPanel.Visibility = Visibility.Visible;
+                if (OutsideRecordsPanel != null) OutsideRecordsPanel.Visibility = Visibility.Visible;
                 break;
             case "allergies":
             case "clin_allergies":
                 HighlightNav(NavAllergiesBorder, NavAllergiesBar, NavAllergiesText);
-                AllergiesPanel.Visibility = Visibility.Visible;
+                if (AllergiesPanel != null) AllergiesPanel.Visibility = Visibility.Visible;
                 break;
             case "clinical_media":
             case "clinicalmedia":
             case "clin_clinical_media":
                 HighlightNav(NavClinicalMediaBorder, NavClinicalMediaBar, NavClinicalMediaText);
-                ClinicalMediaPanel.Visibility = Visibility.Visible;
+                if (ClinicalMediaPanel != null) ClinicalMediaPanel.Visibility = Visibility.Visible;
                 break;
             case "diagnoses":
             case "diagnoses and problems":
             case "clin_diagnoses":
                 HighlightNav(NavDiagnosesBorder, NavDiagnosesBar, NavDiagnosesText);
-                DiagnosesPanel.Visibility = Visibility.Visible;
+                if (DiagnosesPanel != null) DiagnosesPanel.Visibility = Visibility.Visible;
                 break;
             case "form_browser":
             case "formbrowser":
             case "clin_form_browser":
                 HighlightNav(NavFormBrowserBorder, NavFormBrowserBar, NavFormBrowserText);
-                FormBrowserPanel.Visibility = Visibility.Visible;
+                if (FormBrowserPanel != null) FormBrowserPanel.Visibility = Visibility.Visible;
+                break;
+            case "growth_chart":
+            case "growthchart":
+                HighlightNav(NavGrowthChartBorder, NavGrowthChartBar, NavGrowthChartText);
+                if (GrowthChartPanel != null) GrowthChartPanel.Visibility = Visibility.Visible;
                 break;
             case "insurance":
             case "patient_info":
             case "patientinfo":
             case "clin_patient_info":
                 HighlightNav(NavInsuranceBorder, NavInsuranceBar, NavInsuranceText);
-                InsurancePanel.Visibility = Visibility.Visible;
+                if (InsurancePanel != null) InsurancePanel.Visibility = Visibility.Visible;
                 break;
             case "histories":
             case "clin_histories":
@@ -781,23 +795,38 @@ public sealed partial class PatientProfileView : UserControl
             case "interactiveview":
             case "clin_interactive_view":
                 HighlightNav(NavInteractiveViewBorder, NavInteractiveViewBar, NavInteractiveViewText);
-                InteractiveViewPanel.Visibility = Visibility.Visible;
+                if (InteractiveViewPanel != null) InteractiveViewPanel.Visibility = Visibility.Visible;
                 break;
             case "mar_summary":
             case "marsummary":
             case "clin_mar_summary":
                 HighlightNav(NavMarBorder, NavMarBar, NavMarText);
-                MarSummaryPanel.Visibility = Visibility.Visible;
+                if (MarSummaryPanel != null) MarSummaryPanel.Visibility = Visibility.Visible;
                 break;
             case "medication_list":
             case "medications":
             case "clin_medication_list":
                 HighlightNav(NavMedicationBorder, NavMedicationBar, NavMedicationText);
-                MedicationsPanel.Visibility = Visibility.Visible;
+                if (MedicationsPanel != null) MedicationsPanel.Visibility = Visibility.Visible;
+                OpenMedicationPopup();
+                break;
+            case "recommendations":
+                HighlightNav(NavRecommendationsBorder, NavRecommendationsBar, NavRecommendationsText);
+                if (RecommendationsPanel != null) RecommendationsPanel.Visibility = Visibility.Visible;
+                break;
+            case "smart_app_validator":
+            case "smartappvalidator":
+                HighlightNav(NavSmartAppValidatorBorder, NavSmartAppValidatorBar, NavSmartAppValidatorText);
+                if (SmartAppValidatorPanel != null) SmartAppValidatorPanel.Visibility = Visibility.Visible;
+                break;
+            case "workflowview_edge":
+            case "workflowview":
+                HighlightNav(NavWorkflowViewEdgeBorder, NavWorkflowViewEdgeBar, NavWorkflowViewEdgeText);
+                if (WorkflowViewEdgePanel != null) WorkflowViewEdgePanel.Visibility = Visibility.Visible;
                 break;
             default:
-                HighlightNav(NavDocBorder, NavDocBar, NavDocText);
-                DocumentationPanel.Visibility = Visibility.Visible;
+                HighlightNav(NavOpNoteProdEdgeBorder, NavOpNoteProdEdgeBar, NavOpNoteProdEdgeText);
+                if (OpNoteProdEdgePanel != null) OpNoteProdEdgePanel.Visibility = Visibility.Visible;
                 break;
         }
     }
@@ -806,57 +835,84 @@ public sealed partial class PatientProfileView : UserControl
     private void ResetSidebarHighlights()
     {
         var transparent = new SolidColorBrush(Colors.Transparent);
-        var white = new SolidColorBrush(Colors.White);
 
         // Reset borders
-        NavProviderViewBorder.Background = transparent;
-        NavResultsReviewBorder.Background = transparent;
-        NavOrdersBorder.Background = transparent;
-        NavDocBorder.Background = transparent;
-        NavOutsideRecordsBorder.Background = transparent;
-        NavAllergiesBorder.Background = transparent;
-        NavClinicalMediaBorder.Background = transparent;
-        NavDiagnosesBorder.Background = transparent;
-        NavFormBrowserBorder.Background = transparent;
-        NavInsuranceBorder.Background = transparent;
-        NavHistoriesBorder.Background = transparent;
-        NavInteractiveViewBorder.Background = transparent;
-        NavMarBorder.Background = transparent;
-        NavMedicationBorder.Background = transparent;
+        if (NavProviderViewBorder != null) NavProviderViewBorder.Background = transparent;
+        if (NavResultsReviewBorder != null) NavResultsReviewBorder.Background = transparent;
+        if (NavOrdersBorder != null) NavOrdersBorder.Background = transparent;
+        if (NavDocBorder != null) NavDocBorder.Background = transparent;
+        if (NavOutsideRecordsBorder != null) NavOutsideRecordsBorder.Background = transparent;
+        if (NavAllergiesBorder != null) NavAllergiesBorder.Background = transparent;
+        if (NavClinicalMediaBorder != null) NavClinicalMediaBorder.Background = transparent;
+        if (NavDiagnosesBorder != null) NavDiagnosesBorder.Background = transparent;
+        if (NavFormBrowserBorder != null) NavFormBrowserBorder.Background = transparent;
+        if (NavGrowthChartBorder != null) NavGrowthChartBorder.Background = transparent;
+        if (NavInsuranceBorder != null) NavInsuranceBorder.Background = transparent;
+        if (NavHistoriesBorder != null) NavHistoriesBorder.Background = transparent;
+        if (NavInteractiveViewBorder != null) NavInteractiveViewBorder.Background = transparent;
+        if (NavMarBorder != null) NavMarBorder.Background = transparent;
+        if (NavMedicationBorder != null) NavMedicationBorder.Background = transparent;
+        if (NavRecommendationsBorder != null) NavRecommendationsBorder.Background = transparent;
+        if (NavSmartAppValidatorBorder != null) NavSmartAppValidatorBorder.Background = transparent;
+        if (NavOpNoteTestIeBorder != null) NavOpNoteTestIeBorder.Background = transparent;
+        if (NavOpNoteTestEdgeBorder != null) NavOpNoteTestEdgeBorder.Background = transparent;
+        if (NavOpNoteProdEdgeBorder != null) NavOpNoteProdEdgeBorder.Background = transparent;
+        if (NavWorkflowViewEdgeBorder != null) NavWorkflowViewEdgeBorder.Background = transparent;
+        if (NavMTuitiveDevEdgeBorder != null) NavMTuitiveDevEdgeBorder.Background = transparent;
+        if (NavOpNoteDebugEdgeBorder != null) NavOpNoteDebugEdgeBorder.Background = transparent;
 
         // Reset cyan accent bars
-        NavProviderViewBar.Background = transparent;
-        NavResultsReviewBar.Background = transparent;
-        NavOrdersBar.Background = transparent;
-        NavDocBar.Background = transparent;
-        NavOutsideRecordsBar.Background = transparent;
-        NavAllergiesBar.Background = transparent;
-        NavClinicalMediaBar.Background = transparent;
-        NavDiagnosesBar.Background = transparent;
-        NavFormBrowserBar.Background = transparent;
-        NavInsuranceBar.Background = transparent;
-        NavHistoriesBar.Background = transparent;
-        NavInteractiveViewBar.Background = transparent;
-        NavMarBar.Background = transparent;
-        NavMedicationBar.Background = transparent;
+        if (NavProviderViewBar != null) NavProviderViewBar.Background = transparent;
+        if (NavResultsReviewBar != null) NavResultsReviewBar.Background = transparent;
+        if (NavOrdersBar != null) NavOrdersBar.Background = transparent;
+        if (NavDocBar != null) NavDocBar.Background = transparent;
+        if (NavOutsideRecordsBar != null) NavOutsideRecordsBar.Background = transparent;
+        if (NavAllergiesBar != null) NavAllergiesBar.Background = transparent;
+        if (NavClinicalMediaBar != null) NavClinicalMediaBar.Background = transparent;
+        if (NavDiagnosesBar != null) NavDiagnosesBar.Background = transparent;
+        if (NavFormBrowserBar != null) NavFormBrowserBar.Background = transparent;
+        if (NavGrowthChartBar != null) NavGrowthChartBar.Background = transparent;
+        if (NavInsuranceBar != null) NavInsuranceBar.Background = transparent;
+        if (NavHistoriesBar != null) NavHistoriesBar.Background = transparent;
+        if (NavInteractiveViewBar != null) NavInteractiveViewBar.Background = transparent;
+        if (NavMarBar != null) NavMarBar.Background = transparent;
+        if (NavMedicationBar != null) NavMedicationBar.Background = transparent;
+        if (NavRecommendationsBar != null) NavRecommendationsBar.Background = transparent;
+        if (NavSmartAppValidatorBar != null) NavSmartAppValidatorBar.Background = transparent;
+        if (NavOpNoteTestIeBar != null) NavOpNoteTestIeBar.Background = transparent;
+        if (NavOpNoteTestEdgeBar != null) NavOpNoteTestEdgeBar.Background = transparent;
+        if (NavOpNoteProdEdgeBar != null) NavOpNoteProdEdgeBar.Background = transparent;
+        if (NavWorkflowViewEdgeBar != null) NavWorkflowViewEdgeBar.Background = transparent;
+        if (NavMTuitiveDevEdgeBar != null) NavMTuitiveDevEdgeBar.Background = transparent;
+        if (NavOpNoteDebugEdgeBar != null) NavOpNoteDebugEdgeBar.Background = transparent;
 
         // Reset text weights
-        NavProviderViewText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavResultsReviewText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavOrdersText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavDocText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavOutsideRecordsText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavAllergiesText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavClinicalMediaText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavDiagnosesText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavFormBrowserText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavInsuranceText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavHistoriesText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavInteractiveViewText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavMarText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-        NavMedicationText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavProviderViewText != null) NavProviderViewText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavResultsReviewText != null) NavResultsReviewText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavOrdersText != null) NavOrdersText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavDocText != null) NavDocText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavOutsideRecordsText != null) NavOutsideRecordsText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavAllergiesText != null) NavAllergiesText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavClinicalMediaText != null) NavClinicalMediaText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavDiagnosesText != null) NavDiagnosesText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavFormBrowserText != null) NavFormBrowserText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavGrowthChartText != null) NavGrowthChartText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavInsuranceText != null) NavInsuranceText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavHistoriesText != null) NavHistoriesText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavInteractiveViewText != null) NavInteractiveViewText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavMarText != null) NavMarText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavMedicationText != null) NavMedicationText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavRecommendationsText != null) NavRecommendationsText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavSmartAppValidatorText != null) NavSmartAppValidatorText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavOpNoteTestIeText != null) NavOpNoteTestIeText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavOpNoteTestEdgeText != null) NavOpNoteTestEdgeText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavOpNoteProdEdgeText != null) NavOpNoteProdEdgeText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavWorkflowViewEdgeText != null) NavWorkflowViewEdgeText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavMTuitiveDevEdgeText != null) NavMTuitiveDevEdgeText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
+        if (NavOpNoteDebugEdgeText != null) NavOpNoteDebugEdgeText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
 
         // Collapse all content panels
+        if (OpNoteProdEdgePanel != null) OpNoteProdEdgePanel.Visibility = Visibility.Collapsed;
         if (ProviderViewPanel != null) ProviderViewPanel.Visibility = Visibility.Collapsed;
         if (ResultsReviewPanel != null) ResultsReviewPanel.Visibility = Visibility.Collapsed;
         if (OrdersPanel != null) OrdersPanel.Visibility = Visibility.Collapsed;
@@ -866,18 +922,22 @@ public sealed partial class PatientProfileView : UserControl
         if (ClinicalMediaPanel != null) ClinicalMediaPanel.Visibility = Visibility.Collapsed;
         if (DiagnosesPanel != null) DiagnosesPanel.Visibility = Visibility.Collapsed;
         if (FormBrowserPanel != null) FormBrowserPanel.Visibility = Visibility.Collapsed;
+        if (GrowthChartPanel != null) GrowthChartPanel.Visibility = Visibility.Collapsed;
         if (InsurancePanel != null) InsurancePanel.Visibility = Visibility.Collapsed;
         if (HistoriesChartPanel != null) HistoriesChartPanel.Visibility = Visibility.Collapsed;
         if (InteractiveViewPanel != null) InteractiveViewPanel.Visibility = Visibility.Collapsed;
         if (MarSummaryPanel != null) MarSummaryPanel.Visibility = Visibility.Collapsed;
         if (MedicationsPanel != null) MedicationsPanel.Visibility = Visibility.Collapsed;
+        if (RecommendationsPanel != null) RecommendationsPanel.Visibility = Visibility.Collapsed;
+        if (SmartAppValidatorPanel != null) SmartAppValidatorPanel.Visibility = Visibility.Collapsed;
+        if (WorkflowViewEdgePanel != null) WorkflowViewEdgePanel.Visibility = Visibility.Collapsed;
     }
 
     private void HighlightNav(Border border, Border bar, TextBlock text)
     {
         ResetSidebarHighlights();
         _activeNavBorder = border;
-        border.Background = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 14, 75, 117)); // #0E4B75
+        border.Background = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 0, 92, 138)); // #005C8A
         bar.Background = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 0, 162, 237));      // #00A2ED Cyan
         text.FontWeight = Microsoft.UI.Text.FontWeights.SemiBold;
     }
@@ -885,61 +945,67 @@ public sealed partial class PatientProfileView : UserControl
     private void OnNavProviderViewPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavProviderViewBorder, NavProviderViewBar, NavProviderViewText);
-        ProviderViewPanel.Visibility = Visibility.Visible;
+        if (ProviderViewPanel != null) ProviderViewPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavResultsReviewPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavResultsReviewBorder, NavResultsReviewBar, NavResultsReviewText);
-        ResultsReviewPanel.Visibility = Visibility.Visible;
+        if (ResultsReviewPanel != null) ResultsReviewPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavOrdersPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavOrdersBorder, NavOrdersBar, NavOrdersText);
-        OrdersPanel.Visibility = Visibility.Visible;
+        if (OrdersPanel != null) OrdersPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavDocPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavDocBorder, NavDocBar, NavDocText);
-        DocumentationPanel.Visibility = Visibility.Visible;
+        if (DocumentationPanel != null) DocumentationPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavOutsideRecordsPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavOutsideRecordsBorder, NavOutsideRecordsBar, NavOutsideRecordsText);
-        OutsideRecordsPanel.Visibility = Visibility.Visible;
+        if (OutsideRecordsPanel != null) OutsideRecordsPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavAllergiesPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavAllergiesBorder, NavAllergiesBar, NavAllergiesText);
-        AllergiesPanel.Visibility = Visibility.Visible;
+        if (AllergiesPanel != null) AllergiesPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavClinicalMediaPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavClinicalMediaBorder, NavClinicalMediaBar, NavClinicalMediaText);
-        ClinicalMediaPanel.Visibility = Visibility.Visible;
+        if (ClinicalMediaPanel != null) ClinicalMediaPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavDiagnosesPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavDiagnosesBorder, NavDiagnosesBar, NavDiagnosesText);
-        DiagnosesPanel.Visibility = Visibility.Visible;
+        if (DiagnosesPanel != null) DiagnosesPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavFormBrowserPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavFormBrowserBorder, NavFormBrowserBar, NavFormBrowserText);
-        FormBrowserPanel.Visibility = Visibility.Visible;
+        if (FormBrowserPanel != null) FormBrowserPanel.Visibility = Visibility.Visible;
+    }
+
+    private void OnNavGrowthChartPressed(object sender, PointerRoutedEventArgs e)
+    {
+        HighlightNav(NavGrowthChartBorder, NavGrowthChartBar, NavGrowthChartText);
+        if (GrowthChartPanel != null) GrowthChartPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavInsurancePressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavInsuranceBorder, NavInsuranceBar, NavInsuranceText);
-        InsurancePanel.Visibility = Visibility.Visible;
+        if (InsurancePanel != null) InsurancePanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavHistoriesPressed(object sender, PointerRoutedEventArgs e)
@@ -951,19 +1017,75 @@ public sealed partial class PatientProfileView : UserControl
     private void OnNavInteractiveViewPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavInteractiveViewBorder, NavInteractiveViewBar, NavInteractiveViewText);
-        InteractiveViewPanel.Visibility = Visibility.Visible;
+        if (InteractiveViewPanel != null) InteractiveViewPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavMarPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavMarBorder, NavMarBar, NavMarText);
-        MarSummaryPanel.Visibility = Visibility.Visible;
+        if (MarSummaryPanel != null) MarSummaryPanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavMedicationPressed(object sender, PointerRoutedEventArgs e)
     {
         HighlightNav(NavMedicationBorder, NavMedicationBar, NavMedicationText);
-        MedicationsPanel.Visibility = Visibility.Visible;
+        if (MedicationsPanel != null) MedicationsPanel.Visibility = Visibility.Visible;
+        OpenMedicationPopup();
+    }
+
+    public event EventHandler? MedicationListRequested;
+
+    public void OpenMedicationPopup()
+    {
+        MedicationListRequested?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnNavRecommendationsPressed(object sender, PointerRoutedEventArgs e)
+    {
+        HighlightNav(NavRecommendationsBorder, NavRecommendationsBar, NavRecommendationsText);
+        if (RecommendationsPanel != null) RecommendationsPanel.Visibility = Visibility.Visible;
+    }
+
+    private void OnNavSmartAppValidatorPressed(object sender, PointerRoutedEventArgs e)
+    {
+        HighlightNav(NavSmartAppValidatorBorder, NavSmartAppValidatorBar, NavSmartAppValidatorText);
+        if (SmartAppValidatorPanel != null) SmartAppValidatorPanel.Visibility = Visibility.Visible;
+    }
+
+    private void OnNavOpNoteTestIePressed(object sender, PointerRoutedEventArgs e)
+    {
+        HighlightNav(NavOpNoteTestIeBorder, NavOpNoteTestIeBar, NavOpNoteTestIeText);
+        if (OpNoteProdEdgePanel != null) OpNoteProdEdgePanel.Visibility = Visibility.Visible;
+    }
+
+    private void OnNavOpNoteTestEdgePressed(object sender, PointerRoutedEventArgs e)
+    {
+        HighlightNav(NavOpNoteTestEdgeBorder, NavOpNoteTestEdgeBar, NavOpNoteTestEdgeText);
+        if (OpNoteProdEdgePanel != null) OpNoteProdEdgePanel.Visibility = Visibility.Visible;
+    }
+
+    private void OnNavOpNoteProdEdgePressed(object sender, PointerRoutedEventArgs e)
+    {
+        HighlightNav(NavOpNoteProdEdgeBorder, NavOpNoteProdEdgeBar, NavOpNoteProdEdgeText);
+        if (OpNoteProdEdgePanel != null) OpNoteProdEdgePanel.Visibility = Visibility.Visible;
+    }
+
+    private void OnNavWorkflowViewEdgePressed(object sender, PointerRoutedEventArgs e)
+    {
+        HighlightNav(NavWorkflowViewEdgeBorder, NavWorkflowViewEdgeBar, NavWorkflowViewEdgeText);
+        if (WorkflowViewEdgePanel != null) WorkflowViewEdgePanel.Visibility = Visibility.Visible;
+    }
+
+    private void OnNavMTuitiveDevEdgePressed(object sender, PointerRoutedEventArgs e)
+    {
+        HighlightNav(NavMTuitiveDevEdgeBorder, NavMTuitiveDevEdgeBar, NavMTuitiveDevEdgeText);
+        if (OpNoteProdEdgePanel != null) OpNoteProdEdgePanel.Visibility = Visibility.Visible;
+    }
+
+    private void OnNavOpNoteDebugEdgePressed(object sender, PointerRoutedEventArgs e)
+    {
+        HighlightNav(NavOpNoteDebugEdgeBorder, NavOpNoteDebugEdgeBar, NavOpNoteDebugEdgeText);
+        if (OpNoteProdEdgePanel != null) OpNoteProdEdgePanel.Visibility = Visibility.Visible;
     }
 
     private void OnNavPointerEntered(object sender, PointerRoutedEventArgs e)
