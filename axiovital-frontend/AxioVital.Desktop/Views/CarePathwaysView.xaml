@@ -16,11 +16,9 @@
             <RowDefinition Height="28" />
             <!-- 2. Filters Group Box (Height: Auto) -->
             <RowDefinition Height="Auto" />
-            <!-- 3. Tab Bar (Height: 26) -->
-            <RowDefinition Height="26" />
-            <!-- 4. Sub-filter Controls (Height: 32) -->
+            <!-- 3. Sub-filter Controls (Height: 32) -->
             <RowDefinition Height="32" />
-            <!-- 5. Main Data Grid Work List Area (Height: *) -->
+            <!-- 4. Main Data Grid Work List Area (Height: *) -->
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -176,35 +174,8 @@
             </Grid>
         </Border>
 
-        <!-- ==================== 3. CLASSIC TAB BAR (Exam | Transcription) ==================== -->
-        <Grid Grid.Row="3" Margin="8,2,8,0" VerticalAlignment="Bottom">
-            <StackPanel Orientation="Horizontal" Spacing="2" VerticalAlignment="Bottom">
-                <!-- Exam Tab (Selected Active) -->
-                <Border x:Name="ExamTabBorder"
-                        Background="#FFFFFF"
-                        BorderBrush="#8DAAC5"
-                        BorderThickness="1,1,1,0"
-                        CornerRadius="3,3,0,0"
-                        Padding="14,4,14,4"
-                        PointerPressed="OnExamTabClicked">
-                    <TextBlock x:Name="ExamTabText" Text="Exam" FontSize="11" FontWeight="Bold" Foreground="#0A3C6B" />
-                </Border>
-
-                <!-- Transcription Tab (Inactive) -->
-                <Border x:Name="TranscriptionTabBorder"
-                        Background="#D5E3F0"
-                        BorderBrush="#A4BDD4"
-                        BorderThickness="1,1,1,0"
-                        CornerRadius="3,3,0,0"
-                        Padding="14,4,14,4"
-                        PointerPressed="OnTranscriptionTabClicked">
-                    <TextBlock x:Name="TranscriptionTabText" Text="Transcription" FontSize="11" FontWeight="Normal" Foreground="#334155" />
-                </Border>
-            </StackPanel>
-        </Grid>
-
-        <!-- ==================== 4. SUB-FILTER CONTROLS BAR ==================== -->
-        <Border Grid.Row="4" Background="#FFFFFF" BorderBrush="#8DAAC5" BorderThickness="1,1,1,0" Margin="8,0,8,0" Padding="10,3,10,3">
+        <!-- ==================== 3. SUB-FILTER CONTROLS BAR ==================== -->
+        <Border Grid.Row="3" Background="#FFFFFF" BorderBrush="#8DAAC5" BorderThickness="1,1,1,0" Margin="8,0,8,0" CornerRadius="3,3,0,0" Padding="10,3,10,3">
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -251,22 +222,89 @@
                     </ComboBox>
                 </StackPanel>
 
-                <!-- Quick Filter / Search Box -->
-                <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xE721;" FontSize="11" Foreground="#64748B" VerticalAlignment="Center" />
-                    <TextBox x:Name="FilterSearchBox"
-                             PlaceholderText="Filter patient, MRN, procedure..."
-                             Width="190"
-                             Height="24"
-                             FontSize="10.5"
-                             Padding="6,2"
-                             TextChanged="OnFilterSearchTextChanged" />
-                </StackPanel>
+                <!-- Search Bar Panel (Matching Image 2) -->
+                <Border Grid.Column="4"
+                        Background="#08548A"
+                        BorderBrush="#063D66"
+                        BorderThickness="1"
+                        CornerRadius="3"
+                        Padding="6,4"
+                        VerticalAlignment="Center">
+                    <Border Background="#062740"
+                            BorderBrush="#0D3B5C"
+                            BorderThickness="1"
+                            CornerRadius="3"
+                            Padding="8,0,8,0"
+                            Height="24"
+                            VerticalAlignment="Center">
+                        <Grid VerticalAlignment="Center" Height="20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Custom 2-Color Search Magnifying Glass (Cyan Lens + Purple Handle from Image 2) -->
+                            <Grid Grid.Column="0" Width="13" Height="13" VerticalAlignment="Center" Margin="0,0,6,0">
+                                <!-- Purple Handle -->
+                                <Rectangle Width="5.5" Height="2.2" Fill="#B55EE4" RadiusX="0.5" RadiusY="0.5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0.5,0.5">
+                                    <Rectangle.RenderTransform>
+                                        <RotateTransform Angle="45" CenterX="2.5" CenterY="1" />
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                                <!-- Cyan Lens -->
+                                <Ellipse Width="8.5" Height="8.5" Fill="#42C5F4" Stroke="#0C6E9E" StrokeThickness="0.8" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <!-- Specular Dot -->
+                                <Ellipse Width="2.5" Height="2.5" Fill="#FFFFFF" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,1.5,0,0" />
+                            </Grid>
+
+                            <!-- Placeholder TextBlock (visible when SearchBox is empty) -->
+                            <TextBlock x:Name="SearchPlaceholderText" 
+                                       Grid.Column="1"
+                                       Text="Search by Patient or Order..."
+                                       FontSize="11.5" 
+                                       Foreground="#7DA3BE"
+                                       VerticalAlignment="Center"
+                                       IsHitTestVisible="False" />
+
+                            <TextBox x:Name="FilterSearchBox"
+                                     Grid.Column="1"
+                                     Background="Transparent"
+                                     Foreground="#FFFFFF"
+                                     BorderThickness="0"
+                                     FontSize="11.5"
+                                     Width="195"
+                                     Padding="0"
+                                     Margin="0"
+                                     MinHeight="0"
+                                     MinWidth="0"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     IsSpellCheckEnabled="False"
+                                     TextChanged="OnFilterSearchTextChanged">
+                                <TextBox.Template>
+                                    <ControlTemplate TargetType="TextBox">
+                                        <Grid Background="Transparent">
+                                            <ScrollViewer x:Name="ContentElement"
+                                                          HorizontalScrollMode="Disabled"
+                                                          VerticalScrollMode="Disabled"
+                                                          HorizontalScrollBarVisibility="Hidden"
+                                                          VerticalScrollBarVisibility="Hidden"
+                                                          IsHorizontalRailEnabled="False"
+                                                          IsVerticalRailEnabled="False"
+                                                          Padding="{TemplateBinding Padding}"
+                                                          Margin="0" />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </TextBox.Template>
+                            </TextBox>
+                        </Grid>
+                    </Border>
+                </Border>
             </Grid>
         </Border>
 
-        <!-- ==================== 5. DATA GRID WORK LIST TABLE ==================== -->
-        <Border Grid.Row="5" Background="#FFFFFF" BorderBrush="#8DAAC5" BorderThickness="1" Margin="8,0,8,0">
+        <!-- ==================== 4. DATA GRID WORK LIST TABLE ==================== -->
+        <Border Grid.Row="4" Background="#FFFFFF" BorderBrush="#8DAAC5" BorderThickness="1" Margin="8,0,8,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <!-- Header Row -->
@@ -450,8 +488,8 @@
             </Grid>
         </Border>
 
-        <!-- ==================== 6. CASE DETAILS MODAL DIALOG ==================== -->
-        <Grid x:Name="CaseDetailsModalOverlay" Grid.Row="0" Grid.RowSpan="6" Background="#66000000" Visibility="Collapsed" PointerPressed="OnCaseDetailsBackdropPressed">
+        <!-- ==================== 5. CASE DETAILS MODAL DIALOG ==================== -->
+        <Grid x:Name="CaseDetailsModalOverlay" Grid.Row="0" Grid.RowSpan="5" Background="#66000000" Visibility="Collapsed" PointerPressed="OnCaseDetailsBackdropPressed">
             <Border Width="560" Background="#FFFFFF" BorderBrush="#0A4C84" BorderThickness="1" CornerRadius="3" HorizontalAlignment="Center" VerticalAlignment="Center" PointerPressed="OnCaseDetailsDialogPressed">
                 <Grid>
                     <Grid.RowDefinitions>

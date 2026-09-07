@@ -507,10 +507,6 @@
                 <Border x:Name="AnalyticsCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnAnalyticsTabPointerPressed" Background="Transparent">
                     <TextBlock x:Name="AnalyticsCategoryTabText" Text="Analytics" Foreground="#444444" FontSize="12.5" />
                 </Border>
-
-                <Border x:Name="DocumentsCategoryTabBorder" Padding="0,0,0,3" PointerPressed="OnDocumentsTabPointerPressed" Background="Transparent">
-                    <TextBlock x:Name="DocumentsCategoryTabText" Text="Documents" Foreground="#444444" FontSize="12.5" />
-                </Border>
             </StackPanel>
 
             <FontIcon Grid.Column="1" Glyph="&#xE712;" FontSize="12" Foreground="#666666" VerticalAlignment="Center" />

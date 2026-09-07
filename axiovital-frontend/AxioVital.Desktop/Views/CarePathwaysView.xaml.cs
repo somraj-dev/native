@@ -213,6 +213,10 @@ public sealed partial class CarePathwaysView : UserControl
 
     private void OnFilterSearchTextChanged(object sender, TextChangedEventArgs e)
     {
+        if (SearchPlaceholderText != null)
+        {
+            SearchPlaceholderText.Visibility = string.IsNullOrEmpty(FilterSearchBox?.Text) ? Microsoft.UI.Xaml.Visibility.Visible : Microsoft.UI.Xaml.Visibility.Collapsed;
+        }
         ApplyFilter();
     }
 
@@ -277,34 +281,6 @@ public sealed partial class CarePathwaysView : UserControl
     private void OnCaseDetailsDialogPressed(object sender, PointerRoutedEventArgs e)
     {
         e.Handled = true;
-    }
-
-    private void OnExamTabClicked(object sender, PointerRoutedEventArgs e)
-    {
-        if (ExamTabBorder != null && TranscriptionTabBorder != null && ExamTabText != null && TranscriptionTabText != null)
-        {
-            ExamTabBorder.Background = new SolidColorBrush(Microsoft.UI.Colors.White);
-            ExamTabText.FontWeight = Microsoft.UI.Text.FontWeights.Bold;
-            ExamTabText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 10, 60, 107));
-
-            TranscriptionTabBorder.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 213, 227, 240));
-            TranscriptionTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-            TranscriptionTabText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 51, 65, 85));
-        }
-    }
-
-    private void OnTranscriptionTabClicked(object sender, PointerRoutedEventArgs e)
-    {
-        if (ExamTabBorder != null && TranscriptionTabBorder != null && ExamTabText != null && TranscriptionTabText != null)
-        {
-            TranscriptionTabBorder.Background = new SolidColorBrush(Microsoft.UI.Colors.White);
-            TranscriptionTabText.FontWeight = Microsoft.UI.Text.FontWeights.Bold;
-            TranscriptionTabText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 10, 60, 107));
-
-            ExamTabBorder.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 213, 227, 240));
-            ExamTabText.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
-            ExamTabText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 51, 65, 85));
-        }
     }
 
     private void OnRefreshClicked(object sender, RoutedEventArgs e)

@@ -13,8 +13,6 @@
             <RowDefinition Height="Auto" />
             <!-- 1. Data Table Area with Column Headers -->
             <RowDefinition Height="*" />
-            <!-- 2. Footer Controls Bar -->
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!-- Total Patients Summary Header -->
@@ -623,22 +621,5 @@
             </Grid>
         </ScrollViewer>
 
-        <!-- Footer Controls Bar -->
-        <Grid Grid.Row="2" Background="#F4F6F8" Padding="10,4" BorderBrush="#D9E4EC" BorderThickness="0,1,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
-                <TextBlock Text="Sort Order: Location, ascending" Foreground="#666666" FontSize="12" FontFamily="Segoe UI" />
-                <TextBlock Text="Filter: Active" Foreground="#666666" FontSize="12" FontFamily="Segoe UI" />
-            </StackPanel>
-
-            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
-                <TextBlock Text="Showing 28 of 28 records" Foreground="#666666" FontSize="12" FontFamily="Segoe UI" VerticalAlignment="Center" />
-                <Button Content="Refresh List" Background="White" BorderBrush="#CCCCCC" BorderThickness="1" Foreground="#333333" FontSize="12" FontFamily="Segoe UI" Padding="8,2" Height="28" CornerRadius="2" />
-            </StackPanel>
-        </Grid>
     </Grid>
 </UserControl>

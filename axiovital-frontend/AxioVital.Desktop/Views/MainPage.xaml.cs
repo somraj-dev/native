@@ -430,14 +430,8 @@ public partial class MainPage : Page
         ShowAnalyticsView();
     }
 
-    private void OnDocumentsTabPointerPressed(object sender, PointerRoutedEventArgs e)
-    {
-        ShowFileManagerView();
-    }
-
     public void ShowFileManagerView()
     {
-        HighlightRibbonTabWithAnimation(DocumentsCategoryTabBorder, DocumentsCategoryTabText);
         OpenFileManagerView();
     }
 
@@ -464,7 +458,6 @@ public partial class MainPage : Page
         ResetTabItem(CarePathwaysCategoryTabBorder, CarePathwaysCategoryTabText, catNeutralColor);
         ResetTabItem(LabsCategoryTabBorder, LabsCategoryTabText, catNeutralColor);
         ResetTabItem(AnalyticsCategoryTabBorder, AnalyticsCategoryTabText, catNeutralColor);
-        ResetTabItem(DocumentsCategoryTabBorder, DocumentsCategoryTabText, catNeutralColor);
     }
 
     private void ResetTabItem(Border? tabBorder, TextBlock? tabText, SolidColorBrush defaultColor)
