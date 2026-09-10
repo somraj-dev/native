@@ -989,10 +989,10 @@ flowchart LR
 | Script                        | Purpose                                           |
 |-------------------------------|---------------------------------------------------|
 | `scripts/build-desktop.ps1`  | Full build pipeline: clean → build → generate PRI → publish → copy assets → create installer |
+| `scripts/run-desktop.bat`     | Quick-launch desktop app                          |
+| `scripts/run-desktop.ps1`     | Quick-launch desktop app (PowerShell)             |
+| `scripts/AxioVital.bat`       | Launcher script                                   |
 | `tools/dev-setup.ps1`        | Developer environment setup                       |
-| `run-desktop.bat`            | Quick-launch desktop app                          |
-| `run-desktop.ps1`            | Quick-launch desktop app (PowerShell)             |
-| `AxioVital.bat`              | Launcher script                                   |
 
 ### CI/CD
 

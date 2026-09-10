@@ -40,8 +40,8 @@ jobs:
           $publishSource = "axiovital-frontend/AxioVital.Desktop/bin/publish"
           Copy-Item "$publishSource/*" $distDir -Recurse -Force
           
-          if (Test-Path "run-desktop.bat") { Copy-Item "run-desktop.bat" $distDir -Force }
-          if (Test-Path "run-desktop.ps1") { Copy-Item "run-desktop.ps1" $distDir -Force }
+          if (Test-Path "scripts/run-desktop.bat") { Copy-Item "scripts/run-desktop.bat" $distDir -Force }
+          if (Test-Path "scripts/run-desktop.ps1") { Copy-Item "scripts/run-desktop.ps1" $distDir -Force }
           
           Write-Host "Artifact staging complete at $distDir"
 
